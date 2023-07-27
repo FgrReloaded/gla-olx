@@ -1,0 +1,48 @@
+/* Styling Below */
+
+.footerWrapper{
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    padding: 1rem;
+    background: #c3c2c2;
+    color: #ececec;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-self: baseline;
+}
+.title{
+    font-size: 2rem;
+    color: teal;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.iconList ul{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.icons{
+    font-size: 2rem;
+}
+.logo img{
+    width: 90px;
+    height: 60px;
+}
+.footerBottom{
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0097b2;
+    color: #ececec;
+    font-weight: bold;
+}

@@ -1,0 +1,215 @@
+/* Styling Below */
+
+.navWrapper {
+    padding: 0rem 1rem;
+}
+
+.navWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--secondary);
+}
+.logo{
+    margin-left: 1rem;
+}
+.logo img{
+    width: 100px;
+    height: 70px;
+}
+
+.navWrapper ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -5px;
+    padding: 0;
+    gap: 1.5rem;
+}
+
+.navWrapper ul li {
+    position: relative;
+    list-style: none;
+    z-index: 2;
+
+}
+
+.navWrapper ul li a {
+    text-decoration: none;
+    padding: 0rem 1rem;
+    font-weight: lighter !important;
+    font-size: 1.2rem;
+    color: var(--text);
+}
+
+.navLinks{
+    color: #fff !important;
+}
+.seller div{
+    color: var(--secondary);
+    display: flex;
+    gap: 5px;
+    padding: 3px 6px;
+    border-radius: 1rem;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+}
+.loginLink{
+    padding: 0.38rem 0.4rem !important;
+    border-radius: 1rem;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    color: var(--secondary) !important;
+}
+
+.sell a {
+    margin: 5px 0px !important;
+    border-radius: 5px;
+    background: #fff;
+    color: #000;
+}
+
+.sell {
+    display: flex;
+    padding: 0px 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: #fff;
+    color: #000;
+}
+
+.btn {
+    outline: none !important;
+    align-items: center;
+    appearance: none;
+    background-color: #afe4ee;
+    border-radius: 4px;
+    border-width: 0 !important;
+    box-shadow: #016b7e 0 2px 4px, #016b7e 0 7px 13px -3px, #4993a4 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395A;
+    cursor: pointer;
+    display: inline-flex;
+    height: 36px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s, transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    font-size: 18px;
+}
+
+.btn:focus {
+    box-shadow: #016b7e 0 0 0 1.5px inset, #016b7e 0 2px 4px, #4993a4 0 7px 13px -3px, #69b5c6 0 -3px 0 inset;
+}
+
+.btn:hover {
+    box-shadow: #016b7e 0 4px 8px, #016b7e 0 7px 13px -3px, #4993a4 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+
+
+.btn div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn:has(> div) {
+    padding: 0px 10px !important;
+}
+
+.btn:has(> .more) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+.moreParent {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    visibility: hidden;
+    margin-top: -1rem;
+    opacity: 0;
+    z-index: -1;
+    transition: 0.5s ease-in-out;
+}
+
+.moreParent:hover .dropdown{
+    visibility: visible;
+    margin-top: 0.5rem;
+    opacity: 1;
+    z-index: 1;
+}
+
+
+.btnMore {
+    align-items: center;
+    appearance: none;
+    background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+    border: 0 !important;
+    outline: none !important;
+    border-radius: 6px;
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, rgba(58, 65, 111, .5) 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    height: 36px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s, transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    font-size: 1rem;
+    width: 100px;
+}
+
+.btnMore:focus {
+    box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.btnMore:hover {
+    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.btnMore:active {
+    box-shadow: #3c4fe0 0 3px 7px inset;
+    transform: translateY(2px);
+}
