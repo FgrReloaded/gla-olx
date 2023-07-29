@@ -6,9 +6,11 @@ var ItemSchema = new Schema({
     title: String,
     price: String,
     desc: String,
-    image: Array,
+    images: Array,
     category: String,
     seller: String,
+    sellerName: String,
+    sellerPic: String,
     buyer: String,
     status: String,
 }, { timestamps: true });

@@ -7,18 +7,18 @@ import { set } from 'mongoose'
 import { CldUploadWidget } from 'next-cloudinary'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
+import Head from 'next/head'
 
 const sell = () => {
-  const [productData, setProductData] = useState({ title: "", desc: "", price: "", category: "" })
+  const [productData, setProductData] = useState({ title: "", desc: "", price: "", category: "", sellerName: "" })
   const [profilePic, setprofilePic] = useState("")
   const router = useRouter()
   const [userData, setUserData] = useState([])
   const [files, setFiles] = useState([])
-  const [closeHover, setCloseHover] = useState(false)
   const [width, setWidth] = useState(80)
   const [height, setHeight] = useState(80)
   const [coverSrc, setCoverSrc] = useState("/images/addImage.png")
-  const [smallImg, setSmallImg] = useState("/images/addImage.png")
+  const [coverFile, setCoverFile] = useState(null)
   const ref = useRef(null);
   const ref1 = useRef(null);
   const context = useContext(glxContext);
@@ -26,9 +26,15 @@ const sell = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const { title, desc, price, category } = productData;
+    let { title, desc, price, category, sellerName } = productData;
+    sellerName = userData[0].fullname
     let seller = localStorage.getItem("currentUserId")
-    createItem({ title, desc, price, category, seller })
+    // Upload files to cloudinary
+
+    let coverImg = coverFile;
+    let images = files.slice(0, 4);
+    images.push(coverImg)
+    createItem({ title, desc, price, category, seller, sellerName, images, sellerPic: profilePic })
   }
 
   useEffect(() => {
@@ -50,7 +56,8 @@ const sell = () => {
 
   const handleCoverFile = (e) => {
     let file = e.target.files[0]
-    // setFiles([...files, file])
+    setCoverFile(file)
+    e.target.previousSibling.classList.remove("hidden")
     let url = URL.createObjectURL(file)
     setCoverSrc(url)
     setWidth("100%")
@@ -67,6 +74,13 @@ const sell = () => {
     let newFiles = files.filter((file, index) => index != order)
     setFiles(newFiles)
   }
+  const removeCover = (e) => {
+    setCoverSrc("/images/addImage.png");
+    setCoverFile(null);
+    e.target.classList.add("hidden")
+    setWidth(80)
+    setHeight(80)
+  }
 
 
   const handleMiniImageUpload = (e) => {
@@ -81,6 +95,9 @@ const sell = () => {
   }
   return (
     <>
+      <Head>
+        <title>Sell - GLA-OLX.com</title>
+      </Head>
       <header className={styles.header}>
         <h1>CREATE YOUR AD</h1>
       </header>
@@ -90,9 +107,9 @@ const sell = () => {
           <h2 className={styles.h2}>ADD COVER PHOTO:</h2>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <div className={styles.add_image}>
+              <span className={`hidden ${styles.removeImg}`} onClick={removeCover}>x</span>
               <input type="file" onChange={handleCoverFile} accept='image/*' ref={ref} style={{ display: "none" }} />
-              <img src={coverSrc} onClick={() => { ref.current.click() }} width={80} style={{ height: height, width: width }} height={80} />
-              <span className={styles.removeImg} onClick={removeImg}>x</span>
+              <img src={coverSrc} onClick={() => { ref.current.click() }} width={80} style={{ height: height, width: width, cursor: "default" }} height={80} />
             </div>
           </div>
         </div>

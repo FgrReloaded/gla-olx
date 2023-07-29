@@ -252,10 +252,10 @@
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     color: #fff;
-    transition: 0.4s ease-in-out;
+    transition: 0.2s ease-in-out;
 }
 .buttonChat:hover{
-    background: #008fa8;
+    background: #02798e;
 }
 
 .item3 div {

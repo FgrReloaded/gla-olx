@@ -1,189 +1,127 @@
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "@/styles/Chat.module.css"
-import { Alice } from "next/font/google"
+import { Alice, Noto_Sans } from "next/font/google"
 const alice = Alice({ subsets: ["latin"], weight: "400" })
-import { IoIosSend } from "react-icons/io"
+const noto = Noto_Sans({ subsets: ["latin"], weight: "800" })
+import { IoSendSharp } from "react-icons/io5"
+import { GrSearch } from "react-icons/gr"
 import { AiOutlinePaperClip } from "react-icons/ai"
-// import { db, auth } from "@/middleware/firebase"
-// import {
-//     addDoc,
-//     collection,
-//     onSnapshot,
-//     orderBy,
-//     query,
-// } from "firebase/firestore";
-// import { useRouter } from 'next/navigation';
+import ChattingWith from '@/models/ChattingWith'
+import mongoose from 'mongoose'
+import {
+  doc, getDoc, addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { auth, db } from "@/middleware/firebase"
+import { useRouter } from 'next/navigation';
+
+
+const chat = ({ data }) => {
+  const [users, setUsers] = useState([])
+  const [receiverData, setReceiverData] = useState(null)
+  const [allMessages, setAllMessages] = useState([])
+  const [chatMessage, setChatMessage] = useState("");
+  const myUser = auth.currentUser;
+
+  useEffect(() => {
+    if (data) {
+      getAllUsersData(data.chattingWith)
+    } else {
+      getChattingWith()
+    }
+    if (receiverData) {
+      const unsub = onSnapshot(
+        query(
+          collection(
+            db,
+            "users",
+            myUser?.uid,
+            "chatUsers",
+            receiverData,
+            "messages"
+          ),
+          orderBy("timestamp")
+        ),
+        (snapshot) => {
+          setAllMessages(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              messages: doc.data(),
+            }))
+          );
+        }
+      );
+      return unsub;
+    }
+  }, [receiverData])
+  const getChattingWith = async () => {
+    let currentUser = localStorage.getItem("currentUserId");
+    let res = await fetch(`/api/chattingwith?id=${currentUser}`)
+    let data = await res.json()
+    getAllUsersData(data.chattingWith.chattingWith)
+  }
+
+  const getAllUsersData = async (chattingWith) => {
+    let data = []
+    for (let i = 0; i < chattingWith.length; i++) {
+      const docRef = doc(db, "users", chattingWith[i].userToken);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        data.push({ itemName: chattingWith[i].itemName, itemPrice: chattingWith[i].itemPrice, ...docSnap.data() })
+      }
+    }
+    setUsers(data)
+  }
+
+  const sendMessage = async () => {
+    try {
+      if (myUser && receiverData && chatMessage) {
+        await addDoc(
+          collection(
+            db,
+            "users",
+            myUser.uid,
+            "chatUsers",
+            receiverData,
+            "messages"
+          ),
+          {
+            username: myUser.displayName,
+            messageUserId: myUser.uid,
+            message: chatMessage,
+            timestamp: new Date(),
+          }
+        );
+
+        await addDoc(
+          collection(
+            db,
+            "users",
+            receiverData,
+            "chatUsers",
+            myUser.uid,
+            "messages"
+          ),
+          {
+            username: myUser.displayName,
+            messageUserId: myUser.uid,
+            message: chatMessage,
+            timestamp: new Date(),
+          }
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setChatMessage("");
+  };
 
 
 
-
-
-// const Chat = () => {
-//     const [users, setUsers] = useState([]);
-
-//     const [receiverData, setReceiverData] = useState(null);
-//     const [chatMessage, setChatMessage] = useState("");
-
-//     const [allMessages, setAllMessages] = useState([]);
-//     const user = auth.currentUser;
-//     const router = useRouter();
-
-//     useEffect(() => {
-//         const unsub = onSnapshot(collection(db, "users"), (snapshot) => {
-//             setUsers(snapshot.docs.map((doc) => doc.data()));
-//         });
-//         return unsub;
-//     }, []);
-
-//     useEffect(() => {
-//         if (receiverData) {
-//             const unsub = onSnapshot(
-//                 query(
-//                     collection(
-//                         db,
-//                         "users",
-//                         user?.uid,
-//                         "chatUsers",
-//                         receiverData?.userId,
-//                         "messages"
-//                     ),
-//                     orderBy("timestamp")
-//                 ),
-//                 (snapshot) => {
-//                     setAllMessages(
-//                         snapshot.docs.map((doc) => ({
-//                             id: doc.id,
-//                             messages: doc.data(),
-//                         }))
-//                     );
-//                 }
-//             );
-//             return unsub;
-//         }
-//     }, [receiverData?.userId]);
-
-//     const sendMessage = async () => {
-//         // console.log(user, receiverData)
-//         try {
-//             if (user && receiverData) {
-//                 await addDoc(
-//                     collection(
-//                         db,
-//                         "users",
-//                         user.uid,
-//                         "chatUsers",
-//                         receiverData.userId,
-//                         "messages"
-//                     ),
-//                     {
-//                         username: user.displayName,
-//                         messageUserId: user.uid,
-//                         message: chatMessage,
-//                         timestamp: new Date(),
-//                     }
-//                 );
-
-//                 await addDoc(
-//                     collection(
-//                         db,
-//                         "users",
-//                         receiverData.userId,
-//                         "chatUsers",
-//                         user.uid,
-//                         "messages"
-//                     ),
-//                     {
-//                         username: user.displayName,
-//                         messageUserId: user.uid,
-//                         message: chatMessage,
-//                         timestamp: new Date(),
-//                     }
-//                 );
-//             }
-//         } catch (error) {
-//             console.log(error);
-//         }
-//         setChatMessage("");
-//     };
-
-
-//     return (
-//         <>
-//             <UsersComponent
-//                 users={users}
-//                 setReceiverData={setReceiverData}
-//                 router={router}
-//                 currentUserId={user?.uid}
-//             />
-
-
-//             <div style={right}>
-//                 <h4 style={{ margin: 2, padding: 10 }}>
-//                     {receiverData ? receiverData.username : user?.displayName}{" "}
-//                 </h4>
-
-//                 <div style={messagesDiv}>
-//                     {/* messages area */}
-
-//                     {allMessages &&
-//                         allMessages.map(({ id, messages }) => {
-//                             return (
-//                                 <div
-//                                     key={id}
-//                                     style={{
-//                                         margin: 2,
-//                                         display: "flex",
-//                                         flexDirection:
-//                                             user?.uid == messages.messageUserId
-//                                                 ? "row-reverse"
-//                                                 : "row",
-//                                     }}
-// >
-//                                     <span
-//                                         style={{
-//                                             backgroundColor: "#BB8FCE",
-//                                             padding: 6,
-//                                             borderTopLeftRadius:
-//                                                 user?.uid == messages.messageUserId ? 10 : 0,
-//                                             borderTopRightRadius:
-//                                                 user?.uid == messages.messageUserId ? 0 : 10,
-//                                             borderBottomLeftRadius: 10,
-//                                             borderBottomRightRadius: 10,
-//                                             maxWidth: 400,
-//                                             fontSize: 15,
-//                                             textAlign:
-//                                                 user?.uid == messages.messageUserId ? "right" : "left",
-//                                         }}
-//                                     >
-//                                         {messages.message}
-//                                     </span>
-//                                 </div>
-//                             );
-//                         })}
-//                 </div>
-
-//                 <div style={{ width: "100%", display: "flex", flex: 0.08 }}>
-//                     <input
-//                         value={chatMessage}
-//                         onChange={(e) => setChatMessage(e.target.value)}
-//                         style={input}
-//                         type="text"
-//                         placeholder="Type message..."
-//                     />
-//                     <div onClick={sendMessage}>
-//                         Send
-//                     </div>
-//                 </div>
-//             </div>
-
-//         </>
-//     )
-// }
-
-
-
-const chat = () => {
   return (
     <>
       <Head>
@@ -191,97 +129,70 @@ const chat = () => {
       </Head>
       <section className={styles.container}>
         <div className={styles.box}>
-          <div className={styles.userListBox} style={alice.style}>
-            <div>
-              <h3>Chats</h3>
+          <div className={styles.userListBox}>
+            <div className={styles.chatHeader} style={noto.style}>
+              <h3>Inbox</h3>
+              <div>
+                <GrSearch color='#728D90' size={25} /> <span color='#728D90'>&#8942;</span>
+              </div>
+            </div>
+            <div className={styles.quickFilter}>
+              <p>Quick filters</p>
+              <div>
+                <span className={styles.active}>All</span>
+                <span>Meeting</span>
+                <span>Unread</span>
+                <span>Important</span>
+              </div>
             </div>
             <ul>
-              <li>
-                <img src="/images/item1.jpg" />
-                <a>William</a>
-                <p>Buyer</p>
-                <p>Msg</p>
-              </li>
-              <li>
-                <img src="/images/item1.jpg" />
-                <a>Eula</a>
-                <p>Seller</p>
-                <p>Msg</p>
-              </li>
-              <li>
-                <img src="/images/item1.jpg" />
-                <a>Luke</a>
-                <p>Seller</p>
-                <p>Msg</p>
-              </li>
-              <li>
-                <img src="/images/item1.jpg" />
-                <a>Sean</a>
-                <p>Buyer</p>
-                <p>Msg</p>
-              </li>
-              <li>
-                <img src="/images/item1.jpg" />
-                <a>Luella</a>
-                <p>Seller</p>
-                <p>Msg</p>
-              </li>
-              <li>
-                <img src="/images/item1.jpg" />
-                <a>Gilbert</a>
-                <p>Seller</p>
-                <p>Msg</p>
-              </li>
-              <li>
-                <img src="/images/item1.jpg" />
-                <a>Clayton</a>
-                <p>Buyer</p>
-                <p>Msg</p>
-              </li>
+              {users.length > 0 &&
+                users.map((user, index) => {
+                  return (
+                    <li onClick={() => { setReceiverData(user.userId) }} key={index}>
+                      <img src={user.profilePic} style={{ objectFit: "cover" }} />
+                      <a>{user.fullname}</a>
+                      <p>{user.itemName}</p>
+                      <p>pehli fursat me nikal</p>
+                      <span color='#728D90'>&#8942;</span>
+                    </li>
+                  )
+                })}
             </ul>
           </div>
           <div className={styles.chatBox}>
             <div className={styles.chatContent}>
               <div className={styles.chatDetails}>
-                  <img src="/images/item1.jpg" />
-                  <h3 style={alice.style}>William</h3>
+                <div className={styles.chatUser}>
+                  <img src={receiverData && users.filter(user => user.userId === receiverData)[0].profilePic} style={{ objectFit: "cover" }} />
+                  <h3 style={noto.style}>{
+                    receiverData && users.filter(user => user.userId === receiverData)[0].fullname
+                  }</h3>
+                </div>
+                <div className={styles.userProduct}>
+                  <span>Product: {receiverData && users.filter(user => user.userId === receiverData)[0].itemName}</span><span>Price: Rs {receiverData && users.filter(user => user.userId === receiverData)[0].itemPrice}</span>
+                </div>
               </div>
               <div className={styles.chatItem}>
-                <p className={styles.me}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.me}>Hi This is Nitish</p>                
-                <p className={styles.me}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.me}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.me}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.me}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.me}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.me}>Hi This is Nitish</p>                
-                <p className={styles.you}>Hi This is Nitish</p>                
-                <p className={styles.me}>Hi This is Nitish</p>                
+                {
+                  allMessages.length > 0 &&
+                  allMessages.map(({id, messages}) => {
+                    return (
+                      <p key={id} className={`${myUser.uid === messages.messageUserId ? styles.me : styles.you}`}>
+                        {messages.message}
+                      </p>
+                    )
+                  })
+                }
               </div>
             </div>
             <div className={styles.chatInput}>
               <div>
-                <input type="text" placeholder='Enter a message'/>
+                <input type="text" placeholder='Enter a message' value={chatMessage} onChange={(e) => setChatMessage(e.target.value)} />
                 <span><AiOutlinePaperClip /></span>
               </div>
-              <button>
-                <IoIosSend />
+              <button onClick={sendMessage}>
+                <IoSendSharp color="var(--secondary)" size={40} />
               </button>
             </div>
           </div>
@@ -289,6 +200,69 @@ const chat = () => {
       </section>
     </>
   )
+}
+
+
+export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGODB_URI)
+  }
+  let userToken = context.query.userTempToken;
+  let currentUser = context.query.currentUser;
+  let itemName = context.query.item;
+  let itemPrice = context.query.itemPrice;
+  if (!userToken || !currentUser || !itemName || !itemPrice) {
+    return { props: { success: false, data: null } }
+  }
+  if (userToken === currentUser) {
+    return { props: { success: false, data: null } }
+  }
+  let findSender = await ChattingWith.findOne({ userId: currentUser });
+  let findReceiver = await ChattingWith.findOne({ userId: userToken });
+
+  if (!findReceiver) {
+    let chattingWith = [];
+    chattingWith.push({ userToken: currentUser, itemName, itemPrice });
+    let addReceiverUser = await ChattingWith.create({ userId: userToken, chattingWith });
+  }
+
+  if (findReceiver) {
+    let unique = true;
+    let chattingWith = findReceiver.chattingWith;
+    for (let i = 0; i < chattingWith.length; i++) {
+      if (chattingWith[i].userToken === currentUser && chattingWith[i].itemName === itemName) {
+        unique = false;
+        break;
+      }
+    }
+    if (unique) {
+      chattingWith.push({ userToken: currentUser, itemName, itemPrice });
+      let addReceiverUser = await ChattingWith.findOneAndUpdate({ userId: userToken }, { chattingWith });
+    }
+  }
+
+  if (!findSender) {
+    let chattingWith = [];
+    chattingWith.push({ userToken, itemName, itemPrice });
+    let addUser = await ChattingWith.create({ userId: currentUser, chattingWith });
+    return { props: { success: true, data: JSON.parse(JSON.stringify(addUser)) } }
+  }
+
+  let unique = true;
+  let chattingWith = findSender.chattingWith;
+  for (let i = 0; i < chattingWith.length; i++) {
+    if (chattingWith[i].userToken === userToken && chattingWith[i].itemName === itemName) {
+      unique = false;
+      break;
+    }
+  }
+  if (unique) {
+    chattingWith.push({ userToken, itemName, itemPrice });
+    let addUser = await ChattingWith.findOneAndUpdate({ userId: currentUser }, { chattingWith });
+    return { props: { success: true, data: JSON.parse(JSON.stringify(addUser)) } }
+  }
+  return { props: { success: false, data: JSON.parse(JSON.stringify(findSender)) } }
+
 }
 
 export default chat

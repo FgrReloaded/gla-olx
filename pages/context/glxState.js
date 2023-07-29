@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import glxContext from "./glxContext";
-
+import { useRouter } from "next/navigation";
 
 const GlxState = ({ children }) => {
     const [user, setUser] = useState(null)
     const [items, setItems] = useState([])
-
+    const router = useRouter()
 
     const getUser = async () => {
         const res = await fetch('/api/user', {
@@ -29,15 +29,21 @@ const GlxState = ({ children }) => {
         setItems(data.data)
     }
     const createItem = async (item) => {
+        const { title, desc, price, category, seller, sellerName, sellerPic } = item
+        const metaData = { title, desc, price, category, seller, sellerName, sellerPic }
+        const formData = new FormData()
+        item.images.forEach((file) => formData.append("media", file));
+        console.log(formData.getAll('media'))
+        formData.append('metaData', JSON.stringify(metaData))
         const res = await fetch('/api/item', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
+            body: formData
         })
         const data = await res.json()
-        setItems([...items, data.data])
+        if(data.success){   
+            setItems([...items, data.data])
+            router.push("/")
+        }
     }
 
     return (

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { auth, db } from "@/middleware/firebase"
 import styles from '@/styles/Home.module.css'
+import glxContext from './context/glxContext';
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import Cookies from 'js-cookie';
 import Head from 'next/head';
@@ -13,8 +14,11 @@ import Card from '@/components/Card';
 import { AiFillPlusCircle } from 'react-icons/ai'
 
 const Home = () => {
+  const context = useContext(glxContext);
+  const { getItem, items } = context;
 
   useEffect(() => {
+    getItem()
     let userId = localStorage.getItem("currentUserId")
     if (userId) {
       getUserData(userId)
@@ -71,8 +75,11 @@ const Home = () => {
       <section className={styles.cardSec}>
         <h3 className={styles.cardHead} style={roboto.style}>Fresh Recommendation:</h3>
         <div className={styles.productList}>
-          <Card />
-          <Card />
+          {
+            items && items.map((item, i) => {
+              return <Card key={i} item={item} />
+            })
+          }
 
         </div>
         <button className={styles.loadMore} style={alice.style}>

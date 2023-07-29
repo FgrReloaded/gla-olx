@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from "@/styles/singleProduct.module.css"
-import { Oswald, Alice, Noto_Sans } from 'next/font/google'
-const oswald = Oswald({ subsets: ['latin'] })
-const alice = Alice({ subsets: ['latin'], weight: "400" })
-const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
+import { Oswald, Alice, Noto_Sans, Days_One } from 'next/font/google'
 import { AiOutlineShareAlt, AiOutlineHeart, AiFillHeart } from "react-icons/ai"
 import { BsArrowRightCircleFill } from "react-icons/bs"
 import { TbListDetails, TbEyeCheck } from "react-icons/tb"
@@ -12,11 +9,45 @@ import { FaRegHandshake } from "react-icons/fa"
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io"
 import Card from '@/components/Card'
 import { motion } from "framer-motion"
+import mongoose from 'mongoose'
+import Item from '@/models/Item'
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/middleware/firebase"
+import { useRouter } from 'next/navigation'
 
-const item = () => {
+const oswald = Oswald({ subsets: ['latin'] })
+const alice = Alice({ subsets: ['latin'], weight: "400" })
+const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
+
+const item = ({ item, similarItems }) => {
+    const router = useRouter()
+    const [diff, setDiff] = useState("")
+    useEffect(() => {
+        let today = new Date()
+        let createdAt = new Date(item.createdAt)
+        let diff = today - createdAt
+        let mins = Math.floor(diff / (1000 * 60))
+        let hours = Math.floor(diff / (1000 * 60 * 60))
+        let days = Math.floor(hours / 24)
+        if (days < 1) {
+            if (hours < 1) {
+                setDiff(`${mins} mins ago`)
+            } else {
+                setDiff(`${hours} hours ago`)
+            }
+        } else {
+            setDiff(`${days} days ago`)
+        }
+
+    }, [])
     const [hide, setHide] = useState(true)
-    let images = ["/images/item1.jpg", "/images/item2.jpg", "/images/item3.jpg", "/images/item4.jpg", "/images/item5.jpg"]
-    const [mainSlider, setMainSlider] = useState(images[0])
+    let images = item.images
+    const [mainSlider, setMainSlider] = useState(images[4])
+
+    const handleSeller = (seller) => {
+        let currentUser = localStorage.getItem("currentUserId")
+        router.push(`/chat?currentUser=${currentUser}&userTempToken=${seller}&item=${item.title}&itemPrice=${item.price}`)
+    }
 
     const handleSlider = (e) => {
         let direct = e.target.getAttribute("direct")
@@ -37,24 +68,25 @@ const item = () => {
         }
     }
 
+
     return (
         <>
             <Head>
-                <title>Hacker T-Shirt</title>
+                <title>{item.title}</title>
             </Head>
             <div className={styles.container}>
                 <ul>
                     <li>
-                        <span>Home <IoIosArrowForward size={15} color='#20494E'/> </span>
+                        <span>Home <IoIosArrowForward size={15} color='#20494E' /> </span>
                     </li>
                     <li>
-                        <span>Product <IoIosArrowForward size={15} color='#20494E'/></span>
+                        <span>Product <IoIosArrowForward size={15} color='#20494E' /></span>
                     </li>
                     <li>
-                        <span>Category <IoIosArrowForward size={15} color='#20494E'/></span>
+                        <span>{item.category} <IoIosArrowForward size={15} color='#20494E' /></span>
                     </li>
                     <li>
-                        <span>Item</span>
+                        <span>{item.title}</span>
                     </li>
                 </ul>
             </div>
@@ -69,22 +101,22 @@ const item = () => {
                         <img src='/images/arr.png' className={styles.right} direct="right" onClick={handleSlider} />
                     </div>
                     <div className={styles.imgBox}>
+                        <img src={images[0]} alt={images[0]} onClick={(e) => { setMainSlider(e.target.alt) }} />
                         <img src={images[1]} alt={images[1]} onClick={(e) => { setMainSlider(e.target.alt) }} />
                         <img src={images[2]} alt={images[2]} onClick={(e) => { setMainSlider(e.target.alt) }} />
                         <img src={images[3]} alt={images[3]} onClick={(e) => { setMainSlider(e.target.alt) }} />
-                        <img src={images[4]} alt={images[4]} onClick={(e) => { setMainSlider(e.target.alt) }} />
                     </div>
                     <div className={styles.itemBox}>
                         <div className={styles.item1}>
                             <div className={styles.price}>
-                                <span style={noto.style}>₹1099</span>
-                                <span> <AiOutlineShareAlt size={30}/> <AiOutlineHeart onClick={()=>{setHide(!hide)}} style={{display: !hide?"none":"block"}} size={30} /> <AiFillHeart onClick={()=>{setHide(!hide)}} style={{display: hide?"none":"block"}} size={30} color='red' /> </span>
+                                <span style={noto.style}>₹{item.price}</span>
+                                <span> <AiOutlineShareAlt size={30} /> <AiOutlineHeart onClick={() => { setHide(!hide) }} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={() => { setHide(!hide) }} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
                             </div>
                             <div style={noto.style} className={styles.title}>
-                                Product: Hacker T-shirt
+                                Product: {item.title}
                             </div>
                             <div style={noto.style}>
-                                Added: 1 Day Ago
+                                Added: {diff}
                             </div>
                         </div>
                         <div className={styles.item2}>
@@ -93,10 +125,10 @@ const item = () => {
                                     <img src="/images/item1.jpg" alt="img" />
                                 </div>
                                 <div style={noto.style}>
-                                    Nitish Kumar <IoIosArrowForward color='#BBBEBF' size={25} />
+                                    {item.sellerName} <IoIosArrowForward color='#BBBEBF' size={25} />
                                 </div>
                             </div>
-                            <button className={styles.buttonChat} style={noto.style}>
+                            <button onClick = {()=>{handleSeller(item.seller)}} className={styles.buttonChat} style={noto.style}>
                                 Chat with seller
                             </button>
                         </div>
@@ -125,35 +157,54 @@ const item = () => {
                                     <span>Brand</span>
                                 </div>
                                 <div>
-                                    <span>Image</span>
-                                    <span>Hacker</span>
+                                    <span>{item.category}</span>
+                                    <span>Sasta Maal</span>
                                 </div>
                             </div>
                         </div>
                         <div className={styles.details}>
                             <h4>Description:</h4>
                             <p>
-                                Yourself map understanding noun personal ourselves studied fair test shout cup had surprise came industrial built idea victory something dust hurry ancient garden brief
-                                against full disappear frequently gate progress such birds arrangement hot health brain replace pole cut you quickly cell cave pencil pen exciting college expect
-                                against full disappear frequently gate progress such birds arrangement hot health brain replace pole cut you quickly cell cave pencil pen exciting college expect
-                                against full disappear frequently gate progress such birds arrangement hot health brain replace pole cut you quickly cell cave pencil pen exciting college expect
+                                {item.desc}
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div className={styles.similarItemsBox}>
-                <div className={styles.similarItems}>
-                    <h4>People also look for:</h4>
-                    <div className={styles.products}>
-                        <Card />
+            {
+                similarItems.length > 0 &&
+                <div className={styles.similarItemsBox}>
+                    <div className={styles.similarItems}>
+                        <h4>People also look for:</h4>
+                        <div className={styles.products}>
+                            {
+                                similarItems.map((item) => {
+                                    return (
+                                        <Card key={item._id} item={item} />
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
 
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+    if (!mongoose.connections[0].readyState) {
+        await mongoose.connect(process.env.MONGODB_URI)
+    }
+    const { seller, tempToken } = context.query
+    let items = await Item.findOne({ seller, _id: tempToken })
+    let similarProduct = await Item.find({ category: items.category })
+    similarProduct = similarProduct.filter((item) => {
+        return item._id.toString() !== items._id.toString()
+    })
+
+    return { props: { item: JSON.parse(JSON.stringify(items)), similarItems: JSON.parse(JSON.stringify(similarProduct)) } }
 }
 
 export default item

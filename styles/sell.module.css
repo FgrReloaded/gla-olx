@@ -33,6 +33,9 @@
 .add_image img{
     cursor: pointer;
 }
+.add_image .removeImg{
+    color: red;
+}
 .add_image span{
     position: absolute;
     top: -4%;

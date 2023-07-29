@@ -22,9 +22,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: -5px;
     padding: 0;
     gap: 1.5rem;
+    height: 80px;
 }
 
 .navWrapper ul li {
