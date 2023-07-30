@@ -17,7 +17,10 @@
     border: 2px solid #C8F7F5;
 }
 
+.userListBox {
+    border-right: 2px solid #C8F7F5;
 
+}
 
 .userListBox ul {
     display: grid;
@@ -32,12 +35,13 @@
     position: relative;
     transition: 0.3s ease-in-out;
 }
+
 .userListBox ul li:hover {
-    background: #C8F7F5;
+    /* background: #C8F7F5; */
     cursor: pointer;
 }
 
-.userListBox ul li span{
+.userListBox ul li span {
     position: absolute;
     right: 0;
     top: 10%;
@@ -50,6 +54,7 @@
     cursor: pointer;
 }
 
+
 .userListBox ul li img {
     position: absolute;
     left: 3%;
@@ -58,6 +63,29 @@
     height: 50px;
     border-radius: 50%;
 }
+
+.userListBox ul li span div {
+    position: absolute;
+    font-size: 1rem;
+    font-weight: normal;
+    right: 75%;
+    bottom: 5%;
+    padding: 0.5rem;
+    background: #fff;
+    z-index: 1;
+    border: 1px solid #EBEEEF;
+    border-radius: 0.5rem;
+    transition: 0.3s ease-in-out;
+}
+
+.userListBox ul li span div:hover {
+    background: #EBEEEF;
+}
+
+.userListBox ul li span:hover div {
+    visibility: visible;
+}
+
 
 .userListBox ul li a {
     margin-left: 4rem;
@@ -73,7 +101,7 @@
     margin-left: 4rem;
     font-size: 0.78rem;
     color: #303955;
-    font-family:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .userListBox ul li a+p {
@@ -104,7 +132,8 @@
 .userListBox ul::-webkit-scrollbar-thumb:hover {
     background: #0097b2b5;
 }
-.chatHeader{
+
+.chatHeader {
     padding: 0 0.5rem !important;
     display: flex;
     justify-content: space-between;
@@ -114,7 +143,8 @@
     font-size: 1.5rem;
     color: var(--secondary);
 }
-.chatHeader div{
+
+.chatHeader div {
     padding: 0.5rem !important;
     display: flex;
     gap: 0.9rem;
@@ -123,15 +153,18 @@
     background: none;
     color: #728D90 !important;
 }
-.chatHeader div svg{
+
+.chatHeader div svg {
     color: #728D90 !important;
     font-weight: bolder !important;
     filter: invert(0.5);
 }
-.chatHeader div span{
+
+.chatHeader div span {
     font-size: 2rem;
 }
-.quickFilter{
+
+.quickFilter {
     display: flex;
     flex-direction: column;
     padding: 5px;
@@ -139,31 +172,43 @@
     border-left: none;
     border-right: none;
 }
-.quickFilter p{
+
+.quickFilter p {
     color: rgb(0, 151, 178);
     font-weight: 400;
     font-style: normal;
     font-size: 10px;
     margin-bottom: 0.3rem;
 }
-.quickFilter div{
+
+.quickFilter div {
     display: flex;
     align-items: center;
     gap: 5px;
     padding-left: 0.5rem;
 }
-.quickFilter div span{
+
+.quickFilter div span {
     font-size: 0.5rem;
     color: #000;
     padding: 3px 0.5rem;
     border-radius: 1rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     border: 1px solid #000;
+    transition: 0.3s ease-in-out;
 }
-.quickFilter div span.active{
+
+.quickFilter div span.active {
     border-color: #C8F8F6;
     background: #C8F8F6;
 }
+
+.quickFilter div span:hover {
+    cursor: pointer;
+    background: #C8F8F6;
+    border-color: #C8F8F6;
+}
+
 
 
 /* Chat Section Editing */
@@ -195,41 +240,59 @@
     font-size: 1.2rem;
     font-weight: 800 !important;
 }
-.chatUser{
+
+.chatUser {
     padding: 0.5rem 1rem;
     display: flex;
     align-items: center;
     gap: 2rem;
     border-bottom: 2px solid #C8F7F5;
 }
-.chatUser h3{
+
+.chatUser h3 {
     color: #0F9DB7;
 }
-.userProduct{
+
+.userProduct {
     display: flex;
     padding: 0.1rem 0.5rem;
     align-items: center;
     gap: 5rem;
     border-bottom: none;
 }
-.userProduct span{
-    font-size: 0.8rem;
+
+.userProduct span {
+    font-size: 1rem;
+    color: #7f8080;
     font-weight: light;
 }
 
 .chatItem {
     padding: 2rem 0.67rem;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
     gap: 5px;
     height: 400px;
     overflow-y: auto;
     background: #EBEEEF;
 }
 
+.chatItem div {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.chatItem div h6 {
+    color: #3D6164;
+    align-self: center;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    font-weight: bold;
+    text-align: center;
+}
+
 .chatItem::-webkit-scrollbar {
-    width: 5px;
+    width: 3px;
 }
 
 .chatItem::-webkit-scrollbar-track {
@@ -250,39 +313,53 @@
 
 
 .chatItem p {
-    padding: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    text-align: left;
     border-radius: 5px;
     color: #000;
     font-size: 0.8rem;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    width: fit-content;
     max-width: 60%;
     position: relative;
+    border-bottom-right-radius: 0;
     margin-block: 0.5rem;
 }
-.chatItem p::after{
+
+.chatItem p::after {
     content: "";
     position: absolute;
     right: 0;
-    bottom: -30%;
-    clip-path: polygon(0 0, 100% 0, 100% 51%, 65% 73%);
+    bottom: -40%;
+    clip-path: polygon(17% 0, 100% 0, 100% 41%, 71% 59%);
     width: 15px;
     height: 15px;
 }
 
+.chatItem span {
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    font-family: monospace;
+    font-size: 7px;
+    display: flex;
+    gap: 2px;
+}
+
 .me {
     align-self: flex-end;
-    background: #CEDDFF;
+    background: #C8F8F6;
 }
-.me::after{
-    background: #CEDDFF;
+
+.me::after {
+    background: #C8F8F6;
 }
 
 .you {
     align-self: flex-start;
     background: #CCD5D6;
 }
-.you::after{
+
+.you::after {
     left: 0;
     transform: rotateY(180deg);
     background: #CCD5D6;

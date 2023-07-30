@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styles from "@/styles/Chat.module.css"
 import { Alice, Noto_Sans } from "next/font/google"
 const alice = Alice({ subsets: ["latin"], weight: "400" })
@@ -15,17 +15,22 @@ import {
   onSnapshot,
   orderBy,
   query,
+  deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "@/middleware/firebase"
 import { useRouter } from 'next/navigation';
 
 
 const chat = ({ data }) => {
+  const ref = useRef(null)
+  const router = useRouter()
   const [users, setUsers] = useState([])
+  const [hidden, setHidden] = useState(true)
   const [receiverData, setReceiverData] = useState(null)
-  const [allMessages, setAllMessages] = useState([])
+  const [allMessages, setAllMessages] = useState({})
   const [chatMessage, setChatMessage] = useState("");
   const myUser = auth.currentUser;
+  const [currentDate, setCurrentDate] = useState([])
 
   useEffect(() => {
     if (data) {
@@ -41,23 +46,30 @@ const chat = ({ data }) => {
             "users",
             myUser?.uid,
             "chatUsers",
-            receiverData,
+            receiverData?.id,
             "messages"
           ),
           orderBy("timestamp")
         ),
         (snapshot) => {
-          setAllMessages(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              messages: doc.data(),
-            }))
-          );
+          let d = {}
+          snapshot.docs.map((doc) => {
+            if (doc.data().item === receiverData?.item) {
+              let date = doc.data().timestamp.toDate().toDateString().split(" ").slice(1).join(" ")
+              let today = new Date().toDateString().split(" ").slice(1).join(" ")
+              if (date === today) {
+                date = "Today"
+              }
+              d[date] = [...d[date] || [], doc.data()]
+            }
+          })
+          setAllMessages(d)
         }
       );
       return unsub;
     }
   }, [receiverData])
+
   const getChattingWith = async () => {
     let currentUser = localStorage.getItem("currentUserId");
     let res = await fetch(`/api/chattingwith?id=${currentUser}`)
@@ -86,13 +98,14 @@ const chat = ({ data }) => {
             "users",
             myUser.uid,
             "chatUsers",
-            receiverData,
+            receiverData?.id,
             "messages"
           ),
           {
             username: myUser.displayName,
             messageUserId: myUser.uid,
             message: chatMessage,
+            item: receiverData?.item,
             timestamp: new Date(),
           }
         );
@@ -101,7 +114,7 @@ const chat = ({ data }) => {
           collection(
             db,
             "users",
-            receiverData,
+            receiverData?.id,
             "chatUsers",
             myUser.uid,
             "messages"
@@ -110,6 +123,7 @@ const chat = ({ data }) => {
             username: myUser.displayName,
             messageUserId: myUser.uid,
             message: chatMessage,
+            item: receiverData?.item,
             timestamp: new Date(),
           }
         );
@@ -119,6 +133,31 @@ const chat = ({ data }) => {
     }
     setChatMessage("");
   };
+  const handleReceiver = (id, item, price) => {
+    setReceiverData({ id, item, price })
+  }
+  const showDeleteBtn = (e) => {
+    if (e.target.children.length > 0) {
+      e.target.children[0].classList.toggle("hidden")
+    }
+  }
+  const deleteMsg = async () => {
+    try {
+      if (myUser && receiverData) {
+        const docRef = doc(db, "users", myUser?.uid, "chatUsers", receiverData?.id);
+        deleteDoc(docRef)
+          .then(() => {
+            console.log("Entire Document has been deleted successfully.")
+          })
+          .catch(error => {
+            console.log(error);
+          }) 
+        // await deleteDoc(docRef)
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
 
 
@@ -149,12 +188,12 @@ const chat = ({ data }) => {
               {users.length > 0 &&
                 users.map((user, index) => {
                   return (
-                    <li onClick={() => { setReceiverData(user.userId) }} key={index}>
+                    <li onClick={() => { handleReceiver(user.userId, user.itemName, user.itemPrice) }} key={index}>
                       <img src={user.profilePic} style={{ objectFit: "cover" }} />
                       <a>{user.fullname}</a>
                       <p>{user.itemName}</p>
                       <p>pehli fursat me nikal</p>
-                      <span color='#728D90'>&#8942;</span>
+                      <span onClick={showDeleteBtn} color='#728D90'>&#8942; <div onClick={deleteMsg} className='hidden'>Delete</div></span>
                     </li>
                   )
                 })}
@@ -164,23 +203,39 @@ const chat = ({ data }) => {
             <div className={styles.chatContent}>
               <div className={styles.chatDetails}>
                 <div className={styles.chatUser}>
-                  <img src={receiverData && users.filter(user => user.userId === receiverData)[0].profilePic} style={{ objectFit: "cover" }} />
+                  <img src={receiverData && users.filter(user => user.userId === receiverData?.id)[0].profilePic} style={{ objectFit: "cover" }} />
                   <h3 style={noto.style}>{
-                    receiverData && users.filter(user => user.userId === receiverData)[0].fullname
+                    receiverData && users.filter(user => user.userId === receiverData?.id)[0].fullname
                   }</h3>
                 </div>
                 <div className={styles.userProduct}>
-                  <span>Product: {receiverData && users.filter(user => user.userId === receiverData)[0].itemName}</span><span>Price: Rs {receiverData && users.filter(user => user.userId === receiverData)[0].itemPrice}</span>
+                  <span>Product: {receiverData && receiverData?.item}</span><span>Price: Rs {receiverData && receiverData?.price}</span>
                 </div>
               </div>
               <div className={styles.chatItem}>
                 {
-                  allMessages.length > 0 &&
-                  allMessages.map(({id, messages}) => {
+                  Object.keys(allMessages).length > 0 &&
+                  Object.keys(allMessages).map((date) => {
                     return (
-                      <p key={id} className={`${myUser.uid === messages.messageUserId ? styles.me : styles.you}`}>
-                        {messages.message}
-                      </p>
+                      <div key={date}>
+                        <h6>
+                          {date}
+                        </h6>
+                        {
+                          allMessages[date].map((messages, id) => {
+                            return (
+                              <p key={id} className={`${myUser.uid === messages.messageUserId ? styles.me : styles.you}`}>
+                                {messages.message}
+                                <span>
+                                  {
+                                    new Date(messages.timestamp?.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                  }
+                                </span>
+                              </p>
+                            )
+                          })
+                        }
+                      </div>
                     )
                   })
                 }
@@ -188,16 +243,16 @@ const chat = ({ data }) => {
             </div>
             <div className={styles.chatInput}>
               <div>
-                <input type="text" placeholder='Enter a message' value={chatMessage} onChange={(e) => setChatMessage(e.target.value)} />
+                <input type="text" placeholder='Enter a message' value={chatMessage} onKeyDown={(e) => { e.key === "Enter" ? ref.current.click() : null }} onChange={(e) => setChatMessage(e.target.value)} />
                 <span><AiOutlinePaperClip /></span>
               </div>
-              <button onClick={sendMessage}>
+              <button ref={ref} onClick={sendMessage}>
                 <IoSendSharp color="var(--secondary)" size={40} />
               </button>
             </div>
           </div>
         </div>
-      </section>
+      </section >
     </>
   )
 }
