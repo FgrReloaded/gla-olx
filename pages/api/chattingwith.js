@@ -8,6 +8,24 @@ const handler = async (req, res) => {
         let chattingWith = await ChattingWith.findOne({ userId: id });
         res.status(200).json({ success: true, chattingWith });
     }
+    if (method === "POST") {
+        let { id, receiver, item } = req.body;
+        let filter = { userToken: receiver, itemName: item }
+        let chattingWith = await ChattingWith.findOne({ userId: id });
+        if (chattingWith) {
+            let data = chattingWith.chattingWith.filter(function (item) {
+                for (var key in filter) {
+                    if (item[key] === undefined || item[key] != filter[key])
+                        return true;
+                }
+                return false;
+            });
+            chattingWith.chattingWith = data;
+            let getData = await chattingWith.save();
+            res.status(200).json({ success: true, data: getData });
+        }
+
+    }
 
 }
 export default connectDB(handler);

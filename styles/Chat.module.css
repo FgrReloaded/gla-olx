@@ -408,3 +408,30 @@
     padding: 5px;
     transition: 0.4s ease-in-out;
 }
+
+.chatUser span {
+    position: absolute;
+    right: 12%;
+    font-weight: bold;
+    cursor: pointer;
+    color: #0F9DB7;
+}
+
+.noChat {
+    background: #EBECED !important;
+
+}
+
+.noChats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #7f8080;
+}
+
+.noChats p {
+    font-size: 1rem;
+    font-weight: lighter !important;
+    text-align: center;
+}

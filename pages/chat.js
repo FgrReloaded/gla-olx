@@ -1,16 +1,15 @@
 import Head from 'next/head'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import styles from "@/styles/Chat.module.css"
 import { Alice, Noto_Sans } from "next/font/google"
 const alice = Alice({ subsets: ["latin"], weight: "400" })
 const noto = Noto_Sans({ subsets: ["latin"], weight: "800" })
 import { IoSendSharp } from "react-icons/io5"
 import { GrSearch } from "react-icons/gr"
-import { AiOutlinePaperClip } from "react-icons/ai"
-import ChattingWith from '@/models/ChattingWith'
-import mongoose from 'mongoose'
+import { AiOutlinePaperClip, AiOutlineClose } from "react-icons/ai"
+import {PiChatsFill} from "react-icons/pi"
 import {
-  doc, getDoc, addDoc,
+  doc, addDoc,
   collection,
   onSnapshot,
   orderBy,
@@ -19,22 +18,32 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "@/middleware/firebase"
 import { useRouter } from 'next/navigation';
+import glxContext from './context/glxContext';
 
 
-const chat = ({ data }) => {
+
+const chat = () => {
+  const context = useContext(glxContext);
   const ref = useRef(null)
   const router = useRouter()
-  const [users, setUsers] = useState([])
   const [hidden, setHidden] = useState(true)
   const [receiverData, setReceiverData] = useState(null)
-  const [allMessages, setAllMessages] = useState({})
+  const [allMessages, setAllMessages] = useState([])
   const [chatMessage, setChatMessage] = useState("");
   const myUser = auth.currentUser;
   const [currentDate, setCurrentDate] = useState([])
+  const [currentUserMessageId, setCurrentUserMessageId] = useState([])
+  const { getChattingWith, users, getAllUsersData, addUser } = context;
 
   useEffect(() => {
-    if (data) {
-      getAllUsersData(data.chattingWith)
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let userToken = urlParams.get('userTempToken')
+    let currentUser = urlParams.get('currentUser')
+    let item = urlParams.get('item')
+    let price = urlParams.get('itemPrice')
+    if (userToken && currentUser && item && price) {
+      addUser(userToken, currentUser, item, price)
     } else {
       getChattingWith()
     }
@@ -53,8 +62,10 @@ const chat = ({ data }) => {
         ),
         (snapshot) => {
           let d = {}
+          let msgId = []
           snapshot.docs.map((doc) => {
             if (doc.data().item === receiverData?.item) {
+              msgId.push(doc.id)
               let date = doc.data().timestamp.toDate().toDateString().split(" ").slice(1).join(" ")
               let today = new Date().toDateString().split(" ").slice(1).join(" ")
               if (date === today) {
@@ -64,32 +75,17 @@ const chat = ({ data }) => {
             }
           })
           setAllMessages(d)
+          setCurrentUserMessageId(msgId)
         }
       );
       return unsub;
     }
   }, [receiverData])
 
-  const getChattingWith = async () => {
-    let currentUser = localStorage.getItem("currentUserId");
-    let res = await fetch(`/api/chattingwith?id=${currentUser}`)
-    let data = await res.json()
-    getAllUsersData(data.chattingWith.chattingWith)
-  }
 
-  const getAllUsersData = async (chattingWith) => {
-    let data = []
-    for (let i = 0; i < chattingWith.length; i++) {
-      const docRef = doc(db, "users", chattingWith[i].userToken);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        data.push({ itemName: chattingWith[i].itemName, itemPrice: chattingWith[i].itemPrice, ...docSnap.data() })
-      }
-    }
-    setUsers(data)
-  }
 
-  const sendMessage = async () => {
+
+  const sendMessage = async () => { // Working Fine
     try {
       if (myUser && receiverData && chatMessage) {
         await addDoc(
@@ -133,26 +129,31 @@ const chat = ({ data }) => {
     }
     setChatMessage("");
   };
-  const handleReceiver = (id, item, price) => {
+  const handleReceiver = (id, item, price) => { // Working Fine
     setReceiverData({ id, item, price })
   }
-  const showDeleteBtn = (e) => {
+  const showDeleteBtn = (e) => { // Working Fine
     if (e.target.children.length > 0) {
       e.target.children[0].classList.toggle("hidden")
     }
   }
-  const deleteMsg = async () => {
+  const deleteMsg = async () => { // Working Fine
     try {
       if (myUser && receiverData) {
-        const docRef = doc(db, "users", myUser?.uid, "chatUsers", receiverData?.id);
-        deleteDoc(docRef)
-          .then(() => {
-            console.log("Entire Document has been deleted successfully.")
-          })
-          .catch(error => {
-            console.log(error);
-          }) 
-        // await deleteDoc(docRef)
+        for (let i = 0; i < currentUserMessageId.length; i++) {
+          const docRef = doc(db, "users", myUser.uid, "chatUsers", receiverData.id, "messages", currentUserMessageId[i]);
+          await deleteDoc(docRef)
+        }
+        let res = await fetch(`/api/chattingwith`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: myUser.uid, receiver: receiverData.id, item: receiverData.item })
+        })
+        let { data } = await res.json()
+        setReceiverData(null)
+        getAllUsersData(data.chattingWith)
       }
     } catch (error) {
       console.log(error.message);
@@ -186,138 +187,86 @@ const chat = ({ data }) => {
             </div>
             <ul>
               {users.length > 0 &&
-                users.map((user, index) => {
+                users.toReversed().map((user, index) => {
                   return (
                     <li onClick={() => { handleReceiver(user.userId, user.itemName, user.itemPrice) }} key={index}>
                       <img src={user.profilePic} style={{ objectFit: "cover" }} />
                       <a>{user.fullname}</a>
                       <p>{user.itemName}</p>
-                      <p>pehli fursat me nikal</p>
+                      {/* <p>pehli fursat me nikal</p> */}
                       <span onClick={showDeleteBtn} color='#728D90'>&#8942; <div onClick={deleteMsg} className='hidden'>Delete</div></span>
                     </li>
                   )
                 })}
             </ul>
           </div>
-          <div className={styles.chatBox}>
-            <div className={styles.chatContent}>
-              <div className={styles.chatDetails}>
-                <div className={styles.chatUser}>
-                  <img src={receiverData && users.filter(user => user.userId === receiverData?.id)[0].profilePic} style={{ objectFit: "cover" }} />
-                  <h3 style={noto.style}>{
-                    receiverData && users.filter(user => user.userId === receiverData?.id)[0].fullname
-                  }</h3>
+          <div className={`${styles.chatBox} ${!receiverData?styles.noChat:null}`}>
+            {!receiverData && 
+              <div className={styles.noChats}>
+                  <PiChatsFill size={80} color='var(--secondary)'/>
+                  <p>Select a User to Chat</p>
+              </div>
+            } 
+            {receiverData &&
+              <div className={styles.chatContent}>
+                <div className={styles.chatDetails}>
+                  <div className={styles.chatUser}>
+                    <img src={receiverData && users.filter(user => user.userId === receiverData?.id)[0].profilePic} style={{ objectFit: "cover" }} />
+                    <h3 style={noto.style}>{
+                      receiverData && users.filter(user => user.userId === receiverData?.id)[0].fullname
+                    }</h3>
+                    <span onClick={()=>{setReceiverData(null)}}><AiOutlineClose size={20}/></span>
+                  </div>
+                  <div className={styles.userProduct}>
+                    <span>Product: {receiverData && receiverData?.item}</span><span>Price: Rs {receiverData && receiverData?.price}</span>
+                  </div>
                 </div>
-                <div className={styles.userProduct}>
-                  <span>Product: {receiverData && receiverData?.item}</span><span>Price: Rs {receiverData && receiverData?.price}</span>
+                <div className={styles.chatItem}>
+                  {
+                    Object.keys(allMessages).length > 0 &&
+                    Object.keys(allMessages).map((date) => {
+                      return (
+                        <div key={date}>
+                          <h6>
+                            {date}
+                          </h6>
+                          {
+                            allMessages[date].map((messages, id) => {
+                              return (
+                                <p key={id} className={`${myUser.uid === messages.messageUserId ? styles.me : styles.you}`}>
+                                  {messages.message}
+                                  <span>
+                                    {
+                                      new Date(messages.timestamp?.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                    }
+                                  </span>
+                                </p>
+                              )
+                            })
+                          }
+                        </div>
+                      )
+                    })
+                  }
                 </div>
               </div>
-              <div className={styles.chatItem}>
-                {
-                  Object.keys(allMessages).length > 0 &&
-                  Object.keys(allMessages).map((date) => {
-                    return (
-                      <div key={date}>
-                        <h6>
-                          {date}
-                        </h6>
-                        {
-                          allMessages[date].map((messages, id) => {
-                            return (
-                              <p key={id} className={`${myUser.uid === messages.messageUserId ? styles.me : styles.you}`}>
-                                {messages.message}
-                                <span>
-                                  {
-                                    new Date(messages.timestamp?.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                                  }
-                                </span>
-                              </p>
-                            )
-                          })
-                        }
-                      </div>
-                    )
-                  })
-                }
+            }
+            {receiverData &&
+              <div className={styles.chatInput}>
+                <div>
+                  <input type="text" placeholder='Enter a message' value={chatMessage} onKeyDown={(e) => { e.key === "Enter" ? ref.current.click() : null }} onChange={(e) => setChatMessage(e.target.value)} />
+                  <span><AiOutlinePaperClip /></span>
+                </div>
+                <button ref={ref} onClick={sendMessage}>
+                  <IoSendSharp color="var(--secondary)" size={40} />
+                </button>
               </div>
-            </div>
-            <div className={styles.chatInput}>
-              <div>
-                <input type="text" placeholder='Enter a message' value={chatMessage} onKeyDown={(e) => { e.key === "Enter" ? ref.current.click() : null }} onChange={(e) => setChatMessage(e.target.value)} />
-                <span><AiOutlinePaperClip /></span>
-              </div>
-              <button ref={ref} onClick={sendMessage}>
-                <IoSendSharp color="var(--secondary)" size={40} />
-              </button>
-            </div>
+            }
           </div>
         </div>
       </section >
     </>
   )
-}
-
-
-export async function getServerSideProps(context) {
-  if (!mongoose.connections[0].readyState) {
-    await mongoose.connect(process.env.MONGODB_URI)
-  }
-  let userToken = context.query.userTempToken;
-  let currentUser = context.query.currentUser;
-  let itemName = context.query.item;
-  let itemPrice = context.query.itemPrice;
-  if (!userToken || !currentUser || !itemName || !itemPrice) {
-    return { props: { success: false, data: null } }
-  }
-  if (userToken === currentUser) {
-    return { props: { success: false, data: null } }
-  }
-  let findSender = await ChattingWith.findOne({ userId: currentUser });
-  let findReceiver = await ChattingWith.findOne({ userId: userToken });
-
-  if (!findReceiver) {
-    let chattingWith = [];
-    chattingWith.push({ userToken: currentUser, itemName, itemPrice });
-    let addReceiverUser = await ChattingWith.create({ userId: userToken, chattingWith });
-  }
-
-  if (findReceiver) {
-    let unique = true;
-    let chattingWith = findReceiver.chattingWith;
-    for (let i = 0; i < chattingWith.length; i++) {
-      if (chattingWith[i].userToken === currentUser && chattingWith[i].itemName === itemName) {
-        unique = false;
-        break;
-      }
-    }
-    if (unique) {
-      chattingWith.push({ userToken: currentUser, itemName, itemPrice });
-      let addReceiverUser = await ChattingWith.findOneAndUpdate({ userId: userToken }, { chattingWith });
-    }
-  }
-
-  if (!findSender) {
-    let chattingWith = [];
-    chattingWith.push({ userToken, itemName, itemPrice });
-    let addUser = await ChattingWith.create({ userId: currentUser, chattingWith });
-    return { props: { success: true, data: JSON.parse(JSON.stringify(addUser)) } }
-  }
-
-  let unique = true;
-  let chattingWith = findSender.chattingWith;
-  for (let i = 0; i < chattingWith.length; i++) {
-    if (chattingWith[i].userToken === userToken && chattingWith[i].itemName === itemName) {
-      unique = false;
-      break;
-    }
-  }
-  if (unique) {
-    chattingWith.push({ userToken, itemName, itemPrice });
-    let addUser = await ChattingWith.findOneAndUpdate({ userId: currentUser }, { chattingWith });
-    return { props: { success: true, data: JSON.parse(JSON.stringify(addUser)) } }
-  }
-  return { props: { success: false, data: JSON.parse(JSON.stringify(findSender)) } }
-
 }
 
 export default chat

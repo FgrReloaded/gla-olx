@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react"
 import glxContext from "./glxContext";
 import { useRouter } from "next/navigation";
+import {
+    doc, getDoc, addDoc,
+    collection,
+    onSnapshot,
+    orderBy,
+    query,
+    deleteDoc,
+} from "firebase/firestore";
+import { db } from "@/middleware/firebase"
+
 
 const GlxState = ({ children }) => {
     const [user, setUser] = useState(null)
+    const [users, setUsers] = useState([])
     const [items, setItems] = useState([])
     const router = useRouter()
 
@@ -40,14 +51,49 @@ const GlxState = ({ children }) => {
             body: formData
         })
         const data = await res.json()
-        if(data.success){   
+        if (data.success) {
             setItems([...items, data.data])
             router.push("/")
         }
     }
+    const addUser = async (userToken, currentUser, itemName, itemPrice) => {
+        try {
+            let res = await fetch(`/api/addchattingwith`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userToken, currentUser, itemName, itemPrice })
+            })
+            let { data } = await res.json()
+            if (data) {
+                getAllUsersData(data.chattingWith)
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+    const getChattingWith = async () => {  // Working Fine
+        let currentUser = localStorage.getItem("currentUserId");
+        let res = await fetch(`/api/chattingwith?id=${currentUser}`)
+        let data = await res.json()
+        getAllUsersData(data.chattingWith.chattingWith)
+    }
+
+    const getAllUsersData = async (chattingWith) => {
+        let newUsers = []
+        for (let i = 0; i < chattingWith.length; i++) {
+            const docRef = doc(db, "users", chattingWith[i].userToken);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                newUsers.push({ itemName: chattingWith[i].itemName, itemPrice: chattingWith[i].itemPrice, ...docSnap.data() })
+            }
+        }
+        setUsers(newUsers)
+    }
 
     return (
-        <glxContext.Provider value={{ createItem, getItem, items, getUser, user }}>
+        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser }}>
             {children}
         </glxContext.Provider>
     )
