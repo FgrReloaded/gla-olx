@@ -1,13 +1,19 @@
 import React from 'react'
 import styles from '@/styles/footer.module.css'
 import { CiFacebook, CiInstagram, CiTwitter } from 'react-icons/ci'
-import {AiOutlinePhone, AiOutlineMail} from   'react-icons/ai'
+import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai'
 import { Open_Sans } from 'next/font/google'
 import Link from 'next/link'
 const os = Open_Sans({ subsets: ['latin'] })
+import { usePathname } from 'next/navigation'
+
 
 const Footer = () => {
+    let path = usePathname();
 
+    if (path === "/signup") {
+        return null
+    }
 
     return (
         <>
@@ -30,9 +36,9 @@ const Footer = () => {
                         <div className={styles.socialMedia}>
                             <div className={styles.iconList}>
                                 <ul>
-                                    <CiFacebook className={styles.icons}/>
-                                    <CiInstagram className={styles.icons}/>
-                                    <CiTwitter className={styles.icons}/>
+                                    <CiFacebook className={styles.icons} />
+                                    <CiInstagram className={styles.icons} />
+                                    <CiTwitter className={styles.icons} />
                                 </ul>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styles from "@/styles/userSetup.module.css"
-import { Raleway } from 'next/font/google'
+import { Raleway, Jost } from 'next/font/google'
 const raleway = Raleway({ subsets: ['latin'], weight: "400" })
 import { BsTelephonePlus } from "react-icons/bs"
 import { PiStudent } from "react-icons/pi"
@@ -13,12 +13,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation'
 import { BiSolidCameraPlus } from "react-icons/bi"
 import { CldUploadWidget } from 'next-cloudinary';
+const jost = Jost({ subsets: ['latin'] })
 
 
 const UserSetup = () => {
     const [userImg, setUserImg] = useState('/images/user.png')
     let router = useRouter()
     let ref = useRef(null)
+    const [loader, setLoader] = useState(false)
     const [stdType, setStdType] = useState(null)
     const [credentials, setCredentials] = useState({ number: "", stdType: "", hostel: "", location: "", course: "", branch: "", year: "" })
 
@@ -82,6 +84,7 @@ const UserSetup = () => {
 
     const handleSetup = (e) => {
         e.preventDefault()
+        setLoader(true)
         let check = inputVerification()
         if (!check) {
             return
@@ -104,6 +107,7 @@ const UserSetup = () => {
             timestamp: new Date(),
         })
             .then(() => {
+                setLoader(false)
                 window.location.href = "/"
             })
             .catch((error) => {
@@ -131,7 +135,7 @@ const UserSetup = () => {
                         <h3 className={styles.h3}>Setting Up Your Account</h3>
                         <div className={`${styles.imageHolder} ${styles.formHolder}`}>
                             <img src={userImg} />
-                            <CldUploadWidget options={{maxFiles: 1}} onUpload={handleOnUpload} uploadPreset="j5di0uph">
+                            <CldUploadWidget options={{ maxFiles: 1 }} onUpload={handleOnUpload} uploadPreset="j5di0uph">
                                 {({ open }) => {
                                     function handleOnClick(e) {
                                         e.preventDefault();
@@ -191,17 +195,19 @@ const UserSetup = () => {
                                 <input name='location' onChange={handleSetupChange} type="text" className={styles.formControl} placeholder="Address (PG, Hostel, Location)" />
                             </div> : null
                         }
-                        <div className={styles.formHolder}>
-                            <span>
-                                <MdCastForEducation />
-                            </span>
-                            <input name='course' onChange={handleSetupChange} type="text" className={styles.formControl} placeholder="Course" required />
-                        </div>
-                        <div className={styles.formHolder}>
-                            <span>
-                                <AiOutlineBranches />
-                            </span>
-                            <input name='branch' onChange={handleSetupChange} type="text" className={styles.formControl} placeholder="Branch" required />
+                        <div className={styles.formDivider}>
+                            <div>
+                                <span>
+                                    <MdCastForEducation />
+                                </span>
+                                <input name='course' onChange={handleSetupChange} type="text" className={styles.formControl} placeholder="Course" required />
+                            </div>
+                            <div>
+                                <span>
+                                    <AiOutlineBranches />
+                                </span>
+                                <input name='branch' onChange={handleSetupChange} type="text" className={styles.formControl} placeholder="Branch" required />
+                            </div>
                         </div>
                         <div className={styles.formHolder}>
                             <span>
@@ -210,10 +216,13 @@ const UserSetup = () => {
                             <input name='year' onChange={handleSetupChange} type="number" min={1} max={5} className={styles.formControl} placeholder="Year (Current Year)" required />
                         </div>
                         <button onClick={handleSetup} className={styles.button}>
-                            <span>Register</span>
+                            <span style={jost.style}>
+                                {
+                                    loader ? <span className={styles.loader}></span> : " Register"
+                                }
+                            </span>
                         </button>
                     </form>
-                    <img src="/images/image-2.png" alt="" className={styles.image2} />
                 </div >
 
             </div >
