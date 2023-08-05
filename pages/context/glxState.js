@@ -16,6 +16,9 @@ const GlxState = ({ children }) => {
     const [user, setUser] = useState(null)
     const [users, setUsers] = useState([])
     const [items, setItems] = useState([])
+    const [userItems, setUserItems] = useState([])
+    const [show, setShow] = useState("hidden")
+    const [message, setMessage] = useState("")
     const router = useRouter()
 
     const getUser = async () => {
@@ -36,24 +39,36 @@ const GlxState = ({ children }) => {
                 'Content-Type': 'application/json'
             }
         })
-        const data = await res.json()
-        setItems(data.data)
+        const { data } = await res.json()
+        setItems(data)
     }
+    const getUserItem = async (id) => {
+        const res = await fetch('/api/useritem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id })
+        })
+        const { data } = await res.json()
+        setUserItems(data);
+    }
+
     const createItem = async (item) => {
-        const { title, desc, price, category, seller, sellerName, sellerPic } = item
-        const metaData = { title, desc, price, category, seller, sellerName, sellerPic }
+        const { title, desc, price, category, subCategory, seller, sellerName, sellerPic } = item
+        const metaData = { title, desc, price, category, subCategory, seller, sellerName, sellerPic }
         const formData = new FormData()
         item.images.forEach((file) => formData.append("media", file));
-        console.log(formData.getAll('media'))
         formData.append('metaData', JSON.stringify(metaData))
         const res = await fetch('/api/item', {
             method: 'POST',
             body: formData
         })
-        const data = await res.json()
-        if (data.success) {
-            setItems([...items, data.data])
-            router.push("/")
+        const result = await res.json()
+        if (result.success) {
+            setItems([...items, result.data])
+            setMessage("Ad Created Successfully")
+            showAlert()
         }
     }
     const addUser = async (userToken, currentUser, itemName, itemPrice) => {
@@ -92,8 +107,14 @@ const GlxState = ({ children }) => {
         setUsers(newUsers)
     }
 
+    const showAlert = () => {
+        setShow("")
+        setTimeout(() => {
+            setShow("hidden")
+        }, 2500)
+    }
     return (
-        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser }}>
+        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser, show, message, setShow, getUserItem,userItems,  }}>
             {children}
         </glxContext.Provider>
     )

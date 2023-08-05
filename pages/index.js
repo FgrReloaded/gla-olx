@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { auth, db } from "@/middleware/firebase"
 import styles from '@/styles/Home.module.css'
 import glxContext from './context/glxContext';
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import Cookies from 'js-cookie';
 import Head from 'next/head';
 import { BiSearchAlt2 } from 'react-icons/bi'
 import { IoIosArrowDropdownCircle } from "react-icons/io"
@@ -14,40 +12,20 @@ import Card from '@/components/Card';
 import { AiFillPlusCircle } from 'react-icons/ai'
 
 const Home = () => {
+  const ref = useRef(null)
   const context = useContext(glxContext);
   const { getItem, items } = context;
 
   useEffect(() => {
     getItem()
-    let userId = localStorage.getItem("currentUserId")
-    if (userId) {
-      getUserData(userId)
-    }
   }, [])
 
-  const getUserData = async (userId) => {
-    let getExistingUserData = Cookies.get(userId)
-    if (getExistingUserData) {
-      return;
-    }
-    const docRef = doc(db, "users", userId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      let data = []
-      data.push(docSnap.data())
-      localStorage.setItem("profilePic", docSnap.data().profilePic)
-      Cookies.set(userId, JSON.stringify(data), { expires: 5 })
-    } else {
-      console.log("No such document!");
-    }
-  }
 
   return (
     <>
       <Head>
         <title>Home</title>
       </Head>
-
 
       <main>
         <div className={styles.heroSec} style={alice.style} >
@@ -61,7 +39,20 @@ const Home = () => {
       </main>
       <section>
         <ul className={styles.category}>
-          <li><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle /> </li>
+          <li className={styles.dropDownParent}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle onClick={() => { ref.current.classList.toggle("hidden") }} />
+            <div ref={ref} className={`${styles.dropDown} hidden`}>
+              {/* {
+                items && items.map((item, i) => {
+                  return (
+                    <div key={i}>
+                      <span value={item.category}>
+                      </span>
+                      {item.category}
+                    </div>
+                  )
+                })} */}
+            </div>
+          </li>
           <li><a>Chemistry Lab-Coats</a></li>
           <li><a>ED-lab Stuff</a></li>
           <li><a>Electronics Items</a></li>
@@ -77,7 +68,9 @@ const Home = () => {
         <div className={styles.productList}>
           {
             items && items.map((item, i) => {
-              return <Card key={i} item={item} />
+              return (
+                <Card item={item} key={i} />
+              )
             })
           }
 

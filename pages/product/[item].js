@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from "@/styles/singleProduct.module.css"
-import { Oswald, Alice, Noto_Sans, Days_One } from 'next/font/google'
+import { Alice, Noto_Sans } from 'next/font/google'
 import { AiOutlineShareAlt, AiOutlineHeart, AiFillHeart } from "react-icons/ai"
-import { BsArrowRightCircleFill } from "react-icons/bs"
 import { TbListDetails, TbEyeCheck } from "react-icons/tb"
 import { FaRegHandshake } from "react-icons/fa"
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io"
+import { IoIosArrowForward } from "react-icons/io"
 import Card from '@/components/Card'
-import { motion } from "framer-motion"
 import mongoose from 'mongoose'
 import Item from '@/models/Item'
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "@/middleware/firebase"
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
-const oswald = Oswald({ subsets: ['latin'] })
 const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
 
@@ -68,6 +64,11 @@ const item = ({ item, similarItems }) => {
         }
     }
 
+    const copyLink = () => {
+        let link = window.location.href
+        navigator.clipboard.writeText(link)
+    }
+
 
     return (
         <>
@@ -77,13 +78,19 @@ const item = ({ item, similarItems }) => {
             <div className={styles.container}>
                 <ul>
                     <li>
+                        <Link href={"/"}>
                         <span>Home <IoIosArrowForward size={15} color='#20494E' /> </span>
+                        </Link>
                     </li>
                     <li>
-                        <span>Product <IoIosArrowForward size={15} color='#20494E' /></span>
-                    </li>
-                    <li>
+                        <Link href={`/${item.category}`}>
                         <span>{item.category} <IoIosArrowForward size={15} color='#20494E' /></span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={`/${item.subCategory}`}>
+                        <span>{item.subCategory} <IoIosArrowForward size={15} color='#20494E' /></span>
+                        </Link>
                     </li>
                     <li>
                         <span>{item.title}</span>
@@ -110,7 +117,7 @@ const item = ({ item, similarItems }) => {
                         <div className={styles.item1}>
                             <div className={styles.price}>
                                 <span style={noto.style}>₹{item.price}</span>
-                                <span> <AiOutlineShareAlt size={30} /> <AiOutlineHeart onClick={() => { setHide(!hide) }} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={() => { setHide(!hide) }} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
+                                <span> <AiOutlineShareAlt onClick={copyLink} size={30} /> <AiOutlineHeart onClick={() => { setHide(!hide) }} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={() => { setHide(!hide) }} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
                             </div>
                             <div style={noto.style} className={styles.title}>
                                 Product: {item.title}
@@ -128,7 +135,7 @@ const item = ({ item, similarItems }) => {
                                     {item.sellerName} <IoIosArrowForward color='#BBBEBF' size={25} />
                                 </div>
                             </div>
-                            <button onClick = {()=>{handleSeller(item.seller)}} className={styles.buttonChat} style={noto.style}>
+                            <button onClick={() => { handleSeller(item.seller) }} className={styles.buttonChat} style={noto.style}>
                                 Chat with seller
                             </button>
                         </div>
@@ -154,11 +161,11 @@ const item = ({ item, similarItems }) => {
                             <div className={styles.productInfo}>
                                 <div>
                                     <span>Type</span>
-                                    <span>Brand</span>
+                                    <span>Category</span>
                                 </div>
                                 <div>
                                     <span>{item.category}</span>
-                                    <span>Sasta Maal</span>
+                                    <span>{item.subCategory}</span>
                                 </div>
                             </div>
                         </div>

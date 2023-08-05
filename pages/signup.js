@@ -9,14 +9,14 @@ import {
   createUserWithEmailAndPassword,
   updateProfile, signInWithEmailAndPassword
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import { FiUnlock } from 'react-icons/fi'
 import { FiLock } from 'react-icons/fi'
 import { useRouter } from 'next/router'
 import UserSetup from '@/components/UserSetup'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-
+import { doc, getDoc } from "firebase/firestore";
+import Cookies from 'js-cookie';
 
 
 
@@ -41,8 +41,6 @@ export default function SignUp() {
       setShowSetup(true)
     }
 
-    // getUser()
-    // getItem()
   }, [userSetup])
 
   const handleClick = (email) => {
@@ -127,13 +125,31 @@ export default function SignUp() {
         // Signed in 
         const user = userCredential.user;
         localStorage.setItem("currentUserId", user.uid)
-        window.location.href = "/"
+        getUserData(user.uid)
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
 
+  }
+
+  const getUserData = async (userId) => {
+    let getExistingUserData = Cookies.get(userId)
+    if (getExistingUserData) {
+      return;
+    }
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      let data = []
+      data.push(docSnap.data())
+      localStorage.setItem("profilePic", docSnap.data().profilePic)
+      Cookies.set(userId, JSON.stringify(data), { expires: 5 })
+      window.location.href = "/"
+    } else {
+      console.log("No such document!");
+    }
   }
 
   const handleChange = (e) => {
@@ -191,11 +207,11 @@ export default function SignUp() {
                   <label onClick={() => { ref.current.checked = !ref.current.checked }} className={styles.label} htmlFor="chk" aria-hidden="true">Login</label>
                   <div className={styles.inputBox}>
                     <label htmlFor="name" className={styles.inputLabel}>Email</label>
-                    <input className={styles.input} type="email" name="email" required="" onChange={handleChange} />
+                    <input className={styles.input} type="email" name="email" required id='email' onChange={handleChange} />
                   </div>
                   <div className={styles.inputBox}>
                     <label htmlFor="password" className={styles.inputLabel}>Password</label>
-                    <input className={styles.input} type={`${showPass ? "text" : "password"}`} id='password' name="password" onChange={handleChange} required="" />
+                    <input className={styles.input} type={`${showPass ? "text" : "password"}`} id='password' name="password" onChange={handleChange} required />
                     <FiLock className={`${styles.lock} ${showPass ? "hidden" : ""}`} onClick={() => { setShowPass(true) }} />
                     <FiUnlock className={`${showPass ? "" : "hidden"} ${styles.unlock}`} onClick={() => { setShowPass(false) }} />
                   </div>
