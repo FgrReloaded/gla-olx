@@ -107,7 +107,7 @@
 }
 
 .login .button:hover {
-  color: #e7af4c;
+  color: var(--secondary);
   background: #fff;
 }
 

@@ -21,20 +21,25 @@ const sell = () => {
   const [coverFile, setCoverFile] = useState(null)
   const ref = useRef(null);
   const ref1 = useRef(null);
+  const [loader, setLoader] = useState(false)
   const context = useContext(glxContext);
   const { createItem, items } = context;
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setLoader(true)
     let { title, desc, price, category, sellerName } = productData;
     sellerName = userData[0].fullname
     let seller = localStorage.getItem("currentUserId")
-    // Upload files to cloudinary
 
     let coverImg = coverFile;
     let images = files.slice(0, 4);
     images.push(coverImg)
     createItem({ title, desc, price, category, seller, sellerName, images, sellerPic: profilePic })
+    setProductData({ title: "", desc: "", price: "", category: "" })
+    setCoverSrc("/images/addImage.png");
+    setFiles([])
+    setLoader(false)
   }
 
   useEffect(() => {
@@ -122,7 +127,7 @@ const sell = () => {
               files.length > 0 && (files.slice(0, 4).map((file, index) => {
                 return (
                   <div key={index} order={index}>
-                    <img src={URL.createObjectURL(file)} style={{ width: "100%", height: "100%", cursor: "default", objectFit: "cover" }} />
+                    <img src={URL.createObjectURL(file)} style={{ width: "100px", height: "95px", cursor: "default" }} />
                     <span className={styles.removeImg} onClick={removeImg}>x</span>
                   </div>
                 )
@@ -148,15 +153,6 @@ const sell = () => {
                 </>
               )
             }
-            {/* <div>
-              <img src={smallImg} className='smallImg' order="2" onClick={handleMiniImageUpload} width={30} height={30} />
-            </div>
-            <div>
-              <img src={smallImg} className='smallImg' order="3" onClick={handleMiniImageUpload} width={30} height={30} />
-            </div>
-            <div>
-              <img src={smallImg} className='smallImg' order="4" onClick={handleMiniImageUpload} width={30} height={30} />
-            </div> */}
           </div>
         </div>
         <br />
@@ -207,11 +203,13 @@ const sell = () => {
             </div>
           </div>
         </div>
-
         <hr />
-
         <div className={styles.btnParent}>
-          <button onClick={handleSubmit} className={styles.post}>POST</button>
+          <button onClick={handleSubmit} className={styles.post}>
+            {
+              loader ? <span className={styles.loader}></span> : "POST"
+            }
+          </button>
         </div>
       </section>
     </>

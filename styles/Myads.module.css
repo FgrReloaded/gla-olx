@@ -1,0 +1,153 @@
+/* Styling Below */
+
+.section{
+    width: 80%;
+    margin-block: 2rem;
+    margin-inline: auto;
+    background: #fff;
+    padding: 1rem;
+}
+.upperSection{
+    display: flex;
+    justify-content: space-between;
+}
+.search{
+    position: relative;
+}
+.search svg{
+    position: absolute;
+    top: 21%;
+    left: 5%;
+
+}
+
+.search input{
+    width: 100%;
+    padding: 0.2rem 1rem;
+    padding-left: 2rem;
+    border-radius: 4px;
+    font-weight: 400;
+    border: 1.5px solid #8a8a8a;
+    outline: none;
+    font-size: 0.8rem;
+}
+
+.filter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+.filterOptions{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+.filterOptions span:hover{
+    border-color: #C8F7F5;
+    background: #C8F7F5;
+}
+.filterOptions span{
+    cursor: pointer;
+    border: 2px solid #000;
+    border-radius: 1rem;
+    padding: 0.1rem 0.8rem;
+    transition: 0.4s ease-in-out;
+}
+.filterOptions span.active{
+    border-color: #C8F7F5;
+    background: #C8F7F5;
+}
+
+.itemSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    margin-block: 1.5rem;
+}
+
+.item{
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 3px 0 rgba(0,47,52,.2), 0 1px 3px 0 rgba(0,47,52,.2);;
+}
+.date{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    border-right: 1px solid gray;
+    padding: 1rem;
+}
+.date span{
+    display: flex;
+    gap: 5px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    white-space: nowrap;
+}
+.date span p{
+    text-transform: uppercase;
+}
+.item::before{
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 3px;
+    height: 100%;
+    background: var(--secondary);
+
+}
+
+.productData{
+    display: grid;
+    grid-template-rows: 0.7fr 0.3fr;
+}
+.details{
+    border-bottom: 1px solid gray;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+.details div{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.details div img{
+    border: 1px solid gray;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+.details div h6{
+    font-weight: bold;
+}
+.details span, .details p{
+    font-size: 0.8rem;
+}
+.details button{
+    border-radius: 4px;
+    padding: 0.2rem 0.8rem;
+    background: #C8F7F5;
+}
+.metaData{
+    padding: 0.5rem 0;
+}
+.metaData div{
+    display: flex;
+    justify-content: space-around;
+}
+.metaData div span{
+    font-size: 0.8rem;
+    font-weight: 400;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}

@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from 'react'
 import { auth, db } from "@/middleware/firebase"
 import styles from '@/styles/Home.module.css'
 import glxContext from './context/glxContext';
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import Cookies from 'js-cookie';
 import Head from 'next/head';
 import { BiSearchAlt2 } from 'react-icons/bi'
 import { IoIosArrowDropdownCircle } from "react-icons/io"
@@ -19,28 +17,9 @@ const Home = () => {
 
   useEffect(() => {
     getItem()
-    let userId = localStorage.getItem("currentUserId")
-    if (userId) {
-      getUserData(userId)
-    }
   }, [])
 
-  const getUserData = async (userId) => {
-    let getExistingUserData = Cookies.get(userId)
-    if (getExistingUserData) {
-      return;
-    }
-    const docRef = doc(db, "users", userId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      let data = []
-      data.push(docSnap.data())
-      localStorage.setItem("profilePic", docSnap.data().profilePic)
-      Cookies.set(userId, JSON.stringify(data), { expires: 5 })
-    } else {
-      console.log("No such document!");
-    }
-  }
+  
 
   return (
     <>

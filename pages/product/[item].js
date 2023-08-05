@@ -68,6 +68,11 @@ const item = ({ item, similarItems }) => {
         }
     }
 
+    const copyLink = () => {
+        let link = window.location.href
+        navigator.clipboard.writeText(link)
+    }
+    
 
     return (
         <>
@@ -110,7 +115,7 @@ const item = ({ item, similarItems }) => {
                         <div className={styles.item1}>
                             <div className={styles.price}>
                                 <span style={noto.style}>₹{item.price}</span>
-                                <span> <AiOutlineShareAlt size={30} /> <AiOutlineHeart onClick={() => { setHide(!hide) }} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={() => { setHide(!hide) }} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
+                                <span> <AiOutlineShareAlt onClick={copyLink} size={30} /> <AiOutlineHeart onClick={() => { setHide(!hide) }} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={() => { setHide(!hide) }} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
                             </div>
                             <div style={noto.style} className={styles.title}>
                                 Product: {item.title}

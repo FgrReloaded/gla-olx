@@ -44,7 +44,6 @@ const GlxState = ({ children }) => {
         const metaData = { title, desc, price, category, seller, sellerName, sellerPic }
         const formData = new FormData()
         item.images.forEach((file) => formData.append("media", file));
-        console.log(formData.getAll('media'))
         formData.append('metaData', JSON.stringify(metaData))
         const res = await fetch('/api/item', {
             method: 'POST',
@@ -53,7 +52,6 @@ const GlxState = ({ children }) => {
         const data = await res.json()
         if (data.success) {
             setItems([...items, data.data])
-            router.push("/")
         }
     }
     const addUser = async (userToken, currentUser, itemName, itemPrice) => {

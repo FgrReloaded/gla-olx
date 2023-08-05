@@ -1,7 +1,7 @@
 /* Styling Below */
 
 
-.header{
+.header {
     text-align: center;
     font-size: 2rem;
     color: var(--secondary);
@@ -15,11 +15,13 @@
     display: block;
     margin: 1rem auto;
 }
-.section h2{
+
+.section h2 {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--secondary);
 }
+
 .section .add_image {
     position: relative;
     margin: 12px 0;
@@ -30,13 +32,16 @@
     width: 320px;
     border: 4px solid #D9D9D9;
 }
-.add_image img{
+
+.add_image img {
     cursor: pointer;
 }
-.add_image .removeImg{
+
+.add_image .removeImg {
     color: red;
 }
-.add_image span{
+
+.add_image span {
     position: absolute;
     top: -4%;
     right: 5px;
@@ -45,7 +50,7 @@
     cursor: pointer;
 }
 
-.mainImg{
+.mainImg {
     width: 100%;
     height: 100%;
 }
@@ -69,7 +74,8 @@
     align-items: center;
     cursor: pointer;
 }
-.more_imgs div span{
+
+.more_imgs div span {
     position: absolute;
     right: 4px;
     top: -5px;
@@ -96,7 +102,8 @@
     outline: none;
 }
 
-.input, .input_field textarea {
+.input,
+.input_field textarea {
     padding: 0rem 0.5rem;
     outline: none;
 }
@@ -192,25 +199,31 @@
     position: relative;
 }
 
-.input_field , .priceParent{
+.input_field,
+.priceParent {
     position: relative;
 }
-.input_field span, .priceParent span{
+
+.input_field span,
+.priceParent span {
     font-size: 0.5rem;
     color: red;
     position: absolute;
     bottom: 10%;
     left: 0;
 }
-.input_field textarea + span{
+
+.input_field textarea+span {
     bottom: -10%;
 }
+
 .section .review_details .right .input {
     padding: 0.5rem;
     width: 100%;
     border: 3px solid #D9D9D9;
 }
-.counter{
+
+.counter {
     font-size: 0.7rem;
     position: absolute;
     right: 0;
@@ -235,7 +248,7 @@
     background: #018198;
 }
 
-.reviewParent{
+.reviewParent {
     display: flex;
     justify-content: baseline;
     flex-direction: column;
@@ -259,7 +272,8 @@
         width: 80%;
     }
 
-    .input, .input_field textarea {
+    .input,
+    .input_field textarea {
         margin: auto;
         width: 80% !important;
     }
@@ -269,7 +283,8 @@
         width: 100%;
     }
 }
-.btnParent{
+
+.btnParent {
     padding: 2rem;
 }
 
@@ -306,5 +321,36 @@
     .btnParent {
         display: flex;
         justify-content: center;
+    }
+}
+
+
+.loader {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: block;
+    margin: 15px auto;
+    position: relative;
+    color: #fff;
+    box-sizing: border-box;
+    animation: animloader 1s linear infinite alternate;
+}
+
+@keyframes animloader {
+    0% {
+        box-shadow: -19px -6px, -7px 0, 7px 0, 19px 0;
+    }
+
+    33% {
+        box-shadow: -19px 0px, -7px -6px, 7px 0, 19px 0;
+    }
+
+    66% {
+        box-shadow: -19px 0px, -7px 0, 7px -6px, 19px 0;
+    }
+
+    100% {
+        box-shadow: -19px 0, -7px 0, 7px 0, 19px -6px;
     }
 }

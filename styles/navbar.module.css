@@ -10,10 +10,31 @@
     align-items: center;
     background: var(--secondary);
 }
-.logo{
+.userIcon {
+    height: 50px;
+    width: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    user-select: none;
+}
+
+.userIcon img {
+    height: 100%;
+    width: 70%;
+    border-radius: 50%;
+    border: 2px solid var(--background);
+}
+.userIcon svg {
+    cursor: pointer;
+}
+
+.logo {
     margin-left: 1rem;
 }
-.logo img{
+
+.logo img {
     width: 100px;
     height: 70px;
 }
@@ -34,7 +55,7 @@
 
 }
 
-.navWrapper ul li a {
+.navWrapper ul li >a {
     text-decoration: none;
     padding: 0rem 1rem;
     font-weight: lighter !important;
@@ -42,10 +63,11 @@
     color: var(--text);
 }
 
-.navLinks{
+.navLinks {
     color: #fff !important;
 }
-.seller div{
+
+.seller div {
     color: var(--secondary);
     display: flex;
     gap: 5px;
@@ -55,7 +77,8 @@
     align-items: center;
     background: #fff;
 }
-.loginLink{
+
+.loginLink {
     padding: 0.38rem 0.4rem !important;
     border-radius: 1rem;
     justify-content: center;
@@ -160,7 +183,7 @@
     transition: 0.5s ease-in-out;
 }
 
-.moreParent:hover .dropdown{
+.moreParent:hover .dropdown {
     visibility: visible;
     margin-top: 0.5rem;
     opacity: 1;
@@ -212,4 +235,88 @@
 .btnMore:active {
     box-shadow: #3c4fe0 0 3px 7px inset;
     transform: translateY(2px);
+}
+.dropDown{
+    position: absolute;
+    top: 110%;
+    right: 0%;
+    padding-top: 1rem;
+    display: flex;
+    background: #fff;
+    flex-direction: column;
+    user-select: none;
+    border-radius: 4px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,.12), 0 6px 6px 0 rgba(0,0,0,.24);
+
+}
+.dropDown::before{
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    right: 16px;
+    content: " ";
+    height: 0;
+    width: 0;
+    pointer-events: none;
+    border: 12px solid transparent;
+    border-bottom: 12px solid #fff;
+
+}
+.dropDown > div{
+    padding: 0.5rem 1rem;
+}
+.userData{
+    padding: 0.5rem 1rem;
+}
+.userData p{
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+.userData div:has(> img){
+    padding-right: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.userData div img{
+    border: none;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    border-radius: 50%;
+}
+.userData div:has(> button){
+    margin-top: 1rem;
+    text-align: center;
+}
+.userData button{
+    padding: 0.5rem 1rem;
+    background: var(--secondary);
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    transition: 0.2s ease-in-out;
+    border: 2px solid var(--secondary);
+}
+.userData button:hover{
+    background: #fff;
+    color: var(--secondary);
+}
+.otherDrops div{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.otherDrops:last-child{
+    cursor: pointer;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.otherDrops span{
+    cursor: pointer;
 }
