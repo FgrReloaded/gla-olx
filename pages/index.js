@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { auth, db } from "@/middleware/firebase"
 import styles from '@/styles/Home.module.css'
 import glxContext from './context/glxContext';
@@ -12,21 +12,20 @@ import Card from '@/components/Card';
 import { AiFillPlusCircle } from 'react-icons/ai'
 
 const Home = () => {
+  const ref = useRef(null)
   const context = useContext(glxContext);
-  const { getItem, items } = context;
+  const { getItem, items, filtered, handleChecked } = context;
 
   useEffect(() => {
     getItem()
   }, [])
 
-  
 
   return (
     <>
       <Head>
         <title>Home</title>
       </Head>
-
 
       <main>
         <div className={styles.heroSec} style={alice.style} >
@@ -40,7 +39,20 @@ const Home = () => {
       </main>
       <section>
         <ul className={styles.category}>
-          <li><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle /> </li>
+          <li className={styles.dropDownParent}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle onClick={() => { ref.current.classList.toggle("hidden") }} />
+            <div ref={ref} className={`${styles.dropDown} hidden`}>
+              {
+                items && items.map((item, i) => {
+                  return (
+                    <div key={i}>
+                      <span value={item.category} onClick={handleChecked}>
+                      </span>
+                      {item.category}
+                    </div>
+                  )
+                })}
+            </div>
+          </li>
           <li><a>Chemistry Lab-Coats</a></li>
           <li><a>ED-lab Stuff</a></li>
           <li><a>Electronics Items</a></li>
@@ -56,7 +68,11 @@ const Home = () => {
         <div className={styles.productList}>
           {
             items && items.map((item, i) => {
-              return <Card key={i} item={item} />
+              if (filtered.includes(item.category)) {
+                return (
+                  <Card item={item} key={i} />
+                )
+              }
             })
           }
 

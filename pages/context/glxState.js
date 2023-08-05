@@ -16,6 +16,8 @@ const GlxState = ({ children }) => {
     const [user, setUser] = useState(null)
     const [users, setUsers] = useState([])
     const [items, setItems] = useState([])
+    const [filtered, setFiltered] = useState([])
+
     const router = useRouter()
 
     const getUser = async () => {
@@ -36,8 +38,13 @@ const GlxState = ({ children }) => {
                 'Content-Type': 'application/json'
             }
         })
-        const data = await res.json()
-        setItems(data.data)
+        const {data} = await res.json()
+        let categories = [];
+        for (let i = 0; i < data.length; i++) {
+            categories.push(data[i].category)
+        }
+        setFiltered(categories)
+        setItems(data)
     }
     const createItem = async (item) => {
         const { title, desc, price, category, seller, sellerName, sellerPic } = item
@@ -89,9 +96,20 @@ const GlxState = ({ children }) => {
         }
         setUsers(newUsers)
     }
+    const handleChecked = (e) => {
+        e.target.classList.toggle("changeBack")
+        const value = e.target.getAttribute("value")
+        if (!e.target.classList.contains("changeBack")) {
+            setFiltered([...filtered, value])
+        } else {
+            const index = filtered.indexOf(value)
+            filtered.splice(index, 1)
+            setFiltered([...filtered])
+        }
+    }
 
     return (
-        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser }}>
+        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser, filtered, handleChecked }}>
             {children}
         </glxContext.Provider>
     )

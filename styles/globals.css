@@ -10,3 +10,7 @@ body {
     --accent: #a82aac;
     background: var(--background);
 }
+
+.changeBack{
+    background: #fff !important;
+}

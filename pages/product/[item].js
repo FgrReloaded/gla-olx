@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from "@/styles/singleProduct.module.css"
-import { Oswald, Alice, Noto_Sans, Days_One } from 'next/font/google'
+import { Alice, Noto_Sans } from 'next/font/google'
 import { AiOutlineShareAlt, AiOutlineHeart, AiFillHeart } from "react-icons/ai"
-import { BsArrowRightCircleFill } from "react-icons/bs"
 import { TbListDetails, TbEyeCheck } from "react-icons/tb"
 import { FaRegHandshake } from "react-icons/fa"
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io"
+import { IoIosArrowForward } from "react-icons/io"
 import Card from '@/components/Card'
-import { motion } from "framer-motion"
 import mongoose from 'mongoose'
 import Item from '@/models/Item'
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "@/middleware/firebase"
 import { useRouter } from 'next/navigation'
 
-const oswald = Oswald({ subsets: ['latin'] })
 const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
 
@@ -72,7 +67,7 @@ const item = ({ item, similarItems }) => {
         let link = window.location.href
         navigator.clipboard.writeText(link)
     }
-    
+
 
     return (
         <>
@@ -133,7 +128,7 @@ const item = ({ item, similarItems }) => {
                                     {item.sellerName} <IoIosArrowForward color='#BBBEBF' size={25} />
                                 </div>
                             </div>
-                            <button onClick = {()=>{handleSeller(item.seller)}} className={styles.buttonChat} style={noto.style}>
+                            <button onClick={() => { handleSeller(item.seller) }} className={styles.buttonChat} style={noto.style}>
                                 Chat with seller
                             </button>
                         </div>
