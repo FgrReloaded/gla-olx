@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+    scroll-behavior: smooth;    
+}
 body {
     --text: #020208;
     --background: #d9d9d9;
@@ -9,7 +12,6 @@ body {
     --secondary: #0097B2;
     --accent: #a82aac;
     background: var(--background);
-    scroll-behavior: smooth;
 }
 
 .changeBack{
@@ -38,5 +40,5 @@ body {
     color: #939292;
 }
 .hidden{
-    display: none;
+    display: none !important;
 }

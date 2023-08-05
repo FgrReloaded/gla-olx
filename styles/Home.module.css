@@ -150,7 +150,8 @@
 
 .dropDown {
     position: absolute;
-    top: 100%;
+    top: 110%;
+    left: 10%;
     padding: 0.5rem 1rem;
     background: #fff;
     font-weight: 400;
@@ -158,38 +159,32 @@
     z-index: 1;
     transition: 0.5s ease-in-out;
     cursor: default;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    white-space: nowrap;
+    column-gap: 4rem;
+    row-gap: 0.1rem;
 }
-
-.dropDown div {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-.dropDown div>span {
+.dropDown > div h3{
+    font-size: 14px;
+    font-weight: 700;
+    color: rgb(0, 47, 52);
     cursor: pointer;
-    width: 15px;
-    height: 15px;
-    border-radius: 2px;
-    border: 2px solid black;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.dropDown > div div span{
+    color: rgb(0, 47, 52);
+    font-size: 14px;
+    cursor: pointer;
+}
+.dropDown > div{
+    padding-top: 1rem;
+}
+.dropDown > div div {
+    padding-top: 1rem;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--secondary);
-}
-.dropDown button{
-    padding: 0.2rem 0.8rem;
-    border-radius: 1rem;
-    margin-top: 1rem;
-    text-align: center;
-    color: var(--secondary);
-    border: 1.5px solid #000;
-    font-size: 0.8rem;
-    transition: 0.4s ease-in-out;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-.dropDown button:hover{
-    border-color: var(--secondary);
-    background: var(--secondary);
-    color: #000;
+    flex-direction: column;
+    gap: 5px;
 }

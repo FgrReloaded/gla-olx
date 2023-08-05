@@ -4,17 +4,28 @@ import styles from '@/styles/Home.module.css'
 import glxContext from './context/glxContext';
 import Head from 'next/head';
 import { BiSearchAlt2 } from 'react-icons/bi'
-import { IoIosArrowDropdownCircle } from "react-icons/io"
 import { Alice, Roboto } from "next/font/google"
 const alice = Alice({ subsets: ["latin"], weight: "400" })
 const roboto = Roboto({ subsets: ["latin"], weight: "300" })
 import Card from '@/components/Card';
 import { AiFillPlusCircle } from 'react-icons/ai'
+import Category from '@/components/Category';
 
 const Home = () => {
   const ref = useRef(null)
+  const [search, setSearch] = useState("")
   const context = useContext(glxContext);
   const { getItem, items } = context;
+  const categories = {
+    "Lab Items": ["Lab-Coats", "ED-lab Stuff"],
+    "Room Items": ["Posters", "Lights", "General Room Stuff"],
+    "Books": ["Course Books", "Novels", "Others"],
+    "Sports Items": ["Cricket", "Badminton", "Volleyball", "Football", "Table Tennis", "Basketball"],
+    "Gadgets": ["Mobiles", "Laptops", "Headphones", "Speakers", "Others"],
+    "Accessories": ["Bags", "Watches", "Wallets", "Belts", "Sunglasses", "Others"],
+    "Clothes": ["T-Shirts", "Shirts", "Jeans", "Jackets", "Others"],
+    "Others": ["Others"],
+  }
 
   useEffect(() => {
     getItem()
@@ -30,47 +41,25 @@ const Home = () => {
       <main>
         <div className={styles.heroSec} style={alice.style} >
           <div className={styles.searchBox}>
-            <input type="text" className={styles.inputSearch} placeholder="What are you looking for?..." />
+            <input type="text" onChange={(e) => { setSearch(e.target.value) }} className={styles.inputSearch} placeholder="What are you looking for?..." />
             <div className={styles.searchBtn}>
-              <span>Search</span> <BiSearchAlt2 color='#D9D9D9' size={25} />
+              <span onClick={()=>{document.getElementById("cardSec").scrollIntoView();}}>Search</span> <BiSearchAlt2 color='#D9D9D9' size={25} />
             </div>
           </div>
         </div>
       </main>
-      <section>
-        <ul className={styles.category}>
-          <li className={styles.dropDownParent}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle onClick={() => { ref.current.classList.toggle("hidden") }} />
-            <div ref={ref} className={`${styles.dropDown} hidden`}>
-              {/* {
-                items && items.map((item, i) => {
-                  return (
-                    <div key={i}>
-                      <span value={item.category}>
-                      </span>
-                      {item.category}
-                    </div>
-                  )
-                })} */}
-            </div>
-          </li>
-          <li><a>Chemistry Lab-Coats</a></li>
-          <li><a>ED-lab Stuff</a></li>
-          <li><a>Electronics Items</a></li>
-          <li><a>Student's Notes</a></li>
-          <li><a>Books</a></li>
-          <li><a>Posters</a></li>
-          <li><a>General Room Stuff</a></li>
-        </ul>
-      </section>
+      <Category categories={categories}/>
 
-      <section className={styles.cardSec}>
+      <section className={styles.cardSec} id='cardSec'>
         <h3 className={styles.cardHead} style={roboto.style}>Fresh Recommendation:</h3>
         <div className={styles.productList}>
           {
             items && items.map((item, i) => {
-              return (
-                <Card item={item} key={i} />
-              )
+              if (item.title.toLowerCase().includes(search.toLowerCase())) {
+                return (
+                  <Card item={item} key={i} />
+                )
+              }
             })
           }
 

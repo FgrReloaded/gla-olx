@@ -22,7 +22,6 @@ const sell = () => {
     "Accessories": ["Bags", "Watches", "Wallets", "Belts", "Sunglasses", "Others"],
     "Clothes": ["T-Shirts", "Shirts", "Jeans", "Jackets", "Others"],
     "Others": ["Others"],
-
   }
   const [categoryList, setCategoryList] = useState([])
   const [profilePic, setprofilePic] = useState("")
