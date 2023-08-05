@@ -38,7 +38,7 @@ const GlxState = ({ children }) => {
                 'Content-Type': 'application/json'
             }
         })
-        const {data} = await res.json()
+        const { data } = await res.json()
         let categories = [];
         for (let i = 0; i < data.length; i++) {
             categories.push(data[i].category)
