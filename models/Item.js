@@ -8,6 +8,7 @@ var ItemSchema = new Schema({
     desc: String,
     images: Array,
     category: String,
+    subCategory: String,
     seller: String,
     sellerName: String,
     sellerPic: String,

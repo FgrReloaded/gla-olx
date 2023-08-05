@@ -10,6 +10,7 @@ import Card from '@/components/Card'
 import mongoose from 'mongoose'
 import Item from '@/models/Item'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
@@ -77,13 +78,19 @@ const item = ({ item, similarItems }) => {
             <div className={styles.container}>
                 <ul>
                     <li>
+                        <Link href={"/"}>
                         <span>Home <IoIosArrowForward size={15} color='#20494E' /> </span>
+                        </Link>
                     </li>
                     <li>
-                        <span>Product <IoIosArrowForward size={15} color='#20494E' /></span>
-                    </li>
-                    <li>
+                        <Link href={`/${item.category}`}>
                         <span>{item.category} <IoIosArrowForward size={15} color='#20494E' /></span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={`/${item.subCategory}`}>
+                        <span>{item.subCategory} <IoIosArrowForward size={15} color='#20494E' /></span>
+                        </Link>
                     </li>
                     <li>
                         <span>{item.title}</span>
@@ -154,11 +161,11 @@ const item = ({ item, similarItems }) => {
                             <div className={styles.productInfo}>
                                 <div>
                                     <span>Type</span>
-                                    <span>Brand</span>
+                                    <span>Category</span>
                                 </div>
                                 <div>
                                     <span>{item.category}</span>
-                                    <span>Sasta Maal</span>
+                                    <span>{item.subCategory}</span>
                                 </div>
                             </div>
                         </div>

@@ -24,7 +24,7 @@ const handler = async (req, res) => {
             try {
                 var form = new formidable.IncomingForm();
                 const data = await form.parse(req);
-                const { title, desc, price, category, seller, sellerPic, sellerName } = JSON.parse(data[0].metaData)
+                const { title, desc, price, category, subCategory, seller, sellerPic, sellerName } = JSON.parse(data[0].metaData)
 
                 // Upload all images
                 const images = await Promise.all(data[1].media.map(async (file) => {
@@ -37,28 +37,13 @@ const handler = async (req, res) => {
                     desc,
                     price,
                     category,
+                    subCategory,
                     seller,
                     sellerName,
                     sellerPic,
                     images: images,
                 });
-                // })
-                // const uploadedImage = await cloudinary.uploader.upload(image);
-
-                // let images = [];
-                // for (let i = 0; i < req.files.length; i++) {
-                //     let image = await cloudinary.uploader.upload(req.files[i].path);
-                //     images.push(image.secure_url);
-                // }
-                // const item = await Item.create({
-                //     title: req.body.title,
-                //     desc: req.body.desc,
-                //     price: req.body.price,
-                //     category: req.body.category,
-                //     seller: req.body.seller,
-                //     images: images,
-                // });
-                res.status(201).json({ success: true, data: item});
+                res.status(201).json({ success: true, data: item });
             } catch (error) {
                 console.log(error.message)
                 res.status(400).json({ success: false });

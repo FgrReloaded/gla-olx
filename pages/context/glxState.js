@@ -16,8 +16,9 @@ const GlxState = ({ children }) => {
     const [user, setUser] = useState(null)
     const [users, setUsers] = useState([])
     const [items, setItems] = useState([])
-    const [filtered, setFiltered] = useState([])
-
+    const [userItems, setUserItems] = useState([])
+    const [show, setShow] = useState("hidden")
+    const [message, setMessage] = useState("")
     const router = useRouter()
 
     const getUser = async () => {
@@ -39,16 +40,23 @@ const GlxState = ({ children }) => {
             }
         })
         const { data } = await res.json()
-        let categories = [];
-        for (let i = 0; i < data.length; i++) {
-            categories.push(data[i].category)
-        }
-        setFiltered(categories)
         setItems(data)
     }
+    const getUserItem = async (id) => {
+        const res = await fetch('/api/useritem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id })
+        })
+        const { data } = await res.json()
+        setUserItems(data);
+    }
+
     const createItem = async (item) => {
-        const { title, desc, price, category, seller, sellerName, sellerPic } = item
-        const metaData = { title, desc, price, category, seller, sellerName, sellerPic }
+        const { title, desc, price, category, subCategory, seller, sellerName, sellerPic } = item
+        const metaData = { title, desc, price, category, subCategory, seller, sellerName, sellerPic }
         const formData = new FormData()
         item.images.forEach((file) => formData.append("media", file));
         formData.append('metaData', JSON.stringify(metaData))
@@ -56,9 +64,11 @@ const GlxState = ({ children }) => {
             method: 'POST',
             body: formData
         })
-        const data = await res.json()
-        if (data.success) {
-            setItems([...items, data.data])
+        const result = await res.json()
+        if (result.success) {
+            setItems([...items, result.data])
+            setMessage("Ad Created Successfully")
+            showAlert()
         }
     }
     const addUser = async (userToken, currentUser, itemName, itemPrice) => {
@@ -96,20 +106,15 @@ const GlxState = ({ children }) => {
         }
         setUsers(newUsers)
     }
-    const handleChecked = (e) => {
-        e.target.classList.toggle("changeBack")
-        const value = e.target.getAttribute("value")
-        if (!e.target.classList.contains("changeBack")) {
-            setFiltered([...filtered, value])
-        } else {
-            const index = filtered.indexOf(value)
-            filtered.splice(index, 1)
-            setFiltered([...filtered])
-        }
-    }
 
+    const showAlert = () => {
+        setShow("")
+        setTimeout(() => {
+            setShow("hidden")
+        }, 2500)
+    }
     return (
-        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser, filtered, handleChecked }}>
+        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser, show, message, setShow, getUserItem,userItems,  }}>
             {children}
         </glxContext.Provider>
     )

@@ -3,7 +3,7 @@ import styles from "@/styles/navbar.module.css"
 import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { AiOutlinePlusCircle, AiOutlineHeart } from 'react-icons/ai'
-import { BiHelpCircle } from 'react-icons/bi'
+import { BiHelpCircle, BiSpreadsheet } from 'react-icons/bi'
 import { IoMdArrowDropdown } from 'react-icons/io'
 import { usePathname } from 'next/navigation'
 import { Alice, Jost } from 'next/font/google'
@@ -56,7 +56,9 @@ const Navbar = () => {
             <nav>
                 <div className={styles.navWrapper}>
                     <div className={styles.logo}>
+                        <Link href={"/"}>
                         <img src='/images/logo.png' />
+                        </Link>
                     </div>
 
                     <ul style={alice.style}>
@@ -85,9 +87,18 @@ const Navbar = () => {
                                             <hr />
                                             <div className={styles.otherDrops}>
                                                 <div>
-                                                    <AiOutlineHeart size={20} /> <span>
+                                                    <BiSpreadsheet size={20} /> <span>
                                                         <Link href={"/myads"}>
                                                             My Ads
+                                                        </Link>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className={styles.otherDrops}>
+                                                <div>
+                                                    <AiOutlineHeart size={20} /> <span>
+                                                        <Link href={"/myads"}>
+                                                            My Wishlists
                                                         </Link>
                                                     </span>
                                                 </div>

@@ -14,7 +14,7 @@ import { AiFillPlusCircle } from 'react-icons/ai'
 const Home = () => {
   const ref = useRef(null)
   const context = useContext(glxContext);
-  const { getItem, items, filtered, handleChecked } = context;
+  const { getItem, items } = context;
 
   useEffect(() => {
     getItem()
@@ -41,16 +41,16 @@ const Home = () => {
         <ul className={styles.category}>
           <li className={styles.dropDownParent}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle onClick={() => { ref.current.classList.toggle("hidden") }} />
             <div ref={ref} className={`${styles.dropDown} hidden`}>
-              {
+              {/* {
                 items && items.map((item, i) => {
                   return (
                     <div key={i}>
-                      <span value={item.category} onClick={handleChecked}>
+                      <span value={item.category}>
                       </span>
                       {item.category}
                     </div>
                   )
-                })}
+                })} */}
             </div>
           </li>
           <li><a>Chemistry Lab-Coats</a></li>
@@ -68,11 +68,9 @@ const Home = () => {
         <div className={styles.productList}>
           {
             items && items.map((item, i) => {
-              if (filtered.includes(item.category)) {
-                return (
-                  <Card item={item} key={i} />
-                )
-              }
+              return (
+                <Card item={item} key={i} />
+              )
             })
           }
 
