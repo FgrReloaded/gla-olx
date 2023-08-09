@@ -1,0 +1,184 @@
+/* Styling Below */
+
+.section {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.sideBar {
+    background: #e2e2e2;
+    padding: 1rem 2rem;
+}
+
+.sideBar div {
+    display: flex;
+    flex-direction: column;
+}
+
+.sideBar div span {
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding-block: 1rem;
+    padding-right: 3rem;
+    white-space: nowrap;
+}
+
+.sideBar button {
+    margin-top: 1rem;
+    padding: 13px;
+    width: 100%;
+    background-color: var(--secondary);
+    border: 2px solid var(--secondary);
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.sideBar button:hover{
+    background-color: transparent;
+    color: var(--secondary);
+}
+
+.editProfile,
+.profilePic {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid rgb(164, 164, 164);
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.header {
+    border-bottom: 1px solid rgb(164, 164, 164);
+    padding: 1.5rem;
+
+}
+
+.header h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.details h5 {
+    font-size: 1.3rem;
+    padding: 1rem;
+}
+
+.details input,
+.details textarea {
+    width: 60%;
+    outline: none;
+    border: 1px solid rgb(60, 60, 60);
+    border-radius: 5px;
+    padding: 0.5rem 0.8rem;
+    margin: 1rem 0;
+}
+
+.details hr {
+    border-color: rgb(164, 164, 164);
+}
+
+.details input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.details div {
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details div span {
+    font-size: 1.5rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.details div span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -30%;
+    height: 0.5px;
+    width: 100%;
+    background: rgb(60, 60, 60);
+}
+
+.details div span:hover:after {
+    visibility: hidden;
+}
+
+.details div button {
+    font-size: 1.2rem;
+    background: var(--secondary);
+    color: #fff;
+    padding: 0.5rem 2rem;
+    border: 2px solid var(--secondary);
+    border-radius: 5px;
+    transition: 0.4s;
+}
+.details div button:hover {
+    background: #fff;
+    color: var(--secondary)
+}
+
+
+.profilePicture {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+.profilePicture .deletePic img{
+    width: 80%;
+    padding: 1rem;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+.profilePicture .deletePic img:hover{
+    cursor: pointer;
+    background: #0097B2;
+}
+.profilePicHolder{
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgb(164, 164, 164);
+}
+.profilePicHolder img{
+    width: 100%;
+    height: 100%;
+}
+.picContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40%;
+}
+.picContent p{
+    font-size: 0.8rem;
+}
+.picContent button{
+    margin-top: 1rem;
+    padding: 13px;
+    width: 100%;
+    background-color: #0097B2;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+
+}
+.section input::placeholder, .section textarea::placeholder{
+    color: rgb(60, 60, 60);
+}

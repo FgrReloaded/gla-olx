@@ -1,43 +1,46 @@
 /* Styling Below */
 
-.footerWrapper{
+.footerWrapper {
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
     padding: 1rem;
     background: #c3c2c2;
     color: #ececec;
 }
 
-.content{
+.content {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     align-self: baseline;
 }
-.title{
+
+.title {
     font-size: 2rem;
     color: teal;
     text-transform: uppercase;
     font-weight: bold;
 }
 
-.iconList ul{
+.iconList ul {
     margin-top: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1rem;
 }
-.icons{
+
+.icons {
     font-size: 2rem;
 }
-.logo img{
+
+.logo img {
     width: 90px;
     height: 60px;
 }
-.footerBottom{
+
+.footerBottom {
     padding: 0.5rem;
     display: flex;
     justify-content: space-between;
@@ -45,4 +48,29 @@
     background: #0097b2;
     color: #ececec;
     font-weight: bold;
+}
+
+@media (max-width: 400px) {
+    .footerWrapper {
+        padding: 0.5rem;
+    }
+    .title {
+        font-size: 1rem;
+    }
+    .list li{
+        font-size: 0.8rem;
+    }
+    .logo img {
+        width: 45px;
+        height: 30px;
+    }
+    .iconList svg{
+        font-size: 1.5rem;
+    }
+    .copyright p{
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+        font-weight: lighter;
+    }
+    
 }

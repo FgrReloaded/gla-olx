@@ -1,0 +1,66 @@
+/* Styling Below */
+
+.section{
+    width: 80%;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 2rem;
+    background: #fff;
+    padding: 2rem;
+}
+.profileSection{
+    display: flex;
+    flex-direction: column;
+}
+.profileSection img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.profileSection div:has(img){
+    align-self: center;
+}
+.profileSection p{
+    font-weight: 700;
+    padding: 1rem 0;
+}
+.profileSection a{
+    text-align: center;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: none;
+    color: #0097B2;
+    border: 2px solid #0097B2;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.4s;
+}
+.profileSection a:hover{
+    background: #0097B2;
+    color: #fff;
+}
+
+.profileSection small{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.profileSection span{
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+.profileSection span span{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+.userAds{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+}

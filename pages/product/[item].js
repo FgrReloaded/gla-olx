@@ -18,7 +18,9 @@ const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
 const item = ({ item, similarItems }) => {
     const router = useRouter()
     const [diff, setDiff] = useState("")
+    const [currentWishlist, setCurrentWishlist] = useState("")
     useEffect(() => {
+        checkWishlist()
         let today = new Date()
         let createdAt = new Date(item.createdAt)
         let diff = today - createdAt
@@ -69,6 +71,59 @@ const item = ({ item, similarItems }) => {
         navigator.clipboard.writeText(link)
     }
 
+    const handleWishlist = async () => {
+        let userId = localStorage.getItem("currentUserId")
+        let product = {
+            seller: item.seller,
+            productId: item._id,
+            title: item.title,
+            price: item.price,
+            images: item.images[4]
+        }
+        if (hide) {
+            let res = await fetch("/api/wishlist", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userId, productId: item._id, product })
+            })
+            let data = await res.json()
+            if (data.success) {
+                setHide(false)
+            } else {
+                alert("Item already in wishlist")
+            }
+        }
+        else {
+            let res = await fetch(`/api/wishlist?id=${currentWishlist}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            let data = await res.json()
+            if (data.success) {
+                setHide(true)
+            } else {
+                alert("Item not in wishlist")
+            }
+        }
+    }
+
+    const checkWishlist = async () => {
+        let userId = localStorage.getItem("currentUserId")
+        let productId = item._id
+        let res = await fetch("/api/wishlist?userId=" + userId + "&productId=" + productId)
+        let data = await res.json()
+        if (data.success) {
+            setCurrentWishlist(data.data[0]._id)
+            setHide(false)
+        } else {
+            setHide(true)
+        }
+    }
+
 
     return (
         <>
@@ -79,17 +134,17 @@ const item = ({ item, similarItems }) => {
                 <ul>
                     <li>
                         <Link href={"/"}>
-                        <span>Home <IoIosArrowForward size={15} color='#20494E' /> </span>
+                            <span>Home <IoIosArrowForward size={15} color='#20494E' /> </span>
                         </Link>
                     </li>
                     <li>
                         <Link href={`/${item.category}`}>
-                        <span>{item.category} <IoIosArrowForward size={15} color='#20494E' /></span>
+                            <span>{item.category} <IoIosArrowForward size={15} color='#20494E' /></span>
                         </Link>
                     </li>
                     <li>
                         <Link href={`/${item.subCategory}`}>
-                        <span>{item.subCategory} <IoIosArrowForward size={15} color='#20494E' /></span>
+                            <span>{item.subCategory} <IoIosArrowForward size={15} color='#20494E' /></span>
                         </Link>
                     </li>
                     <li>
@@ -117,7 +172,7 @@ const item = ({ item, similarItems }) => {
                         <div className={styles.item1}>
                             <div className={styles.price}>
                                 <span style={noto.style}>₹{item.price}</span>
-                                <span> <AiOutlineShareAlt onClick={copyLink} size={30} /> <AiOutlineHeart onClick={() => { setHide(!hide) }} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={() => { setHide(!hide) }} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
+                                <span> <AiOutlineShareAlt onClick={copyLink} size={30} /> <AiOutlineHeart onClick={handleWishlist} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={handleWishlist} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
                             </div>
                             <div style={noto.style} className={styles.title}>
                                 Product: {item.title}

@@ -6,9 +6,10 @@ import { AiOutlinePlusCircle, AiOutlineHeart } from 'react-icons/ai'
 import { BiHelpCircle, BiSpreadsheet } from 'react-icons/bi'
 import { IoMdArrowDropdown } from 'react-icons/io'
 import { usePathname } from 'next/navigation'
-import { Alice, Jost } from 'next/font/google'
+import { Alice, Jost, Poppins } from 'next/font/google'
 const alice = Alice({ subsets: ["latin"], weight: "400" })
 const jost = Jost({ subsets: ["latin"] })
+const pop = Poppins({ subsets: ["latin"], weight: "400" })
 import { signOut } from "firebase/auth";
 import { auth } from "@/middleware/firebase"
 import { useRouter } from 'next/navigation'
@@ -57,18 +58,17 @@ const Navbar = () => {
                 <div className={styles.navWrapper}>
                     <div className={styles.logo}>
                         <Link href={"/"}>
-                        <img src='/images/logo.png' />
+                            <img src='/images/logo.png' />
                         </Link>
                     </div>
 
-                    <ul style={alice.style}>
+                    <ul style={pop.style}>
                         <li><Link className={`${path === "/" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/"}>Home</Link>
                         </li>
                         <li><Link className={`${path === "/chat" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/chat"}>Contact Us</Link></li>
                         <li><Link className={`${path === "/chat" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/chat"}>About Us</Link></li>
                         {
                             currentUser &&
-
                             <li>
                                 <div className={styles.userIcon}>
                                     <img src={profilePic} alt="profile" />
@@ -81,7 +81,7 @@ const Navbar = () => {
                                                     <p>{displayName}</p>
                                                 </div>
                                                 <div>
-                                                    <button>View profile</button>
+                                                    <Link href={"/editprofile   "}>View profile</Link>
                                                 </div>
                                             </div>
                                             <hr />
@@ -97,7 +97,7 @@ const Navbar = () => {
                                             <div className={styles.otherDrops}>
                                                 <div>
                                                     <AiOutlineHeart size={20} /> <span>
-                                                        <Link href={"/myads"}>
+                                                        <Link href={"/wishlist"}>
                                                             My Wishlists
                                                         </Link>
                                                     </span>
@@ -117,7 +117,7 @@ const Navbar = () => {
 
                             </li>
                         }
-                        <li>
+                        <li className={styles.sellerBtn}>
                             <Link className={`${path === "/sell" ? `${styles.active}` : ""} ${styles.seller}`} href={"/sell"}>
                                 <div>
                                     Sell
@@ -126,7 +126,7 @@ const Navbar = () => {
                             </Link>
                         </li>
                         {!currentUser && (
-                            <li><Link className={`${path === "/signup" ? `${styles.active}` : ""} ${styles.loginLink}`} href={"/signup"}>Login</Link></li>
+                            <li className={styles.sellerBtn}><Link className={`${path === "/signup" ? `${styles.active}` : ""} ${styles.loginLink}`} href={"/signup"}>Login</Link></li>
                         )
                         }
                     </ul>

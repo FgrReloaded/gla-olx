@@ -10,6 +10,7 @@
     align-items: center;
     background: var(--secondary);
 }
+
 .userIcon {
     height: 50px;
     width: 75px;
@@ -26,6 +27,7 @@
     border-radius: 50%;
     border: 2px solid var(--background);
 }
+
 .userIcon svg {
     cursor: pointer;
 }
@@ -55,11 +57,49 @@
 
 }
 
-.navWrapper ul li >a {
+.navWrapper ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -25%;
+    height: 2px;
+    width: 0%;
+    background: #fff;
+    transition: 0.5s ease-in-out;
+}
+
+.navWrapper ul li:hover::before {
+    width: 100%;
+    transition: 0.5s ease-in-out;
+}
+
+.navWrapper ul li::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -25%;
+    height: 2px;
+    width: 0%;
+    background: #fff;
+    transition: 0.5s ease-in-out;
+}
+
+.navWrapper ul li:hover::after {
+    width: 100%;
+    transition: 0.5s ease-in-out;
+}
+
+.navWrapper ul li:has(> .userIcon)::before,
+.navWrapper ul li:has(> .userIcon)::after {
+    display: none;
+}
+
+
+.navWrapper ul li>a {
     text-decoration: none;
     padding: 0rem 1rem;
     font-weight: lighter !important;
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     color: var(--text);
 }
 
@@ -236,7 +276,8 @@
     box-shadow: #3c4fe0 0 3px 7px inset;
     transform: translateY(2px);
 }
-.dropDown{
+
+.dropDown {
     position: absolute;
     top: 110%;
     right: 0%;
@@ -246,10 +287,11 @@
     flex-direction: column;
     user-select: none;
     border-radius: 4px;
-    box-shadow: 0 0 6px 0 rgba(0,0,0,.12), 0 6px 6px 0 rgba(0,0,0,.24);
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, .12), 0 6px 6px 0 rgba(0, 0, 0, .24);
 
 }
-.dropDown::before{
+
+.dropDown::before {
     content: '';
     position: absolute;
     bottom: 100%;
@@ -262,36 +304,44 @@
     border-bottom: 12px solid #fff;
 
 }
-.dropDown > div{
+
+.dropDown>div {
     padding: 0.5rem 1rem;
 }
-.userData{
+
+.userData {
     padding: 0.5rem 1rem;
 }
-.userData p{
+
+.userData p {
     font-weight: 900;
     letter-spacing: 0.5px;
     white-space: nowrap;
 }
-.userData div:has(> img){
+
+.userData div:has(> img) {
     padding-right: 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
 }
-.userData div img{
+
+.userData div img {
     border: none;
     width: 40px;
     height: 40px;
     flex: 0 0 40px;
     border-radius: 50%;
 }
-.userData div:has(> button){
+
+.userData div:has(> a) {
     margin-top: 1rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
-.userData button{
+
+.userData a {
     padding: 0.5rem 1rem;
     background: var(--secondary);
     border-radius: 5px;
@@ -302,21 +352,29 @@
     transition: 0.2s ease-in-out;
     border: 2px solid var(--secondary);
 }
-.userData button:hover{
+
+.userData a:hover {
     background: #fff;
     color: var(--secondary);
 }
-.otherDrops div{
+
+.otherDrops div {
     display: flex;
     align-items: center;
     gap: 1rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.otherDrops:last-child{
+
+.otherDrops:last-child {
     cursor: pointer;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.otherDrops span{
+.otherDrops span {
     cursor: pointer;
+}
+
+.sellerBtn::before,
+.sellerBtn::after {
+    display: none;
 }

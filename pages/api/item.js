@@ -11,10 +11,11 @@ export const config = {
 const handler = async (req, res) => {
 
     const { method } = req;
+    const limit = parseInt(req.query.limit);
     switch (method) {
         case "GET":
             try {
-                const items = await Item.find();
+                const items = await Item.find().limit(limit);
                 res.status(200).json({ success: true, data: items });
             } catch (error) {
                 res.status(400).json({ success: false });

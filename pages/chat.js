@@ -7,7 +7,7 @@ const noto = Noto_Sans({ subsets: ["latin"], weight: "800" })
 import { IoSendSharp } from "react-icons/io5"
 import { GrSearch } from "react-icons/gr"
 import { AiOutlinePaperClip, AiOutlineClose } from "react-icons/ai"
-import {PiChatsFill} from "react-icons/pi"
+import { PiChatsFill } from "react-icons/pi"
 import {
   doc, addDoc,
   collection,
@@ -200,13 +200,13 @@ const chat = () => {
                 })}
             </ul>
           </div>
-          <div className={`${styles.chatBox} ${!receiverData?styles.noChat:null}`}>
-            {!receiverData && 
+          <div className={`${styles.chatBox} ${!receiverData ? styles.noChat : null}`}>
+            {!receiverData &&
               <div className={styles.noChats}>
-                  <PiChatsFill size={80} color='var(--secondary)'/>
-                  <p>Select a User to Chat</p>
+                <PiChatsFill size={80} color='var(--secondary)' />
+                <p>Select a User to Chat</p>
               </div>
-            } 
+            }
             {receiverData &&
               <div className={styles.chatContent}>
                 <div className={styles.chatDetails}>
@@ -215,7 +215,7 @@ const chat = () => {
                     <h3 style={noto.style}>{
                       receiverData && users.filter(user => user.userId === receiverData?.id)[0].fullname
                     }</h3>
-                    <span onClick={()=>{setReceiverData(null)}}><AiOutlineClose size={20}/></span>
+                    <span onClick={() => { setReceiverData(null) }}><AiOutlineClose size={20} /></span>
                   </div>
                   <div className={styles.userProduct}>
                     <span>Product: {receiverData && receiverData?.item}</span><span>Price: Rs {receiverData && receiverData?.price}</span>

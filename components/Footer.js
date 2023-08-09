@@ -24,10 +24,10 @@ const Footer = () => {
                         <div className={styles.list}>
                             <ul>
                                 <li><Link href={'/'}>Home</Link></li>
-                                <li><Link href={'/account'}>Account</Link></li>
+                                <li><Link href={'/editprofile'}>Profile</Link></li>
                                 <li><Link href={'/help'}>Help</Link></li>
                                 <li><Link href={"/about"}>About</Link></li>
-                                <li><Link href={"/"}>Contact Us</Link></li>
+                                <li><Link href={"/contact-us"}>Contact Us</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -36,9 +36,9 @@ const Footer = () => {
                         <div className={styles.socialMedia}>
                             <div className={styles.iconList}>
                                 <ul>
-                                    <CiFacebook className={styles.icons} />
-                                    <CiInstagram className={styles.icons} />
-                                    <CiTwitter className={styles.icons} />
+                                    <CiFacebook cursor={"pointer"} className={styles.icons} />
+                                    <CiInstagram cursor={"pointer"} className={styles.icons} />
+                                    <CiTwitter cursor={"pointer"} className={styles.icons} />
                                 </ul>
                             </div>
                         </div>

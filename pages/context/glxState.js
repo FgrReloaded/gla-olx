@@ -32,8 +32,8 @@ const GlxState = ({ children }) => {
         const data = await res.json()
         setUser(data.user)
     }
-    const getItem = async () => {
-        const res = await fetch('/api/item', {
+    const getItem = async (limit) => {
+        const res = await fetch(`/api/item?limit=${limit}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -91,8 +91,10 @@ const GlxState = ({ children }) => {
     const getChattingWith = async () => {  // Working Fine
         let currentUser = localStorage.getItem("currentUserId");
         let res = await fetch(`/api/chattingwith?id=${currentUser}`)
-        let data = await res.json()
-        getAllUsersData(data.chattingWith.chattingWith)
+        let data = await res.json();
+        if(data.success){
+            getAllUsersData(data.chattingWith.chattingWith)
+        }
     }
 
     const getAllUsersData = async (chattingWith) => {
