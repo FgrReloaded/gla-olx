@@ -17,7 +17,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { doc, getDoc } from "firebase/firestore";
 import Cookies from 'js-cookie';
-
+import { BsArrowLeftShort } from 'react-icons/bs'
 
 
 export default function SignUp() {
@@ -43,9 +43,6 @@ export default function SignUp() {
 
   }, [userSetup])
 
-  const handleClick = (email) => {
-
-  }
 
   const inputVerification = (login) => {
     const { fullname, email, password } = credentials;
@@ -180,6 +177,9 @@ export default function SignUp() {
         {
           !loader ?
             <div className={styles.main} style={jost.style}>
+              <div className={styles.backBtn}>
+                <BsArrowLeftShort size={30} onClick={() => { router.push("/") }} />
+              </div>
               <input ref={ref} className={styles.input} type="checkbox" id={styles.chk} aria-hidden="true" />
               <div className={styles.signup}>
                 <form className={styles.form}>

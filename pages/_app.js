@@ -8,7 +8,7 @@ import Alert from '@/components/Alert'
 export default function App({ Component, pageProps }) {
   return (
     <GlxState>
-      {/* <Navbar /> */}
+      <Navbar />
       <Component {...pageProps} />
       <Alert />
       <Footer />

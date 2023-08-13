@@ -21,7 +21,7 @@ const Category = ({ setCategory }) => {
     const ref = useRef(null)
 
     const showCategory = () => {
-        let allLi = document.getElementsByTagName("li")
+        let allLi = document.querySelectorAll(".li")
         setRotate(!rotate)
         let value = "none"
         if (!rotate) {
@@ -39,8 +39,8 @@ const Category = ({ setCategory }) => {
         <>
             <section>
                 <ul className={styles.category}>
-                    <label onClick={showCategory} style={roboto1.style}><IoIosArrowForward className={`${rotate ? styles.rotateArrow : ""}`} /> Filter</label>
-                    <li onClick={() => { ref.current.classList.toggle("hidden"); setCategory("") }} className={styles.dropDownParent}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle />
+                    <label onClick={showCategory} style={roboto1.style}><IoIosArrowForward className={`${rotate ? styles.rotateArrow : ""}`} /> Category</label>
+                    <li onClick={() => { ref.current.classList.toggle("hidden"); setCategory("") }} className={`${styles.dropDownParent} li`}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle />
                         <div ref={ref} className={`${styles.dropDown} hidden`}>
                             {categories &&
                                 Object.keys(categories).map((category, i) => {
@@ -64,13 +64,13 @@ const Category = ({ setCategory }) => {
                                 })}
                         </div>
                     </li>
-                    <li><a onClick={(e) => { setCategory(e.target.innerText) }}>Lab Items</a></li>
-                    <li><a onClick={(e) => { setCategory(e.target.innerText) }}>Room Items</a></li>
-                    <li><a onClick={(e) => { setCategory(e.target.innerText) }}>Books</a></li>
-                    <li><a onClick={(e) => { setCategory(e.target.innerText) }}>Sports Items</a></li>
-                    <li><a onClick={(e) => { setCategory(e.target.innerText) }}>Gadgets</a></li>
-                    <li><a onClick={(e) => { setCategory(e.target.innerText) }}>Accessories</a></li>
-                    <li><a onClick={(e) => { setCategory(e.target.innerText) }}>Clothes</a></li>
+                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Lab Items</a></li>
+                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Room Items</a></li>
+                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Books</a></li>
+                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Sports Items</a></li>
+                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Gadgets</a></li>
+                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Accessories</a></li>
+                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Clothes</a></li>
                 </ul>
             </section>
         </>

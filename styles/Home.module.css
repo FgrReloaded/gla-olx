@@ -230,7 +230,9 @@
         margin-top: 0.5rem;
         right: 2.5%;
     }
-
+    .searchBtn svg{
+        width: 20;
+    }
     .searchBtn span {
         color: #fff;
         font-size: 0.8rem;
@@ -256,11 +258,11 @@
     }
 
     .heroSec::before {
-        top: 0%;
+        top: 10%;
     }
 
     .heroSec::after {
-        bottom: 40%;
+        bottom: 30%;
     }
 
     .dropDown {

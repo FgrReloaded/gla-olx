@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styles from "@/styles/navbar.module.css"
 import Link from 'next/link'
 import Cookies from 'js-cookie'
@@ -12,12 +12,14 @@ const jost = Jost({ subsets: ["latin"] })
 const pop = Poppins({ subsets: ["latin"], weight: "400" })
 import { signOut } from "firebase/auth";
 import { auth } from "@/middleware/firebase"
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 
 const Navbar = () => {
+    const ref = useRef();
     const router = useRouter()
     const [currentUser, setCurrentUser] = useState()
+    const [nav, setNav] = useState(false)
     const [showDropdown, setShowDropdown] = useState(false)
     const [profilePic, setProfilePic] = useState("/images/user.png")
     const [displayName, setDisplayName] = useState("")
@@ -32,6 +34,14 @@ const Navbar = () => {
             setCurrentUser(userId)
             setDisplayName(JSON.parse(Cookies.get(userId))[0].fullname)
         }
+        router.events.on('routeChangeComplete', () => {
+            setNav(false)
+            setShowDropdown(false)
+            if(ref.current){
+                ref.current.style.left = "100%";
+            }
+        })
+
     }, [])
 
 
@@ -50,7 +60,15 @@ const Navbar = () => {
             console.log(error)
         });
     }
-
+    const showNav = () => {
+        setNav(!nav)
+        if (ref.current.style.left === "0%") {
+            setShowDropdown(false)
+            ref.current.style.left = "100%";
+            return;
+        }
+        ref.current.style.left = "0%"
+    }
 
     return (
         <>
@@ -61,8 +79,8 @@ const Navbar = () => {
                             <img src='/images/logo.png' />
                         </Link>
                     </div>
-
-                    <ul style={pop.style}>
+                    <div onClick={showNav} className={`${styles.toggle} ${nav ? styles.toggleActive : ""}`}></div>
+                    <ul ref={ref} style={pop.style}>
                         <li><Link className={`${path === "/" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/"}>Home</Link>
                         </li>
                         <li><Link className={`${path === "/chat" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/chat"}>Contact Us</Link></li>

@@ -1,13 +1,19 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useContext, useState, useRef } from 'react'
 import styles from "@/styles/Myads.module.css"
 import { AiOutlineSearch, AiOutlineHeart } from "react-icons/ai"
 import { BsEyeFill } from "react-icons/bs"
 import glxContext from './context/glxContext'
+import Link from 'next/link'
+import { auth } from "@/middleware/firebase"
 
 const myads = () => {
+    const ref = useRef();
     const { getUserItem, userItems } = useContext(glxContext)
     const [handleFilter, setHandleFilter] = useState("")
+    const [userId, setUserId] = useState("")
     useEffect(() => {
+        const currentUserId = localStorage.getItem("currentUserId")
+        setUserId(currentUserId)
         let currentUser = localStorage.getItem("currentUserId")
         if (!currentUser) {
             window.location.href = "/signup"
@@ -17,6 +23,9 @@ const myads = () => {
 
     const handleChange = (e) => {
         setHandleFilter(e.target.value)
+    }
+    const showDrop = (e) => {
+        e.target.nextSibling.classList.toggle(styles.show)
     }
 
 
@@ -39,7 +48,7 @@ const myads = () => {
                 </div>
                 <div className={styles.itemSection}>
                     {
-                        userItems.length >0 && userItems.toReversed().map((item, index) => {
+                        userItems.length > 0 && userItems.toReversed().map((item, index) => {
                             if (item.title.toLowerCase().includes(handleFilter.toLowerCase())) {
                                 return (
                                     <div key={index} className={styles.item}>
@@ -66,6 +75,19 @@ const myads = () => {
                                                 <span>₹ {item.price}</span>
                                                 <button>Active</button>
                                                 <p>This ad is currently live</p>
+                                                <div className={styles.toggle} onClick={showDrop}>
+                                                    &#10247;
+                                                </div>
+                                                <div ref={ref} className={styles.dropDown}>
+                                                    <span>
+                                                        <Link href={`/product/${item.title}?seller=${userId}&tempToken=${item._id}`}>
+                                                            View Ad
+                                                        </Link>
+                                                    </span>
+                                                    <span>Edit Ad</span>
+                                                    <span>Mark as Sold</span>
+                                                    <span>Delete Ad</span>
+                                                </div>
                                             </div>
                                             <div className={styles.metaData}>
                                                 <div>

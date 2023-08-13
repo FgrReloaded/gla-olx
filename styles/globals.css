@@ -12,6 +12,7 @@ body {
     --secondary: #0097B2;
     --accent: #a82aac;
     background: var(--background);
+    overflow-x: hidden;
 }
 
 .changeBack{
@@ -41,4 +42,12 @@ body {
 }
 .hidden{
     display: none !important;
+}
+@media (max-width: 400px) {
+    #__next{
+        overflow-x: hidden;
+    }
+}
+.dropShow{
+    display: flex !important;
 }

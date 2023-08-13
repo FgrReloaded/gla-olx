@@ -15,7 +15,7 @@ import Link from 'next/link'
 const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
 
-const item = ({ item, similarItems }) => {
+const item = ({ item, similarItems, seller }) => {
     const router = useRouter()
     const [diff, setDiff] = useState("")
     const [currentWishlist, setCurrentWishlist] = useState("")
@@ -172,7 +172,10 @@ const item = ({ item, similarItems }) => {
                         <div className={styles.item1}>
                             <div className={styles.price}>
                                 <span style={noto.style}>₹{item.price}</span>
-                                <span> <AiOutlineShareAlt onClick={copyLink} size={30} /> <AiOutlineHeart onClick={handleWishlist} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={handleWishlist} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
+                                {
+                                    seller === item.seller ? null :
+                                        <span> <AiOutlineShareAlt onClick={copyLink} size={30} /> <AiOutlineHeart onClick={handleWishlist} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={handleWishlist} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
+                                }
                             </div>
                             <div style={noto.style} className={styles.title}>
                                 Product: {item.title}
@@ -190,9 +193,12 @@ const item = ({ item, similarItems }) => {
                                     {item.sellerName} <IoIosArrowForward color='#BBBEBF' size={25} />
                                 </div>
                             </div>
-                            <button onClick={() => { handleSeller(item.seller) }} className={styles.buttonChat} style={noto.style}>
-                                Chat with seller
-                            </button>
+                            {
+                                seller === item.seller ? null :
+                                    <button onClick={() => { handleSeller(item.seller) }} className={styles.buttonChat} style={noto.style}>
+                                        Chat with seller
+                                    </button>
+                            }
                         </div>
                         <div className={styles.item3} style={noto.style}>
                             <div>
@@ -266,7 +272,7 @@ export async function getServerSideProps(context) {
         return item._id.toString() !== items._id.toString()
     })
 
-    return { props: { item: JSON.parse(JSON.stringify(items)), similarItems: JSON.parse(JSON.stringify(similarProduct)) } }
+    return { props: { item: JSON.parse(JSON.stringify(items)), similarItems: JSON.parse(JSON.stringify(similarProduct)), seller } }
 }
 
 export default item

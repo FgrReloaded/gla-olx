@@ -19,8 +19,22 @@
   overflow: hidden;
   border-radius: 10px;
   background: #fff;
+  position: relative;
 }
-
+.backBtn{
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  cursor: pointer;
+  border: 2px solid var(--secondary);
+  border-radius: 50%;
+  color: var(--secondary);
+  transition: 0.4s ease-in-out;
+}
+.backBtn:hover{
+  color: #fff; 
+  background: var(--secondary);
+}
 .form {
   position: relative;
 }
