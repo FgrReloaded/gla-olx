@@ -1,13 +1,18 @@
 import Category from '@/components/Category'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from '@/styles/Category.module.css'
 import Link from 'next/link'
 import { IoIosArrowForward } from "react-icons/io"
 import mongoose from 'mongoose'
 import Item from '@/models/Item'
 import Card from '@/components/Card'
+import NoItem from '@/components/NoItem'
+import { useRouter } from 'next/navigation'
 const category = ({ category, items }) => {
+    console.log(items)
+    const router = useRouter();
     const [subCat, setSubCat] = useState("")
+    const [showFilter, setShowFilter] = useState({})
     const categories = {
         "Lab Items": ["Lab-Coats", "ED-lab Stuffs"],
         "Room Items": ["Posters", "Lights", "General Room Stuffs"],
@@ -19,10 +24,30 @@ const category = ({ category, items }) => {
         "Others": ["Others"],
     }
 
+    const handleSubCat = (ele) => {
+        setSubCat(ele)
+        let ite = items.filter((item) => {
+            return item.subCategory.toLowerCase() === ele.toLowerCase()
+        })
+        console.log(ite)
+        if (!ite.length > 0) {
+            setShowFilter({ display: "grid", gridTemplateColumns: "1fr" })
+        } else {
+            setShowFilter({})
+        }
+    }
+
+    const handleCategory = (ele) => {
+        if(ele!== ""){
+            setSubCat("")
+            setShowFilter({})
+            router.push(`/category/${ele}`)
+        }
+    }
 
     return (
         <>
-            <Category />
+            <Category handleCategory={handleCategory} />
             <section>
                 <div className={styles.heading}>
                     <Link href={"/"}>Home</Link>
@@ -37,7 +62,7 @@ const category = ({ category, items }) => {
                                 {
                                     items && categories[category].map((item, i) => {
                                         return (
-                                            <li key={i} onClick={() => { setSubCat(item) }}>
+                                            <li key={i} onClick={() => { handleSubCat(item) }}>
                                                 {item}
                                             </li>
                                         )
@@ -46,22 +71,26 @@ const category = ({ category, items }) => {
                             </ul>
                         </div>
                     </div>
-                    <div className={styles.itemSection}>
-                        {
-                            items && items.map((item, i) => {
+                    {items.length > 0 ?
+                        <div style={showFilter} className={styles.itemSection} id='itemSec'>
+                            {items && items.map((item, i) => {
                                 if (item.subCategory.toLowerCase().includes(subCat.toLowerCase())) {
                                     return (
                                         <Card item={item} key={i} />
                                     )
+                                } else {
+                                    return <NoItem key={i} />
                                 }
-                            })
-                        }
-                    </div>
+                            })}
+                        </div> :
+                        <NoItem message={"No Items in this category"} />
+                    }
                 </div>
             </section>
         </>
     )
 }
+
 
 export async function getServerSideProps(context) {
     const { category } = context.params

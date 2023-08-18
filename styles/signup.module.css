@@ -21,7 +21,8 @@
   background: #fff;
   position: relative;
 }
-.backBtn{
+
+.backBtn {
   position: absolute;
   top: 5%;
   left: 5%;
@@ -31,10 +32,12 @@
   color: var(--secondary);
   transition: 0.4s ease-in-out;
 }
-.backBtn:hover{
-  color: #fff; 
+
+.backBtn:hover {
+  color: #fff;
   background: var(--secondary);
 }
+
 .form {
   position: relative;
 }
@@ -125,16 +128,16 @@
   background: #fff;
 }
 
-#chk:checked ~ .login {
+#chk:checked~.login {
   transform: translateY(-500px);
   border-radius: 0%;
 }
 
-#chk:checked ~ .login label {
+#chk:checked~.login label {
   transform: scale(1);
 }
 
-#chk:checked ~ .signup label {
+#chk:checked~.signup label {
   transform: scale(0.6);
 }
 
@@ -237,6 +240,7 @@
 }
 
 @keyframes spin {
+
   0%,
   100% {
     box-shadow: 0.2em 0px 0 0px currentcolor;
@@ -268,5 +272,45 @@
 
   87% {
     box-shadow: 0.2em -0.2em 0 0 currentcolor;
+  }
+}
+
+
+.button:hover .btnLoader{
+  color: #fff;
+}
+.button:hover .btnLoader:nth-child(1){
+  color: var(--secondary);
+}
+.btnLoader:nth-child(1){
+  color: #fff;
+}
+.btnLoader {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: var(--secondary);
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite alternate;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: -19px -6px, -7px 0, 7px 0, 19px 0;
+  }
+
+  33% {
+    box-shadow: -19px 0px, -7px -6px, 7px 0, 19px 0;
+  }
+
+  66% {
+    box-shadow: -19px 0px, -7px 0, 7px -6px, 19px 0;
+  }
+
+  100% {
+    box-shadow: -19px 0, -7px 0, 7px 0, 19px -6px;
   }
 }

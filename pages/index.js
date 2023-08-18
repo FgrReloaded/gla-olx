@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react'
-import { auth, db } from "@/middleware/firebase"
+import React, { useEffect, useState, useContext } from 'react'
 import styles from '@/styles/Home.module.css'
 import glxContext from './context/glxContext';
 import Head from 'next/head';
@@ -10,16 +9,22 @@ const roboto = Roboto({ subsets: ["latin"], weight: "300" })
 import Card from '@/components/Card';
 import { AiFillPlusCircle } from 'react-icons/ai'
 import Category from '@/components/Category';
+import NoItem from '@/components/NoItem';
 
 const Home = () => {
-  const ref = useRef(null)
   const [category, setCategory] = useState("")
   const [search, setSearch] = useState("")
+  const [noContent, setNoContent] = useState(false)
+  const [currentUser, setCurrentUser] = useState("")
   const [limit, setLimit] = useState(9)
   const context = useContext(glxContext);
   const { getItem, items } = context;
 
   useEffect(() => {
+    let currentUser = localStorage.getItem("currentUserId")
+    if (currentUser) {
+      setCurrentUser(currentUser)
+    }
     getItem(limit)
   }, [])
 
@@ -27,7 +32,33 @@ const Home = () => {
     setLimit(limit + 1)
     getItem(limit + 1)
   }
+  const handleSearch = (e) => {
+    setSearch(e.target.value)
+    const ite = items.filter(item => {
+      if (item.title.toLowerCase().includes(e.target.value)) {
+        return item
+      }
+    })
+    if (ite.length === 0) {
+      setNoContent(true)
+    } else {
+      setNoContent(false)
+    }
+  }
 
+  const handleCategory = (val) => {
+    setCategory(val)
+    const ite = items.filter(item => {
+      if (item.category.includes(val)) {
+        return item
+      }
+    })
+    if (ite.length === 0) {
+      setNoContent(true)
+    } else {
+      setNoContent(false)
+    }
+  }
 
   return (
     <>
@@ -38,46 +69,55 @@ const Home = () => {
       <main>
         <div className={styles.heroSec} style={pop.style} >
           <div className={styles.searchBox}>
-            <input type="text" onChange={(e) => { setSearch(e.target.value) }} className={styles.inputSearch} placeholder="What are you looking for?..." />
+            <input type="text" onChange={handleSearch} className={styles.inputSearch} placeholder="What are you looking for?..." />
             <div className={styles.searchBtn}>
               <span onClick={() => { document.getElementById("cardSec").scrollIntoView(); }}>Search</span> <BiSearchAlt2 color='#D9D9D9' size={25} />
             </div>
           </div>
         </div>
       </main>
-      <Category setCategory={setCategory} />
+      <Category handleCategory={handleCategory} />
 
       <section className={styles.cardSec} id='cardSec'>
         <h3 className={styles.cardHead} style={roboto.style}>Fresh Recommendation:</h3>
-        <div className={styles.productList}>
-          {
-            items && items.map((item, i) => {
-              if (search && item.title.toLowerCase().includes(search.toLowerCase())) {
-                return (
-                  <Card item={item} key={i} />
-                )
-              }
-              else if (category && item.category.toLowerCase().includes(category.toLowerCase())) {
-                return (
-                  <Card item={item} key={i} />
-                )
-              }
-              else if (!search && !category) {
-                return (
-                  <Card item={item} key={i} />
-                )
-              }
-            })
-          }
-
-        </div>
-        <button onClick={loadMore} className={styles.loadMore} style={pop.style}>
-          Load More <AiFillPlusCircle color='#fff' size={25} />
-        </button>
+        {!noContent ?
+          <div className={styles.productList}>
+            {
+              items && items.map((item, i) => {
+                if (search && item.title.toLowerCase().includes(search.toLowerCase()) && currentUser !== item.seller) {
+                  return (
+                    <Card item={item} key={i} />
+                  )
+                }
+                else if (category && item.category.toLowerCase().includes(category.toLowerCase()) && currentUser !== item.seller) {
+                  return (
+                    <Card item={item} key={i} />
+                  )
+                }
+                else if (!search && !category && currentUser !== item.seller) {
+                  return (
+                    <Card item={item} key={i} />
+                  )
+                }
+              })
+            }
+          </div>
+          : <NoItem />
+        }
+        {
+          !noContent &&
+          <button onClick={loadMore} className={styles.loadMore} style={pop.style}>
+            Load More <AiFillPlusCircle color='#fff' size={25} />
+          </button>
+        }
       </section>
 
     </>
   )
 }
 
+const newStyle = {
+  display: "grid",
+  gridTemplateColumns: "1fr",
+}
 export default Home

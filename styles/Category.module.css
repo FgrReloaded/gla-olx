@@ -1,33 +1,39 @@
 /* Styling Below */
 
-.heading{
+.heading {
     padding: 1rem;
 }
-.heading a{
+
+.heading a {
     font-size: 0.8rem;
     color: gray;
 }
-.heading h3{
+
+.heading h3 {
     font-size: 1.5rem;
     font-weight: bold;
 }
-.container{
+
+.container {
     padding: 1rem 0.5rem;
     background: #fff;
     display: grid;
     grid-template-columns: 0.25fr 0.75fr;
 }
-.categorySection h5{
+
+.categorySection h5 {
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.5px;
     margin-bottom: 1rem;
 }
-.categorySection div{
+
+.categorySection div {
     margin-left: 2rem;
     border-bottom: 2px solid rgba(0, 47, 52, 0.16);
 }
-.categorySection div h4{
+
+.categorySection div h4 {
     position: relative;
     font-weight: 600;
     display: flex;
@@ -37,22 +43,37 @@
     color: rgb(0, 47, 52);
     background: #C8F7F5;
     cursor: pointer;
-} 
-.categorySection div h4 svg{
+}
+
+.categorySection div h4 svg {
     position: absolute;
     left: -7%;
     cursor: pointer;
 }
-.categorySection div ul li{
+
+.categorySection div ul li {
     font-size: 0.8rem;
     padding: 0.4rem 0;
     color: rgba(0, 47, 52, 0.64);
     cursor: pointer;
 }
-.itemSection{
-    display: flex;
-    justify-content: space-evenly;
+
+.itemSection {
+    padding-left: 1rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     align-items: center;
-    flex-wrap: wrap;
     gap: 1rem;
+}
+
+@media (max-width:400px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .itemSection {
+        justify-content: center;
+        grid-template-columns: 0.75fr;
+        padding-left: 0;
+    }
 }

@@ -20,11 +20,11 @@ const profile = ({ data }) => {
     }
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
+    const userProfile = urlParams.get('userProfile')
     let profilePic = localStorage.getItem('profilePic')
-    if (profilePic) {
+    if (profilePic && !urlParams) {
       setProfilePic(profilePic)
     }
-    const userProfile = urlParams.get('userProfile')
     if (!userProfile) {
       let getId = localStorage.getItem('currentUserId')
       if (!getId) {
@@ -46,6 +46,7 @@ const profile = ({ data }) => {
     if (docSnap.exists()) {
       let data = []
       data.push(docSnap.data())
+      setProfilePic(docSnap.data().profilePic)
       setUser(data)
     } else {
       console.log("No Data Available");

@@ -64,3 +64,12 @@
     gap: 1rem;
     padding: 1rem;
 }
+
+@media (max-width: 400px){
+    .section{
+        grid-template-columns: 1fr;
+    }
+    .userAds{
+        grid-template-columns: 1fr;
+    }
+}

@@ -48,7 +48,7 @@ const sell = () => {
     let coverImg = coverFile;
     let images = files.slice(0, 4);
     images.push(coverImg)
-    createItem({ title, desc, price, category, subCategory,seller, sellerName, images, sellerPic: profilePic })
+    createItem({ title, desc, price, category, subCategory, seller, sellerName, images, sellerPic: profilePic })
     router.push("/myads")
   }
 
@@ -256,7 +256,7 @@ const sell = () => {
                     categoryList &&
                     categoryList.map((item, index) => {
                       return (
-                        <span onClick={() => { setProductData({...productData, subCategory: item }) }} key={index}>{item}</span>
+                        <span onClick={() => { setProductData({ ...productData, subCategory: item }) }} key={index}>{item}</span>
                       )
                     })
                   }

@@ -15,12 +15,15 @@ import Link from 'next/link'
 const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
 
-const item = ({ item, similarItems, seller }) => {
+const item = ({ item, similarItems }) => {
+    const [currentUser, setCurrentUser] = useState(null)
     const router = useRouter()
     const [diff, setDiff] = useState("")
     const [currentWishlist, setCurrentWishlist] = useState("")
     useEffect(() => {
-        checkWishlist()
+        checkWishlist();
+        setCurrentUser(localStorage.getItem("currentUserId"));
+        checkView();
         let today = new Date()
         let createdAt = new Date(item.createdAt)
         let diff = today - createdAt
@@ -46,6 +49,37 @@ const item = ({ item, similarItems, seller }) => {
         let currentUser = localStorage.getItem("currentUserId")
         router.push(`/chat?currentUser=${currentUser}&userTempToken=${seller}&item=${item.title}&itemPrice=${item.price}`)
     }
+    const checkView = async () => {
+        let viewed = localStorage.getItem("viewed")
+        if (viewed) {
+            if (viewed.includes(item._id)) {
+                return
+            }
+            viewed = JSON.parse(viewed)
+            viewed.push(item._id)
+            localStorage.setItem("viewed", JSON.stringify(viewed))
+            const res = await fetch("/api/view", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ item: item._id })
+            })
+            const data = await res.json()
+
+        } else {
+            localStorage.setItem("viewed", JSON.stringify([item._id]))
+            const res = await fetch("/api/view", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ item: item._id })
+            })
+            const data = await res.json()
+        }
+    }
+
 
     const handleSlider = (e) => {
         let direct = e.target.getAttribute("direct")
@@ -124,6 +158,10 @@ const item = ({ item, similarItems, seller }) => {
         }
     }
 
+    const handleUserProfile = () => {
+        router.push(`/profile?userProfile=${item.seller}`)
+    }
+
 
     return (
         <>
@@ -173,7 +211,7 @@ const item = ({ item, similarItems, seller }) => {
                             <div className={styles.price}>
                                 <span style={noto.style}>₹{item.price}</span>
                                 {
-                                    seller === item.seller ? null :
+                                    currentUser === item.seller ? null :
                                         <span> <AiOutlineShareAlt onClick={copyLink} size={30} /> <AiOutlineHeart onClick={handleWishlist} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={handleWishlist} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
                                 }
                             </div>
@@ -189,12 +227,12 @@ const item = ({ item, similarItems, seller }) => {
                                 <div>
                                     <img src="/images/item1.jpg" alt="img" />
                                 </div>
-                                <div style={noto.style}>
+                                <div style={noto.style} onClick={handleUserProfile}>
                                     {item.sellerName} <IoIosArrowForward color='#BBBEBF' size={25} />
                                 </div>
                             </div>
                             {
-                                seller === item.seller ? null :
+                                currentUser === item.seller ? null :
                                     <button onClick={() => { handleSeller(item.seller) }} className={styles.buttonChat} style={noto.style}>
                                         Chat with seller
                                     </button>

@@ -134,7 +134,7 @@
 }
 
 .chatHeader {
-    padding: 0 0.5rem !important;
+    padding: 0.8rem !important;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -207,6 +207,9 @@
     cursor: pointer;
     background: #C8F8F6;
     border-color: #C8F8F6;
+}
+.noChat{
+    
 }
 
 
@@ -436,3 +439,13 @@
     font-weight: lighter !important;
     text-align: center;
 }
+
+@media (max-width: 400px){
+    .box{
+        width: 90%;
+        grid-template-columns: 1fr;
+    }
+    .chatBox{
+        display: none;
+    }
+}   

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from "@/styles/wishlist.module.css"
 import Card from '@/components/Card'
+import NoItem from '@/components/NoItem'
 
 const wishlist = () => {
     const [wishlist, setWishlist] = useState([])
@@ -25,13 +26,16 @@ const wishlist = () => {
                     <h4>My Wishlists</h4>
                 </div>
                 <hr />
-                <div className={styles.productList}>
-                    {
-                        wishlist && wishlist.map((item, index) => {
-                            return <Card key={index} item={item} />
-                        })
-                    }
-                </div>
+                {
+                    wishlist.length === 0 ? <NoItem message={"No items in wishlist"} /> :
+                    <div className={styles.productList}>
+                        {
+                            wishlist.length > 0 && wishlist.map((item, index) => {
+                                return <Card key={index} item={item} />
+                            })
+                        }
+                    </div>
+                }
             </div>
         </>
     )

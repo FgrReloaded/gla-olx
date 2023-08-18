@@ -6,7 +6,7 @@ const roboto = Roboto({ subsets: ["latin"], weight: "300" })
 const roboto1 = Roboto({ subsets: ["latin"], weight: "700" })
 import Link from "next/link"
 
-const Category = ({ setCategory }) => {
+const Category = ({ handleCategory }) => {
     const [rotate, setRotate] = useState(false)
     const categories = {
         "Lab Items": ["Lab-Coats", "ED-lab Stuffs"],
@@ -40,7 +40,7 @@ const Category = ({ setCategory }) => {
             <section>
                 <ul className={styles.category}>
                     <label onClick={showCategory} style={roboto1.style}><IoIosArrowForward className={`${rotate ? styles.rotateArrow : ""}`} /> Category</label>
-                    <li onClick={() => { ref.current.classList.toggle("hidden"); setCategory("") }} className={`${styles.dropDownParent} li`}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle />
+                    <li onClick={()=>{handleCategory("")}} className={`${styles.dropDownParent} li`}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle onClick={() => { ref.current.classList.toggle("hidden"); }} />
                         <div ref={ref} className={`${styles.dropDown} hidden`}>
                             {categories &&
                                 Object.keys(categories).map((category, i) => {
@@ -52,7 +52,7 @@ const Category = ({ setCategory }) => {
                                             <div>
                                                 {categories[category].map((item, index) => {
                                                     return (
-                                                        <Link key={index} href={`/category/${category}#${item}`}>
+                                                        <Link key={index} href={`/category/${category}`}>
                                                             <span style={roboto.style} key={index}>{item}</span>
                                                         </Link>
                                                     )
@@ -64,13 +64,13 @@ const Category = ({ setCategory }) => {
                                 })}
                         </div>
                     </li>
-                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Lab Items</a></li>
-                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Room Items</a></li>
-                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Books</a></li>
-                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Sports Items</a></li>
-                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Gadgets</a></li>
-                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Accessories</a></li>
-                    <li className='li'><a onClick={(e) => { setCategory(e.target.innerText) }}>Clothes</a></li>
+                    <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Lab Items</a></li>
+                    <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Room Items</a></li>
+                    <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Books</a></li>
+                    <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Sports Items</a></li>
+                    <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Gadgets</a></li>
+                    <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Accessories</a></li>
+                    <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Clothes</a></li>
                 </ul>
             </section>
         </>

@@ -4,7 +4,7 @@ import { AiOutlineSearch, AiOutlineHeart } from "react-icons/ai"
 import { BsEyeFill } from "react-icons/bs"
 import glxContext from './context/glxContext'
 import Link from 'next/link'
-import { auth } from "@/middleware/firebase"
+import NoItem from '@/components/NoItem'
 
 const myads = () => {
     const ref = useRef();
@@ -20,6 +20,7 @@ const myads = () => {
         }
         getUserItem(currentUser)
     }, [])
+
 
     const handleChange = (e) => {
         setHandleFilter(e.target.value)
@@ -48,7 +49,7 @@ const myads = () => {
                 </div>
                 <div className={styles.itemSection}>
                     {
-                        userItems.length > 0 && userItems.toReversed().map((item, index) => {
+                        userItems.length > 0 ? userItems.toReversed().map((item, index) => {
                             if (item.title.toLowerCase().includes(handleFilter.toLowerCase())) {
                                 return (
                                     <div key={index} className={styles.item}>
@@ -93,11 +94,7 @@ const myads = () => {
                                                 <div>
                                                     <span>
                                                         <BsEyeFill />
-                                                        <p>Views: 0</p>
-                                                    </span>
-                                                    <span>
-                                                        <AiOutlineHeart />
-                                                        <p>Likes: 0</p>
+                                                        <p>Views: {item.views}</p>
                                                     </span>
                                                 </div>
                                             </div>
@@ -105,7 +102,7 @@ const myads = () => {
                                     </div>
                                 )
                             }
-                        })}
+                        }) : <NoItem message={"No items listed for sell"} />}
                 </div>
             </div>
         </>

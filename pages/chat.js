@@ -160,7 +160,17 @@ const chat = () => {
     }
   }
 
-
+  const showChat = () => {
+    let chatBox = document.getElementById("chatBox");
+    let userListBox = document.getElementById("userListBox");
+    if (chatBox.style.display === "none") {
+      chatBox.style.display = "grid";
+      userListBox.style.display = "none"
+    } else {
+      chatBox.style.display = "none";
+      userListBox.style.display = "block"
+    }
+  }
 
   return (
     <>
@@ -169,11 +179,11 @@ const chat = () => {
       </Head>
       <section className={styles.container}>
         <div className={styles.box}>
-          <div className={styles.userListBox}>
+          <div className={styles.userListBox} id='userListBox'>
             <div className={styles.chatHeader} style={noto.style}>
               <h3>Inbox</h3>
               <div>
-                <GrSearch color='#728D90' size={25} /> <span color='#728D90'>&#8942;</span>
+                <GrSearch color='#728D90' size={25} />
               </div>
             </div>
             <div className={styles.quickFilter}>
@@ -186,10 +196,10 @@ const chat = () => {
               </div>
             </div>
             <ul>
-              {users.length > 0 &&
+              {users.length > 0 ?
                 users.toReversed().map((user, index) => {
                   return (
-                    <li onClick={() => { handleReceiver(user.userId, user.itemName, user.itemPrice) }} key={index}>
+                    <li onClick={() => { handleReceiver(user.userId, user.itemName, user.itemPrice); showChat(); }} key={index}>
                       <img src={user.profilePic} style={{ objectFit: "cover" }} />
                       <a>{user.fullname}</a>
                       <p>{user.itemName}</p>
@@ -197,10 +207,15 @@ const chat = () => {
                       <span onClick={showDeleteBtn} color='#728D90'>&#8942; <div onClick={deleteMsg} className='hidden'>Delete</div></span>
                     </li>
                   )
-                })}
+                }):
+                <div className={styles.noChats}>
+                  <PiChatsFill size={80} color='var(--secondary)' />
+                  <p>No Chats</p>
+                </div>
+                }
             </ul>
           </div>
-          <div className={`${styles.chatBox} ${!receiverData ? styles.noChat : null}`}>
+          <div id='chatBox' className={`${styles.chatBox} ${!receiverData ? styles.noChat : null}`}>
             {!receiverData &&
               <div className={styles.noChats}>
                 <PiChatsFill size={80} color='var(--secondary)' />
@@ -215,7 +230,7 @@ const chat = () => {
                     <h3 style={noto.style}>{
                       receiverData && users.filter(user => user.userId === receiverData?.id)[0].fullname
                     }</h3>
-                    <span onClick={() => { setReceiverData(null) }}><AiOutlineClose size={20} /></span>
+                    <span onClick={() => { setReceiverData(null); showChat() }}><AiOutlineClose size={20} /></span>
                   </div>
                   <div className={styles.userProduct}>
                     <span>Product: {receiverData && receiverData?.item}</span><span>Price: Rs {receiverData && receiverData?.price}</span>

@@ -1,0 +1,15 @@
+/* Styling Below */
+.noContent{
+    display: flex;
+    justify-content:  center;
+    align-items: center;
+    flex-direction: column;
+    gap: 3rem;   
+    padding: 5rem 0;
+    text-align: center;
+}
+.noContent p{
+    font-size: 2rem;
+    color: var(--secondary);
+    font-weight: bold;
+}

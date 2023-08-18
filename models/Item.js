@@ -13,6 +13,10 @@ var ItemSchema = new Schema({
     sellerName: String,
     sellerPic: String,
     buyer: String,
+    views: {
+        type: Number,
+        default: 0
+    },
     status: String,
 }, { timestamps: true });
 

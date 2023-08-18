@@ -23,3 +23,14 @@
 .section hr {
     border-color: rgb(60, 60, 60);
 }
+
+@media (max-width: 400px){
+    .section{
+        width: 90%;
+    }
+.productList {
+    grid-template-columns: 0.8fr;
+    justify-content: center;
+}
+
+}

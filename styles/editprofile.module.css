@@ -38,7 +38,8 @@
     cursor: pointer;
     transition: 0.4s;
 }
-.sideBar button:hover{
+
+.sideBar button:hover {
     background-color: transparent;
     color: var(--secondary);
 }
@@ -129,6 +130,7 @@
     border-radius: 5px;
     transition: 0.4s;
 }
+
 .details div button:hover {
     background: #fff;
     color: var(--secondary)
@@ -140,35 +142,42 @@
     justify-content: space-between;
     padding: 1rem;
 }
-.profilePicture .deletePic img{
+
+.profilePicture .deletePic img {
     width: 80%;
     padding: 1rem;
     transition: 0.3s;
     border-radius: 50%;
 }
-.profilePicture .deletePic img:hover{
+
+.profilePicture .deletePic img:hover {
     cursor: pointer;
     background: #0097B2;
 }
-.profilePicHolder{
+
+.profilePicHolder {
     width: 200px;
     height: 200px;
     border: 1px solid rgb(164, 164, 164);
 }
-.profilePicHolder img{
+
+.profilePicHolder img {
     width: 100%;
     height: 100%;
 }
-.picContent{
+
+.picContent {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 40%;
 }
-.picContent p{
+
+.picContent p {
     font-size: 0.8rem;
 }
-.picContent button{
+
+.picContent button {
     margin-top: 1rem;
     padding: 13px;
     width: 100%;
@@ -179,6 +188,52 @@
     cursor: pointer;
 
 }
-.section input::placeholder, .section textarea::placeholder{
+
+.section input::placeholder,
+.section textarea::placeholder {
     color: rgb(60, 60, 60);
+}
+
+@media (max-width: 400px) {
+    .section {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .sideBar {
+        width: 100%;
+    }
+
+    .editProfile,
+    .profilePic {
+        width: 100%;
+    }
+
+    .details input,
+    .details textarea {
+        width: 100%;
+    }
+
+    .picContent {
+        width: 100%;
+    }
+
+    .details div {
+        padding-inline: 1rem;
+    }
+
+    .details div button {
+        padding: 0.5rem;
+    }
+
+    .profilePicture {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .profilePicture .deletePic  {
+        align-self: flex-start;
+    }
 }

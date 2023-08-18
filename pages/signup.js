@@ -25,6 +25,7 @@ export default function SignUp() {
   const router = useRouter()
   let { userSetup } = router.query;
   const [loader, setLoader] = useState(false)
+  const [showLoader, setShowLoader] = useState(false)
   const [showPass, setShowPass] = useState(false)
   const [LoggedInUser, setLoggedInUser] = useState(null)
   const [showSetup, setShowSetup] = useState(false)
@@ -84,6 +85,7 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowLoader(true)
     const { fullname, email, password } = credentials;
     let check = inputVerification();
     if (!check) {
@@ -100,6 +102,7 @@ export default function SignUp() {
       setLoggedInUser(currentUser);
       setLoader(false)
       setShowSetup(true)
+      setShowLoader(false)
       router.replace("/signup?signup=true&userSetup=true", undefined, { shallow: true })
     } catch (error) {
       console.log(error.message)
@@ -108,6 +111,7 @@ export default function SignUp() {
 
   const handleLogin = (e) => {
     e.preventDefault()
+    setShowLoader(true)
     const { email, password } = credentials;
     if (email === "") {
       warnFunc("Email is Required");
@@ -122,6 +126,7 @@ export default function SignUp() {
         // Signed in 
         const user = userCredential.user;
         localStorage.setItem("currentUserId", user.uid)
+        setShowLoader(false)
         getUserData(user.uid)
       })
       .catch((error) => {
@@ -198,7 +203,10 @@ export default function SignUp() {
                     <FiLock className={`${styles.lock} ${showPass ? "hidden" : ""}`} onClick={() => { setShowPass(true) }} />
                     <FiUnlock className={`${showPass ? "" : "hidden"} ${styles.unlock}`} onClick={() => { setShowPass(false) }} />
                   </div>
-                  <button className={styles.button} onClick={handleSubmit}>Sign up</button>
+                  <button className={styles.button} onClick={handleSubmit}>
+                    {showLoader ? <span className={styles.btnLoader}></span> :
+                      "Sign up"}
+                  </button>
                 </form>
               </div>
 
@@ -215,7 +223,12 @@ export default function SignUp() {
                     <FiLock className={`${styles.lock} ${showPass ? "hidden" : ""}`} onClick={() => { setShowPass(true) }} />
                     <FiUnlock className={`${showPass ? "" : "hidden"} ${styles.unlock}`} onClick={() => { setShowPass(false) }} />
                   </div>
-                  <button onClick={handleLogin} className={styles.button}>Login</button>
+                  <button onClick={handleLogin} className={styles.button}>
+                    {
+                      showLoader ? <span className={styles.btnLoader}></span> :
+                      "Login"
+                    }
+                    </button>
                 </form>
               </div>
             </div> :
