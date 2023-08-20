@@ -9,7 +9,6 @@ import Card from '@/components/Card'
 import NoItem from '@/components/NoItem'
 import { useRouter } from 'next/navigation'
 const category = ({ category, items }) => {
-    console.log(items)
     const router = useRouter();
     const [subCat, setSubCat] = useState("")
     const [showFilter, setShowFilter] = useState({})
@@ -38,7 +37,7 @@ const category = ({ category, items }) => {
     }
 
     const handleCategory = (ele) => {
-        if(ele!== ""){
+        if (ele !== "") {
             setSubCat("")
             setShowFilter({})
             router.push(`/category/${ele}`)

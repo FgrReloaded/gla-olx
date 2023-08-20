@@ -19,6 +19,7 @@ import {
 import { auth, db } from "@/middleware/firebase"
 import { useRouter } from 'next/navigation';
 import glxContext from './context/glxContext';
+import LoadingChat from '@/components/LoadingChat'
 
 
 
@@ -164,11 +165,11 @@ const chat = () => {
     let chatBox = document.getElementById("chatBox");
     let userListBox = document.getElementById("userListBox");
     if (chatBox.style.display === "none") {
-      chatBox.style.display = "grid";
-      userListBox.style.display = "none"
+      chatBox.classList.remove("mobileChatBox");
+      userListBox.classList.add("hideUserListBox");
     } else {
-      chatBox.style.display = "none";
-      userListBox.style.display = "block"
+      chatBox.classList.add("mobileChatBox");
+      userListBox.classList.remove("mobileUserListBox");
     }
   }
 
@@ -179,7 +180,7 @@ const chat = () => {
       </Head>
       <section className={styles.container}>
         <div className={styles.box}>
-          <div className={styles.userListBox} id='userListBox'>
+          <div className={`${styles.mobileUserListBox} ${styles.userListBox}`} id='userListBox'>
             <div className={styles.chatHeader} style={noto.style}>
               <h3>Inbox</h3>
               <div>
@@ -203,19 +204,20 @@ const chat = () => {
                       <img src={user.profilePic} style={{ objectFit: "cover" }} />
                       <a>{user.fullname}</a>
                       <p>{user.itemName}</p>
-                      {/* <p>pehli fursat me nikal</p> */}
                       <span onClick={showDeleteBtn} color='#728D90'>&#8942; <div onClick={deleteMsg} className='hidden'>Delete</div></span>
                     </li>
                   )
-                }):
+                }) :
                 <div className={styles.noChats}>
                   <PiChatsFill size={80} color='var(--secondary)' />
                   <p>No Chats</p>
                 </div>
-                }
+              }
+              {/* <LoadingChat /> */}
+
             </ul>
           </div>
-          <div id='chatBox' className={`${styles.chatBox} ${!receiverData ? styles.noChat : null}`}>
+          <div id='chatBox' className={`${styles.chatBox} ${styles.mobileChatBox} ${!receiverData ? styles.noChat : null}`}>
             {!receiverData &&
               <div className={styles.noChats}>
                 <PiChatsFill size={80} color='var(--secondary)' />

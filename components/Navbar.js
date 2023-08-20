@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { AiOutlinePlusCircle, AiOutlineHeart } from 'react-icons/ai'
 import { BiHelpCircle, BiSpreadsheet } from 'react-icons/bi'
+import {BsChatDots} from 'react-icons/bs'
 import { IoMdArrowDropdown } from 'react-icons/io'
 import { usePathname } from 'next/navigation'
 import { Alice, Jost, Poppins } from 'next/font/google'
@@ -37,7 +38,7 @@ const Navbar = () => {
         router.events.on('routeChangeComplete', () => {
             setNav(false)
             setShowDropdown(false)
-            if(ref.current){
+            if (ref.current) {
                 ref.current.style.left = "100%";
             }
         })
@@ -83,7 +84,7 @@ const Navbar = () => {
                     <ul ref={ref} style={pop.style}>
                         <li><Link className={`${path === "/" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/"}>Home</Link>
                         </li>
-                        <li><Link className={`${path === "/chat" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/chat"}>Contact Us</Link></li>
+                        <li><Link className={`${path === "/contact" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/chat"}>Contact Us</Link></li>
                         <li><Link className={`${path === "/chat" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/chat"}>About Us</Link></li>
                         {
                             currentUser &&
@@ -108,6 +109,15 @@ const Navbar = () => {
                                                     <BiSpreadsheet size={20} /> <span>
                                                         <Link href={"/myads"}>
                                                             My Ads
+                                                        </Link>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className={styles.otherDrops}>
+                                                <div>
+                                                    <BsChatDots size={20} /> <span>
+                                                        <Link href={"/chat"}>
+                                                            Inbox
                                                         </Link>
                                                     </span>
                                                 </div>

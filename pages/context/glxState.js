@@ -17,8 +17,10 @@ const GlxState = ({ children }) => {
     const [users, setUsers] = useState([])
     const [items, setItems] = useState([])
     const [userItems, setUserItems] = useState([])
+    const [loadMoreBtn, setLoadMore] = useState(true)
     const [show, setShow] = useState("hidden")
     const [message, setMessage] = useState("")
+    const [showSkeleton, setShowSkeleton] = useState(false)
     const router = useRouter()
 
     const getUser = async () => {
@@ -33,14 +35,19 @@ const GlxState = ({ children }) => {
         setUser(data.user)
     }
     const getItem = async (limit) => {
+        setShowSkeleton(true);
         const res = await fetch(`/api/item?limit=${limit}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        const { data } = await res.json()
+        const { data, loadMore } = await res.json()
         setItems(data)
+        if(loadMore === false){
+            setLoadMore(false)
+        }
+        setShowSkeleton(false);
     }
     const getUserItem = async (id) => {
         const res = await fetch('/api/useritem', {
@@ -53,6 +60,7 @@ const GlxState = ({ children }) => {
         const { data } = await res.json()
         setUserItems(data);
     }
+
 
     const createItem = async (item) => {
         const { title, desc, price, category, subCategory, seller, sellerName, sellerPic } = item
@@ -92,7 +100,7 @@ const GlxState = ({ children }) => {
         let currentUser = localStorage.getItem("currentUserId");
         let res = await fetch(`/api/chattingwith?id=${currentUser}`)
         let data = await res.json();
-        if(data.success){
+        if (data.success) {
             getAllUsersData(data.chattingWith.chattingWith)
         }
     }
@@ -116,7 +124,7 @@ const GlxState = ({ children }) => {
         }, 2500)
     }
     return (
-        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser, show, message, setShow, getUserItem,userItems,  }}>
+        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser, show, message, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn }}>
             {children}
         </glxContext.Provider>
     )

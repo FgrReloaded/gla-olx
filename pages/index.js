@@ -10,15 +10,16 @@ import Card from '@/components/Card';
 import { AiFillPlusCircle } from 'react-icons/ai'
 import Category from '@/components/Category';
 import NoItem from '@/components/NoItem';
+import LoadingComponent from '@/components/LoadingComponent';
 
 const Home = () => {
   const [category, setCategory] = useState("")
   const [search, setSearch] = useState("")
   const [noContent, setNoContent] = useState(false)
   const [currentUser, setCurrentUser] = useState("")
-  const [limit, setLimit] = useState(9)
+  const [limit, setLimit] = useState(1)
   const context = useContext(glxContext);
-  const { getItem, items } = context;
+  const { getItem, items, showSkeleton, loadMoreBtn } = context;
 
   useEffect(() => {
     let currentUser = localStorage.getItem("currentUserId")
@@ -29,8 +30,8 @@ const Home = () => {
   }, [])
 
   const loadMore = () => {
-    setLimit(limit + 1)
-    getItem(limit + 1)
+    setLimit(limit + 9)
+    getItem(limit + 9)
   }
   const handleSearch = (e) => {
     setSearch(e.target.value)
@@ -101,11 +102,12 @@ const Home = () => {
                 }
               })
             }
+            {showSkeleton && <LoadingComponent />}
           </div>
           : <NoItem />
         }
         {
-          !noContent &&
+          !noContent && loadMoreBtn &&
           <button onClick={loadMore} className={styles.loadMore} style={pop.style}>
             Load More <AiFillPlusCircle color='#fff' size={25} />
           </button>

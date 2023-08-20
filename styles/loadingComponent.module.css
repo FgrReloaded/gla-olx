@@ -1,0 +1,76 @@
+/* Styling Below */
+
+.card {
+    border: 1px solid var(--background);
+    position: relative;
+    padding: 1rem;
+}
+
+.imgBox {
+    padding: 0.5rem 1rem;
+    width: 100%;
+    height: 120px;
+    background: #DDDBDD;
+    position: relative;
+    overflow: hidden;
+    animation: slide 1s alternate infinite;
+}
+
+.contentBox {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    height: 125px;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 1rem 0;
+    color: var(--secondary);
+    margin-block: 0.5rem;
+    width: 50%;
+    background: #DDDBDD;
+    position: relative;
+    overflow: hidden;
+    animation: slide 1s alternate infinite;
+}
+
+.title {
+    font-family: sans-serif;
+    font-size: 14px;
+    padding: 1rem 0;
+    font-weight: bolder;
+    cursor: pointer;
+    width: 75%;
+    background: #DDDBDD;
+    text-transform: capitalize;
+    margin-bottom: -0.6rem !important;
+    position: relative;
+    overflow: hidden;
+    animation: slide 1s alternate infinite;
+}
+
+.desc {
+    font-size: 0.8rem;
+    text-align: justify;
+    color: #959C9E;
+    line-height: 15px;
+    margin-top: 2rem;
+    padding: 0.8rem;
+    width: 100%;
+    background: #DDDBDD;
+    position: relative;
+    overflow: hidden;
+    animation: slide 1s alternate infinite;
+}
+
+@keyframes slide {
+    from {
+        background: #DDDBDD;
+    }
+
+    to {
+        background: #f1f1f1c3;
+    }
+}

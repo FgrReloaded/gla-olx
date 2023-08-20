@@ -6,10 +6,10 @@ const handler = async (req, res) => {
     const id = req.query.id;
     if (method === "GET") {
         let chattingWith = await ChattingWith.findOne({ userId: id });
-        if(chattingWith){
+        if (chattingWith) {
             res.status(200).json({ success: true, chattingWith });
         }
-        res.status(404).json({success:false})
+        res.status(404).json({ success: false })
     }
     if (method === "POST") {
         let { id, receiver, item } = req.body;
