@@ -27,7 +27,7 @@ const wishlist = () => {
         <>
             <div className={styles.section}>
                 <div>
-                    <h4>My Wishlists</h4>
+                    <h4>My Wishlist</h4>
                 </div>
                 <hr />
                 {
