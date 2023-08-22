@@ -53,6 +53,25 @@ const GlxState = ({ children }) => {
         setUserItems(data);
     }
 
+    // Function to add user in chat
+    const addUser = async (userToken, currentUser, itemName, itemPrice) => {
+        try {
+            let res = await fetch(`/api/addchattingwith`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ userToken, currentUser, itemName, itemPrice })
+            })
+            let { data } = await res.json()
+            if (data) {
+                getAllUsersData(data.chattingWith)
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     //  Function to get Item By Search 
     const getItemBySearch = async (search, limit) => {
         setShowSkeleton(true);
@@ -122,7 +141,7 @@ const GlxState = ({ children }) => {
         }, 2500)
     }
     return (
-        <glxContext.Provider value={{ createItem, getItem, getItemBySearch, items, searchItem, setSearchItem, getChattingWith, getAllUsersData, users, show, message, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn, showAlert }}>
+        <glxContext.Provider value={{ createItem, getItem, getItemBySearch, items, addUser, searchItem, setSearchItem, getChattingWith, getAllUsersData, users, show, message, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn, showAlert }}>
             {children}
         </glxContext.Provider>
     )

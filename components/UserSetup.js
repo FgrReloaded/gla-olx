@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 import { BiSolidCameraPlus } from "react-icons/bi"
 import { CldUploadWidget } from 'next-cloudinary';
 const jost = Jost({ subsets: ['latin'] })
-import glxContext from './context/glxContext'
+import glxContext from '@/pages/context/glxContext'
 
 
 
