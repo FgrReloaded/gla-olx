@@ -11,6 +11,7 @@ import mongoose from 'mongoose'
 import Item from '@/models/Item'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import ChatWithSeller from '@/components/ChatWithSeller'
 
 const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
@@ -20,6 +21,8 @@ const item = ({ item, similarItems }) => {
     const router = useRouter()
     const [diff, setDiff] = useState("")
     const [currentWishlist, setCurrentWishlist] = useState("")
+    const [showSafetyTips, setShowSafetyTips] = useState(false)
+    const [chatData, setChatData] = useState({currentUser: "", seller: "", item: "", itemPrice: ""})
     useEffect(() => {
         checkWishlist();
         setCurrentUser(localStorage.getItem("currentUserId"));
@@ -47,7 +50,8 @@ const item = ({ item, similarItems }) => {
 
     const handleSeller = (seller) => {
         let currentUser = localStorage.getItem("currentUserId")
-        router.push(`/chat?currentUser=${currentUser}&userTempToken=${seller}&item=${item.title}&itemPrice=${item.price}`)
+        setShowSafetyTips(true)
+        setChatData({currentUser, seller, item: item.title, itemPrice: item.price})
     }
     const checkView = async () => {
         let viewed = localStorage.getItem("viewed")
@@ -169,6 +173,10 @@ const item = ({ item, similarItems }) => {
                 <title>{item.title}</title>
             </Head>
             <div className={styles.container}>
+                {
+                    showSafetyTips &&
+                    <ChatWithSeller chatData={chatData} />
+                }
                 <ul>
                     <li>
                         <Link href={"/"}>

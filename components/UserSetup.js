@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from 'react'
 import styles from "@/styles/userSetup.module.css"
 import { Raleway, Jost } from 'next/font/google'
 const raleway = Raleway({ subsets: ['latin'], weight: "400" })
@@ -14,6 +14,8 @@ import { useRouter } from 'next/navigation'
 import { BiSolidCameraPlus } from "react-icons/bi"
 import { CldUploadWidget } from 'next-cloudinary';
 const jost = Jost({ subsets: ['latin'] })
+import glxContext from './context/glxContext'
+
 
 
 const UserSetup = () => {
@@ -23,6 +25,8 @@ const UserSetup = () => {
     const [loader, setLoader] = useState(false)
     const [stdType, setStdType] = useState(null)
     const [credentials, setCredentials] = useState({ number: "", stdType: "", hostel: "", location: "", course: "", branch: "", year: "" })
+    const context = useContext(glxContext);
+    const { showAlert } = context;
 
     const handleSetupChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -108,6 +112,7 @@ const UserSetup = () => {
         })
             .then(() => {
                 setLoader(false)
+                showAlert("Account Created Successfully")
                 window.location.href = "/"
             })
             .catch((error) => {

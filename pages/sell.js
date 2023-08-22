@@ -34,13 +34,11 @@ const sell = () => {
   const [coverFile, setCoverFile] = useState(null)
   const ref = useRef(null);
   const ref1 = useRef(null);
-  const [loader, setLoader] = useState(false)
   const context = useContext(glxContext);
-  const { createItem, items } = context;
+  const { createItem, showSkeleton } = context;
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setLoader(true)
     let { title, desc, price, category, subCategory, sellerName } = productData;
     sellerName = userData[0].fullname
     let seller = localStorage.getItem("currentUserId")
@@ -49,7 +47,6 @@ const sell = () => {
     let images = files.slice(0, 4);
     images.push(coverImg)
     createItem({ title, desc, price, category, subCategory, seller, sellerName, images, sellerPic: profilePic })
-    router.push("/myads")
   }
 
   useEffect(() => {
@@ -230,7 +227,7 @@ const sell = () => {
           <div className={styles.btnParent}>
             <button onClick={handleSubmit} className={styles.post}>
               {
-                loader ? <span className={styles.loader}></span> : "POST"
+                showSkeleton ? <span className={styles.loader}></span> : "POST"
               }
             </button>
           </div>

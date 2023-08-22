@@ -1,0 +1,279 @@
+/* Styling Below */
+
+.aboutUs {
+    display: flex;
+    justify-content: space-around;
+    height: 80vh;
+    padding: 5rem 1rem;
+    background: #cffafe;
+}
+
+.aboutUs .right {
+    height: 500px;
+    width: 45%;
+}
+
+.aboutUs .right h1 {
+    font-size: 105px;
+    font-weight: bold;
+    color: #57c0c7;
+    text-align: center;
+}
+
+.aboutUs .right p {
+    margin-top: 2rem;
+    text-align: center;
+    color: #083440;
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+}
+
+.aboutUs .left {
+    height: 400px;
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aboutUs .left img {
+    height: 400px;
+    width: auto;
+}
+
+.ourTeamWrap {
+    height: 100%;
+    padding-bottom: 10rem;
+    background: #cffafe;
+}
+
+.ourTeamWrap h1 {
+    font-size: 105px;
+    font-family: "REM", sans-serif;
+    color: #57c0c7;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* WRAPPER */
+.ourTeam {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.ourTeam .card {
+    position: relative;
+    height: 400px;
+    width: 350px;
+    padding: 2rem 1rem;
+    background-color: #0e7490;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.5);
+    transition: 0.5s ease-in-out;
+}
+
+.ourTeam .card:hover {
+    transform: translateY(10px);
+}
+
+.ourTeam .card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    background: linear-gradient(to bottom,
+            rgba(0, 176, 155, 0.5),
+            rgba(150, 201, 61, 0.5));
+    z-index: 2;
+    transition: 0.5s all;
+    opacity: 0;
+}
+
+.ourTeam .card:hover:before {
+    opacity: 1;
+}
+
+.ourTeam .card img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+}
+
+.card .info {
+    z-index: 3;
+    color: #fff;
+    opacity: 0;
+    letter-spacing: 2px;
+    transform: translateY(800%);
+    transition: 0.5s all;
+    align-self: flex-start;
+    /* PREVENTING OVERFLOW */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* // This is where the magic happens */
+}
+
+.card:hover .info {
+    opacity: 1;
+    transform: translateY(600%);
+}
+
+@media (max-width: 1285px) {
+    .aboutUs .right p {
+        /* font-size: 15px; */
+        padding-bottom: 3rem;
+    }
+
+    .aboutUs .right h1 {
+        font-size: 90px;
+    }
+}
+
+@media (max-width: 1105px) {
+    .aboutUs {
+        height: 90vh;
+    }
+
+    .aboutUs .right p {
+        font-size: 15px;
+    }
+
+    .aboutUs .right h1 {
+        font-size: 70px;
+    }
+
+    .aboutUs .left img {
+        height: 400px;
+        width: auto;
+    }
+
+}
+
+@media (max-width: 830px) {
+    .aboutUs {
+        height: 70vh;
+    }
+
+    .aboutUs .left img {
+        height: 350px;
+        width: auto;
+        position: absolute;
+        top: 5.5rem;
+    }
+
+    .aboutUs .right p {
+        font-size: 13px;
+    }
+
+    .aboutUs .right h1 {
+        font-size: 50px;
+    }
+
+    .ourTeamWrap h1 {
+        font-size: 80px;
+    }
+
+    .ourTeamWrap .ourTeam {
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .aboutUs {
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        padding: 0 1rem;
+        /* column-gap: 2rem; */
+    }
+
+    .aboutUs .left {
+        height: 225px;
+    }
+
+    .aboutUs .left img {
+        height: 300px;
+        /* height: auto;
+          width: auto; */
+        /* margin: 4rem; */
+    }
+
+    .aboutUs .right {
+        margin-top: 6rem;
+        height: 390px;
+        width: 80%;
+    }
+
+    .aboutUs .right h1 {
+        font-size: 80px;
+    }
+
+    .aboutUs .right p {
+        font-size: 15px;
+    }
+
+    .ourTeam {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 580px) {
+    .aboutUs {
+        padding-bottom: 4rem;
+    }
+
+    .aboutUs .right {
+        /* margin-top: 6rem; */
+        height: 410px;
+        width: 100%;
+    }
+
+    .aboutUs .right h1 {
+        font-size: 60px;
+    }
+
+    .ourTeamWrap h1 {
+        font-size: 60px;
+    }
+
+}
+
+@media (max-width: 445px) {
+    .aboutUs {
+        padding: 5rem;
+    }
+    .ourTeamWrap{
+        padding-top: 15rem;
+    }
+
+    .aboutUs .right h1 {
+        font-size: 50px;
+    }
+}
+
+@media (max-width: 390px) {
+    .aboutUs {
+        margin-bottom: 15rem;
+    }
+
+    .aboutUs .right h1 {
+        font-size: 40px;
+    }
+
+    .aboutUs .right p {
+        font-size: 17px;
+    }
+
+}

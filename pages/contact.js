@@ -16,7 +16,7 @@ const contact = () => {
                             </li>
                             <li>
                                 <span><img src="/images/mail.png" alt="" /></span>
-                                <span>glasupport@gmail.com</span>
+                                <span>gla-olxsupport@gmail.com</span>
                             </li>
                             <li>
                                 <p>We are just one click away!

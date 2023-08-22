@@ -208,9 +208,8 @@
     background: #C8F8F6;
     border-color: #C8F8F6;
 }
-.noChat{
-    
-}
+
+.noChat {}
 
 
 
@@ -440,45 +439,19 @@
     text-align: center;
 }
 
-@media (max-width: 400px){
-    .box{
+@media (max-width: 400px) {
+    .box {
         width: 90%;
         grid-template-columns: 1fr;
     }
-    .ChatBox, .hideUserListBox{
+
+    .mobileChatBox,
+    .hideUserListBox {
         display: none;
     }
-    .mobileUserListBox{
+
+    .mobileUserListBox {
         display: block;
     }
 
-}   
-
-
-.loadingChat{
-    display: flex;
-    /* align-items: center; */
-    gap: 1rem;
-}
-.img{
-    width: 50px;
-    height: 50px;
-    background: #DDDBDD;
-    border-radius: 50%;
-}
-.contentBox{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 5px;
-}
-.name{
-    padding: 0.8rem;
-    width: 50px;
-    background: #DDDBDD;
-}
-.prod{
-    padding: 0.8rem;
-    width: 50px;
-    background: #DDDBDD;
 }

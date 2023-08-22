@@ -226,9 +226,9 @@ export default function SignUp() {
                   <button onClick={handleLogin} className={styles.button}>
                     {
                       showLoader ? <span className={styles.btnLoader}></span> :
-                      "Login"
+                        "Login"
                     }
-                    </button>
+                  </button>
                 </form>
               </div>
             </div> :

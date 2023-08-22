@@ -28,8 +28,7 @@ const category = ({ category, items }) => {
         let ite = items.filter((item) => {
             return item.subCategory.toLowerCase() === ele.toLowerCase()
         })
-        console.log(ite)
-        if (!ite.length > 0) {
+        if (!ite.length > 0 && ele !== "") {
             setShowFilter({ display: "grid", gridTemplateColumns: "1fr" })
         } else {
             setShowFilter({})
@@ -56,7 +55,7 @@ const category = ({ category, items }) => {
                     <div className={styles.categorySection}>
                         <h5>Categories</h5>
                         <div>
-                            <h4 onClick={() => { setSubCat("") }}><IoIosArrowForward /> {category}</h4>
+                            <h4 onClick={() => { handleSubCat("") }}><IoIosArrowForward /> {category}</h4>
                             <ul>
                                 {
                                     items && categories[category].map((item, i) => {

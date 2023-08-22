@@ -17,9 +17,10 @@ const Home = () => {
   const [search, setSearch] = useState("")
   const [noContent, setNoContent] = useState(false)
   const [currentUser, setCurrentUser] = useState("")
-  const [limit, setLimit] = useState(1)
+  const [showSearchItem, setShowSearchItem] = useState("")
+  const [limit, setLimit] = useState(9)
   const context = useContext(glxContext);
-  const { getItem, items, showSkeleton, loadMoreBtn } = context;
+  const { getItem, items, getItemBySearch, searchItem, setSearchItem, showSkeleton, loadMoreBtn } = context;
 
   useEffect(() => {
     let currentUser = localStorage.getItem("currentUserId")
@@ -35,19 +36,10 @@ const Home = () => {
   }
   const handleSearch = (e) => {
     setSearch(e.target.value)
-    const ite = items.filter(item => {
-      if (item.title.toLowerCase().includes(e.target.value)) {
-        return item
-      }
-    })
-    if (ite.length === 0) {
-      setNoContent(true)
-    } else {
-      setNoContent(false)
-    }
   }
 
   const handleCategory = (val) => {
+    setShowSearchItem(false)
     setCategory(val)
     const ite = items.filter(item => {
       if (item.category.includes(val)) {
@@ -57,6 +49,28 @@ const Home = () => {
     if (ite.length === 0) {
       setNoContent(true)
     } else {
+      setNoContent(false)
+    }
+  }
+  const handleSearchItem = () => {
+    document.getElementById("cardSec").scrollIntoView();
+    const ite = items.filter(item => {
+      if (item.title.toLowerCase().includes(search.toLowerCase())) {
+        return item
+      }
+    })
+
+    if (ite.length === 0) {
+      getItemBySearch(search, limit)
+      if (searchItem.length === 0) {
+        setNoContent(true)
+        setShowSearchItem(false)
+      } else {
+        setShowSearchItem(true)
+      }
+    } else {
+      setShowSearchItem(true)
+      setSearchItem(ite)
       setNoContent(false)
     }
   }
@@ -72,7 +86,7 @@ const Home = () => {
           <div className={styles.searchBox}>
             <input type="text" onChange={handleSearch} className={styles.inputSearch} placeholder="What are you looking for?..." />
             <div className={styles.searchBtn}>
-              <span onClick={() => { document.getElementById("cardSec").scrollIntoView(); }}>Search</span> <BiSearchAlt2 color='#D9D9D9' size={25} />
+              <span onClick={handleSearchItem}>Search</span> <BiSearchAlt2 color='#D9D9D9' size={25} />
             </div>
           </div>
         </div>
@@ -84,24 +98,24 @@ const Home = () => {
         {!noContent ?
           <div className={styles.productList}>
             {
-              items && items.map((item, i) => {
-                if (search && item.title.toLowerCase().includes(search.toLowerCase()) && currentUser !== item.seller) {
+              items && !showSearchItem && items.map((item, i) => {
+                if (category && item.category.toLowerCase().includes(category.toLowerCase()) && currentUser !== item.seller) {
                   return (
                     <Card item={item} key={i} />
                   )
                 }
-                else if (category && item.category.toLowerCase().includes(category.toLowerCase()) && currentUser !== item.seller) {
-                  return (
-                    <Card item={item} key={i} />
-                  )
-                }
-                else if (!search && !category && currentUser !== item.seller) {
+                else if (!category && currentUser !== item.seller) {
                   return (
                     <Card item={item} key={i} />
                   )
                 }
               })
             }
+            {showSearchItem && searchItem && searchItem.map((item, i) => {
+              return (
+                <Card item={item} key={i} />
+              )
+            })}
             {showSkeleton && <LoadingComponent />}
           </div>
           : <NoItem />

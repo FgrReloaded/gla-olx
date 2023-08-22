@@ -1,0 +1,49 @@
+/* Styling Below */
+
+.box{
+    background: #fff;
+    position: absolute;
+    top: calc(30vh);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+}
+.top{
+    width: 100%;
+    position: relative;
+    padding: 0.5rem 1rem;
+    background: #8acdd9;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.top svg{
+    margin: auto;
+}
+.top::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0%;
+    height: 1px;
+    width: 100%;
+    margin: auto;
+    background: var(--secondary);
+}
+.box button{
+    padding: 0.5rem 1rem;
+    border: 2px double var(--secondary);
+    color: var(--secondary);
+    transition: 0.2s ease-in-out;
+    border-radius: 5px;
+    font-weight: 600;
+    margin: 0.5rem 1rem;
+
+}
+
+.box button:hover{
+    background: var(--secondary);
+    color: #fff;
+}

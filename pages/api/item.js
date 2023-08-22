@@ -19,8 +19,9 @@ const handler = async (req, res) => {
                 const count = await Item.countDocuments();
                 if (limit >= count) {
                     res.status(200).json({ success: true, data: items, loadMore: false });
+                }else{
+                    res.status(200).json({ success: true, data: items });
                 }
-                res.status(200).json({ success: true, data: items });
             } catch (error) {
                 res.status(400).json({ success: false });
             }

@@ -32,9 +32,10 @@ const chat = () => {
   const [allMessages, setAllMessages] = useState([])
   const [chatMessage, setChatMessage] = useState("");
   const myUser = auth.currentUser;
-  const [currentDate, setCurrentDate] = useState([])
+  const [mobileChat, setMobileChat] = useState(styles.mobileChatBox);
+  const [mobileUserList, setMobileUserList] = useState(styles.mobileUserListBox)
   const [currentUserMessageId, setCurrentUserMessageId] = useState([])
-  const { getChattingWith, users, getAllUsersData, addUser } = context;
+  const { getChattingWith, users, getAllUsersData, addUser, showSkeleton } = context;
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -162,15 +163,15 @@ const chat = () => {
   }
 
   const showChat = () => {
-    let chatBox = document.getElementById("chatBox");
-    let userListBox = document.getElementById("userListBox");
-    if (chatBox.style.display === "none") {
-      chatBox.classList.remove("mobileChatBox");
-      userListBox.classList.add("hideUserListBox");
-    } else {
-      chatBox.classList.add("mobileChatBox");
-      userListBox.classList.remove("mobileUserListBox");
+    if (mobileChat === styles.mobileChatBox) {
+      setMobileChat("")
+      setMobileUserList(styles.hideUserListBox)
     }
+    else {
+      setMobileChat(styles.mobileChatBox)
+      setMobileUserList(styles.mobileUserListBox)
+    }
+
   }
 
   return (
@@ -180,11 +181,11 @@ const chat = () => {
       </Head>
       <section className={styles.container}>
         <div className={styles.box}>
-          <div className={`${styles.mobileUserListBox} ${styles.userListBox}`} id='userListBox'>
+          <div className={`${mobileUserList} ${styles.userListBox}`} id='userListBox'>
             <div className={styles.chatHeader} style={noto.style}>
               <h3>Inbox</h3>
               <div>
-                <GrSearch color='#728D90' size={25} />
+                {/* <GrSearch cursor={"pointer"} onClick={showSearch} color='#728D90' size={25} /> */}
               </div>
             </div>
             <div className={styles.quickFilter}>
@@ -197,7 +198,7 @@ const chat = () => {
               </div>
             </div>
             <ul>
-              {users.length > 0 ?
+              {users.length > 0 &&
                 users.toReversed().map((user, index) => {
                   return (
                     <li onClick={() => { handleReceiver(user.userId, user.itemName, user.itemPrice); showChat(); }} key={index}>
@@ -207,17 +208,18 @@ const chat = () => {
                       <span onClick={showDeleteBtn} color='#728D90'>&#8942; <div onClick={deleteMsg} className='hidden'>Delete</div></span>
                     </li>
                   )
-                }) :
-                <div className={styles.noChats}>
-                  <PiChatsFill size={80} color='var(--secondary)' />
-                  <p>No Chats</p>
-                </div>
+                })
               }
-              {/* <LoadingChat /> */}
+
+              {users.length <= 0 && !showSkeleton && <div className={styles.noChats}>
+                <PiChatsFill size={80} color='var(--secondary)' />
+                <p>No Chats</p>
+              </div>}
+              {showSkeleton && <LoadingChat />}
 
             </ul>
           </div>
-          <div id='chatBox' className={`${styles.chatBox} ${styles.mobileChatBox} ${!receiverData ? styles.noChat : null}`}>
+          <div id='chatBox' className={` ${mobileChat} ${styles.chatBox} ${!receiverData ? styles.noChat : null}`}>
             {!receiverData &&
               <div className={styles.noChats}>
                 <PiChatsFill size={80} color='var(--secondary)' />

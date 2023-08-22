@@ -11,7 +11,7 @@ const Card = ({ item }) => {
     return (
         <>
             <div className={styles.productBox}>
-                <div className={styles.ribbon} ><BsFillLightningChargeFill /> Trending</div>
+                {/* <div className={styles.ribbon} ><BsFillLightningChargeFill /> Trending</div> */}
                 <div className={styles.productImg}>
                     <img src={Array.isArray(item.images) ? item.images[4] : item.images} alt="img" />
                 </div>

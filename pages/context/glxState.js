@@ -13,7 +13,6 @@ import { db } from "@/middleware/firebase"
 
 
 const GlxState = ({ children }) => {
-    const [user, setUser] = useState(null)
     const [users, setUsers] = useState([])
     const [items, setItems] = useState([])
     const [userItems, setUserItems] = useState([])
@@ -22,18 +21,9 @@ const GlxState = ({ children }) => {
     const [message, setMessage] = useState("")
     const [showSkeleton, setShowSkeleton] = useState(false)
     const router = useRouter()
+    const [searchItem, setSearchItem] = useState([])
 
-    const getUser = async () => {
-        const res = await fetch('/api/user', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth': localStorage.getItem('token')
-            }
-        })
-        const data = await res.json()
-        setUser(data.user)
-    }
+    // Function to get Items
     const getItem = async (limit) => {
         setShowSkeleton(true);
         const res = await fetch(`/api/item?limit=${limit}`, {
@@ -44,11 +34,13 @@ const GlxState = ({ children }) => {
         })
         const { data, loadMore } = await res.json()
         setItems(data)
-        if(loadMore === false){
+        if (loadMore === false) {
             setLoadMore(false)
         }
         setShowSkeleton(false);
     }
+
+    // Function to get User Items
     const getUserItem = async (id) => {
         const res = await fetch('/api/useritem', {
             method: 'POST',
@@ -61,8 +53,23 @@ const GlxState = ({ children }) => {
         setUserItems(data);
     }
 
+    //  Function to get Item By Search 
+    const getItemBySearch = async (search, limit) => {
+        setShowSkeleton(true);
+        const res = await fetch(`/api/searchItem?search=${search}&limit=${limit}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const { data } = await res.json()
+        setSearchItem(data)
+        setShowSkeleton(false);
+    }
 
+    // Function to create Item
     const createItem = async (item) => {
+        setShowSkeleton(true);
         const { title, desc, price, category, subCategory, seller, sellerName, sellerPic } = item
         const metaData = { title, desc, price, category, subCategory, seller, sellerName, sellerPic }
         const formData = new FormData()
@@ -74,29 +81,17 @@ const GlxState = ({ children }) => {
         })
         const result = await res.json()
         if (result.success) {
-            setItems([...items, result.data])
             setMessage("Ad Created Successfully")
             showAlert()
+            setItems([...items, result.data])
+            setShowSkeleton(false);
+            router.push("/myads")
         }
     }
-    const addUser = async (userToken, currentUser, itemName, itemPrice) => {
-        try {
-            let res = await fetch(`/api/addchattingwith`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ userToken, currentUser, itemName, itemPrice })
-            })
-            let { data } = await res.json()
-            if (data) {
-                getAllUsersData(data.chattingWith)
-            }
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
+
+    // Function to add user into chat list
     const getChattingWith = async () => {  // Working Fine
+        setShowSkeleton(true);
         let currentUser = localStorage.getItem("currentUserId");
         let res = await fetch(`/api/chattingwith?id=${currentUser}`)
         let data = await res.json();
@@ -105,6 +100,7 @@ const GlxState = ({ children }) => {
         }
     }
 
+    // Function to getAllUsersData in chat
     const getAllUsersData = async (chattingWith) => {
         let newUsers = []
         for (let i = 0; i < chattingWith.length; i++) {
@@ -115,8 +111,10 @@ const GlxState = ({ children }) => {
             }
         }
         setUsers(newUsers)
+        setShowSkeleton(false);
     }
 
+    // Function to show Alert Box
     const showAlert = () => {
         setShow("")
         setTimeout(() => {
@@ -124,7 +122,7 @@ const GlxState = ({ children }) => {
         }, 2500)
     }
     return (
-        <glxContext.Provider value={{ createItem, getItem, items, getUser, user, getChattingWith, getAllUsersData, users, addUser, show, message, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn }}>
+        <glxContext.Provider value={{ createItem, getItem, getItemBySearch, items, searchItem, setSearchItem, getChattingWith, getAllUsersData, users, show, message, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn, showAlert }}>
             {children}
         </glxContext.Provider>
     )

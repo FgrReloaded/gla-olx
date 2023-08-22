@@ -84,8 +84,8 @@ const Navbar = () => {
                     <ul ref={ref} style={pop.style}>
                         <li><Link className={`${path === "/" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/"}>Home</Link>
                         </li>
-                        <li><Link className={`${path === "/contact" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/chat"}>Contact Us</Link></li>
-                        <li><Link className={`${path === "/chat" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/chat"}>About Us</Link></li>
+                        <li><Link className={`${path === "/contact" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/contact"}>Contact Us</Link></li>
+                        <li><Link className={`${path === "/about" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/about"}>About Us</Link></li>
                         {
                             currentUser &&
                             <li>

@@ -1,0 +1,51 @@
+/* Styling Below */
+
+
+.loadingChat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.3rem 0.5rem;
+    border-bottom: 2px solid #C8F7F5;
+    transition: 0.3s ease-in-out;
+}
+
+.imgBox {
+    width: 50px;
+    height: 50px;
+    background: #DDDBDD;
+    border-radius: 50%;
+    animation: fade 0.8s alternate infinite ease-in-out;
+}
+
+.contentBox {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.name {
+    padding: 0.7rem;
+    width: 150px;
+    background: #DDDBDD;
+    animation: fade 0.8s alternate infinite ease-in-out;
+}
+
+.prod {
+    padding: 0.7rem;
+    width: 100px;
+    align-self: flex-start;
+    background: #DDDBDD;
+    animation: fade 0.8s alternate infinite ease-in-out;
+}
+
+@keyframes fade {
+    from {
+        background: #DDDBDD;
+    }
+
+    to {
+        background: #f1f1f1c3;
+    }
+}
