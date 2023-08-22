@@ -40,7 +40,7 @@ const Category = ({ handleCategory }) => {
             <section>
                 <ul className={styles.category}>
                     <label onClick={showCategory} style={roboto1.style}><IoIosArrowForward className={`${rotate ? styles.rotateArrow : ""}`} /> Category</label>
-                    <li onClick={()=>{handleCategory("")}} className={`${styles.dropDownParent} li`}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle onClick={() => { ref.current.classList.toggle("hidden"); }} />
+                    <li onClick={() => { handleCategory(""); ref.current.classList.toggle("hidden"); }} className={`${styles.dropDownParent} li`}><a>ALL CATEGORIES</a> <IoIosArrowDropdownCircle />
                         <div ref={ref} className={`${styles.dropDown} hidden`}>
                             {categories &&
                                 Object.keys(categories).map((category, i) => {
@@ -71,6 +71,7 @@ const Category = ({ handleCategory }) => {
                     <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Gadgets</a></li>
                     <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Accessories</a></li>
                     <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Clothes</a></li>
+                    <li className='li'><a onClick={(e) => { handleCategory(e.target.innerText) }}>Others</a></li>
                 </ul>
             </section>
         </>

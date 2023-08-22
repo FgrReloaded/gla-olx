@@ -18,7 +18,7 @@ body {
     --primary: #6c2cb5;
     --secondary: #0097B2;
     --accent: #a82aac;
-    background: var(--background);
+    background: #E5E7EB;
     overflow-x: hidden;
 }
 

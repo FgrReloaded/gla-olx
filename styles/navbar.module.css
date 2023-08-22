@@ -38,8 +38,8 @@
 }
 
 .logo img {
-    width: 100px;
-    height: 70px;
+    width: 110px;
+    height: 85px;
 }
 
 .navWrapper ul {
@@ -98,8 +98,7 @@
 .navWrapper ul li>a {
     text-decoration: none;
     padding: 0rem 1rem;
-    font-weight: lighter !important;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     color: var(--text);
 }
 

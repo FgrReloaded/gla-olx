@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Cookies from 'js-cookie'
 import { AiOutlinePlusCircle, AiOutlineHeart } from 'react-icons/ai'
 import { BiHelpCircle, BiSpreadsheet } from 'react-icons/bi'
-import {BsChatDots} from 'react-icons/bs'
+import { BsChatDots } from 'react-icons/bs'
 import { IoMdArrowDropdown } from 'react-icons/io'
 import { usePathname } from 'next/navigation'
 import { Alice, Jost, Poppins } from 'next/font/google'
@@ -77,7 +77,7 @@ const Navbar = () => {
                 <div className={styles.navWrapper}>
                     <div className={styles.logo}>
                         <Link href={"/"}>
-                            <img src='/images/logo.png' />
+                            <img src='/images/mainLogo.png' />
                         </Link>
                     </div>
                     <div onClick={showNav} className={`${styles.toggle} ${nav ? styles.toggleActive : ""}`}></div>
