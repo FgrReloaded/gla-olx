@@ -8,7 +8,7 @@ import Item from '@/models/Item'
 import Card from '@/components/Card'
 import NoItem from '@/components/NoItem'
 import { useRouter } from 'next/navigation'
-const category = ({ category, items }) => {
+const MyCategory = ({ category, items }) => {
     const router = useRouter();
     const [subCat, setSubCat] = useState("")
     const [showFilter, setShowFilter] = useState({})
@@ -104,4 +104,4 @@ export async function getServerSideProps(context) {
     }
 }
 
-export default category
+export default MyCategory

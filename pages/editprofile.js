@@ -7,7 +7,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { CldUploadWidget } from 'next-cloudinary'
 import Image from 'next/image'
 
-const profile = () => {
+const Profile = () => {
   const ref = useRef();
   const [profilePic, setProfilePic] = useState(false)
   const [user, setUser] = useState([])
@@ -176,4 +176,4 @@ const profile = () => {
   )
 }
 
-export default profile
+export default Profile

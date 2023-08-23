@@ -12,7 +12,7 @@ import { Roboto } from "next/font/google"
 import Image from 'next/image'
 const roboto = Roboto({ subsets: ["latin"], weight: "400" })
 
-const sell = () => {
+const Sell = () => {
   const [productData, setProductData] = useState({ title: "", desc: "", price: "", category: "", subCategory: "", sellerName: "" })
   const category = {
     "Lab Items": ["Lab-Coats", "ED-lab Stuff"],
@@ -268,4 +268,4 @@ const sell = () => {
   )
 }
 
-export default sell
+export default Sell

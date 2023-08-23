@@ -21,11 +21,11 @@ const Card = ({ item }) => {
                         <span>₹ {item.price}</span>
                     </div>
                     <div style={lato.style} className={styles.productTitle}>
-                        <Link href={`/product/${item.title}?seller=${item.seller}&tempToken=${item._id ? item._id : item.productId}`}>
+                        <div>
                             <h3>{
                                 item.title.length > 28 ? item.title.substring(0, 28) + "..." : item.title
                             }</h3>
-                        </Link>
+                        </div>
                     </div>
                     <div style={mons.style} className={styles.productDesc}>
                         <p>

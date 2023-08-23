@@ -7,7 +7,7 @@ import Link from 'next/link'
 import NoItem from '@/components/NoItem'
 import Image from 'next/image'
 
-const myads = () => {
+const MyAds = () => {
     const ref = useRef();
     const { getUserItem, userItems } = useContext(glxContext)
     const [handleFilter, setHandleFilter] = useState("")
@@ -110,4 +110,4 @@ const myads = () => {
     )
 }
 
-export default myads
+export default MyAds

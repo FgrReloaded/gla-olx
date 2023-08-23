@@ -24,7 +24,7 @@ import Image from 'next/image'
 
 
 
-const chat = () => {
+const Chat = () => {
   const context = useContext(glxContext);
   const ref = useRef(null)
   const router = useRouter()
@@ -289,4 +289,4 @@ const chat = () => {
   )
 }
 
-export default chat
+export default Chat

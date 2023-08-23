@@ -81,9 +81,6 @@
     margin-bottom: -0.6rem !important;
 }
 
-.productTitle:hover {
-    color: var(--secondary);
-}
 
 .productDesc {
     font-size: 0.8rem;

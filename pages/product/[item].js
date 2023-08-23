@@ -19,7 +19,7 @@ const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
 const pop = Poppins({ subsets: ['latin'], weight: "500" })
 
-const item = ({ item, similarItems }) => {
+const Item = ({ item, similarItems }) => {
     const [currentUser, setCurrentUser] = useState(null)
     const router = useRouter()
     const [diff, setDiff] = useState("")
@@ -212,8 +212,8 @@ const item = ({ item, similarItems }) => {
                         <div className={styles.sliderElement}>
                             <Image width={100} height={100}  src={mainSlider} alt="img" />
                         </div>
-                        <Image width={100} height={100}  src='/images/arr.png' className={styles.left} direct="left" onClick={handleSlider} />
-                        <Image width={100} height={100}  src='/images/arr.png' className={styles.right} direct="right" onClick={handleSlider} />
+                        <Image alt='img' width={100} height={100}  src='/images/arr.png' className={styles.left} direct="left" onClick={handleSlider} />
+                        <Image alt='img' width={100} height={100}  src='/images/arr.png' className={styles.right} direct="right" onClick={handleSlider} />
                     </div>
                     <div className={styles.imgBox}>
                         <Image width={100} height={100}  src={images[0]} alt={images[0]} onClick={(e) => { setMainSlider(e.target.alt) }} />
@@ -332,4 +332,4 @@ export async function getServerSideProps(context) {
     return { props: { item: JSON.parse(JSON.stringify(items)), similarItems: JSON.parse(JSON.stringify(similarProduct)), seller } }
 }
 
-export default item
+export default Item

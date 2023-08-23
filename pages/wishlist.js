@@ -4,7 +4,7 @@ import Card from '@/components/Card'
 import NoItem from '@/components/NoItem'
 import LoadingComponent from '@/components/LoadingComponent'
 
-const wishlist = () => {
+const Wishlist = () => {
     const [wishlist, setWishlist] = useState([])
     const [showSkeleton, setShowSkeleton] = useState(false)
     useEffect(() => {
@@ -47,4 +47,4 @@ const wishlist = () => {
     )
 }
 
-export default wishlist
+export default Wishlist

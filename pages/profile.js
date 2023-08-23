@@ -10,7 +10,7 @@ import { db } from '@/middleware/firebase'
 import Link from 'next/link'
 import Image from 'next/image'
 
-const profile = ({ data }) => {
+const MyProfile = ({ data }) => {
   const [user, setUser] = useState([])
   const [profilePic, setProfilePic] = useState("/images/user.png")
   const [setshowEdit, setShowEdit] = useState(true)
@@ -115,4 +115,4 @@ export async function getServerSideProps(context) {
 }
 
 
-export default profile
+export default MyProfile
