@@ -8,6 +8,7 @@ import Cookies from 'js-cookie'
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '@/middleware/firebase'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const profile = ({ data }) => {
   const [user, setUser] = useState([])
@@ -71,7 +72,7 @@ const profile = ({ data }) => {
       <div className={styles.section}>
         <div className={styles.profileSection}>
           <div>
-            <img src={profilePic} alt="" />
+            <Image width={100} height={100} src={profilePic} alt="" />
           </div>
           <p>{user[0]?.fullname}</p>
           <small><AiOutlineCalendar /> Member Since Jun 2023</small>

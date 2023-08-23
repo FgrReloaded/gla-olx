@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Head from 'next/head'
 import styles from "@/styles/singleProduct.module.css"
-import { Alice, Noto_Sans } from 'next/font/google'
+import { Alice, Noto_Sans, Poppins } from 'next/font/google'
 import { AiOutlineShareAlt, AiOutlineHeart, AiFillHeart } from "react-icons/ai"
 import { TbListDetails, TbEyeCheck } from "react-icons/tb"
 import { FaRegHandshake } from "react-icons/fa"
@@ -12,9 +12,12 @@ import Item from '@/models/Item'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ChatWithSeller from '@/components/ChatWithSeller'
+import glxContext from '../context/glxContext'
+import Image from 'next/image'
 
 const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
+const pop = Poppins({ subsets: ['latin'], weight: "500" })
 
 const item = ({ item, similarItems }) => {
     const [currentUser, setCurrentUser] = useState(null)
@@ -22,7 +25,9 @@ const item = ({ item, similarItems }) => {
     const [diff, setDiff] = useState("")
     const [currentWishlist, setCurrentWishlist] = useState("")
     const [showSafetyTips, setShowSafetyTips] = useState(false)
-    const [chatData, setChatData] = useState({currentUser: "", seller: "", item: "", itemPrice: ""})
+    const [chatData, setChatData] = useState({ currentUser: "", seller: "", item: "", itemPrice: "" })
+    const context = useContext(glxContext)
+    const { showAlert, setMessage } = context
     useEffect(() => {
         checkWishlist();
         setCurrentUser(localStorage.getItem("currentUserId"));
@@ -51,7 +56,7 @@ const item = ({ item, similarItems }) => {
     const handleSeller = (seller) => {
         let currentUser = localStorage.getItem("currentUserId")
         setShowSafetyTips(true)
-        setChatData({currentUser, seller, item: item.title, itemPrice: item.price})
+        setChatData({ currentUser, seller, item: item.title, itemPrice: item.price })
     }
     const checkView = async () => {
         let viewed = localStorage.getItem("viewed")
@@ -107,6 +112,8 @@ const item = ({ item, similarItems }) => {
     const copyLink = () => {
         let link = window.location.href
         navigator.clipboard.writeText(link)
+        setMessage("Link Copied")
+        showAlert()
     }
 
     const handleWishlist = async () => {
@@ -184,12 +191,12 @@ const item = ({ item, similarItems }) => {
                         </Link>
                     </li>
                     <li>
-                        <Link href={`/${item.category}`}>
+                        <Link href={`/category/${item.category}`}>
                             <span>{item.category} <IoIosArrowForward size={15} color='#20494E' /></span>
                         </Link>
                     </li>
                     <li>
-                        <Link href={`/${item.subCategory}`}>
+                        <Link href={`/category/${item.category}#${item.subCategory}`}>
                             <span>{item.subCategory} <IoIosArrowForward size={15} color='#20494E' /></span>
                         </Link>
                     </li>
@@ -203,25 +210,29 @@ const item = ({ item, similarItems }) => {
                 <div className={styles.innerBox}>
                     <div className={styles.sliderBox}>
                         <div className={styles.sliderElement}>
-                            <img src={mainSlider} alt="img" />
+                            <Image width={100} height={100}  src={mainSlider} alt="img" />
                         </div>
-                        <img src='/images/arr.png' className={styles.left} direct="left" onClick={handleSlider} />
-                        <img src='/images/arr.png' className={styles.right} direct="right" onClick={handleSlider} />
+                        <Image width={100} height={100}  src='/images/arr.png' className={styles.left} direct="left" onClick={handleSlider} />
+                        <Image width={100} height={100}  src='/images/arr.png' className={styles.right} direct="right" onClick={handleSlider} />
                     </div>
                     <div className={styles.imgBox}>
-                        <img src={images[0]} alt={images[0]} onClick={(e) => { setMainSlider(e.target.alt) }} />
-                        <img src={images[1]} alt={images[1]} onClick={(e) => { setMainSlider(e.target.alt) }} />
-                        <img src={images[2]} alt={images[2]} onClick={(e) => { setMainSlider(e.target.alt) }} />
-                        <img src={images[3]} alt={images[3]} onClick={(e) => { setMainSlider(e.target.alt) }} />
+                        <Image width={100} height={100}  src={images[0]} alt={images[0]} onClick={(e) => { setMainSlider(e.target.alt) }} />
+                        <Image width={100} height={100}  src={images[1]} alt={images[1]} onClick={(e) => { setMainSlider(e.target.alt) }} />
+                        <Image width={100} height={100}  src={images[2]} alt={images[2]} onClick={(e) => { setMainSlider(e.target.alt) }} />
+                        <Image width={100} height={100}  src={images[3]} alt={images[3]} onClick={(e) => { setMainSlider(e.target.alt) }} />
                     </div>
                     <div className={styles.itemBox}>
                         <div className={styles.item1}>
                             <div className={styles.price}>
                                 <span style={noto.style}>₹{item.price}</span>
-                                {
-                                    currentUser === item.seller ? null :
-                                        <span> <AiOutlineShareAlt onClick={copyLink} size={30} /> <AiOutlineHeart onClick={handleWishlist} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={handleWishlist} style={{ display: hide ? "none" : "block" }} size={30} color='red' /> </span>
-                                }
+
+                                <span> <AiOutlineShareAlt onClick={copyLink} size={30} />
+                                    {
+                                        currentUser === item.seller ? null : <>
+                                            <AiOutlineHeart onClick={handleWishlist} style={{ display: !hide ? "none" : "block" }} size={30} /> <AiFillHeart onClick={handleWishlist} style={{ display: hide ? "none" : "block" }} size={30} color='red' />
+                                        </>
+                                    }
+                                </span>
                             </div>
                             <div style={noto.style} className={styles.title}>
                                 Product: {item.title}
@@ -233,7 +244,7 @@ const item = ({ item, similarItems }) => {
                         <div className={styles.item2}>
                             <div className={styles.profile}>
                                 <div>
-                                    <img src="/images/item1.jpg" alt="img" />
+                                    <Image width={100} height={100}  src="/images/item1.jpg" alt="img" />
                                 </div>
                                 <div style={noto.style} onClick={handleUserProfile}>
                                     {item.sellerName} <IoIosArrowForward color='#BBBEBF' size={25} />
@@ -262,7 +273,7 @@ const item = ({ item, similarItems }) => {
                         </div>
                     </div>
 
-                    <div className={styles.detailsBox} style={alice.style}>
+                    <div className={styles.detailsBox} style={pop.style}>
                         <div className={styles.details}>
                             <h4>Product Details:</h4>
                             <div className={styles.productInfo}>

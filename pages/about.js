@@ -1,13 +1,13 @@
 import React from 'react'
 import styles from '@/styles/about.module.css'
-
+import Image from 'next/image'
 
 const about = () => {
     return (
         <>
             <div className={styles.aboutUs}>
                 <div className={styles.left}>
-                    <img src="/images/newLogo.png" alt="" />
+                    <Image width={100} height={100} src="/images/newLogo.png" alt="" />
                 </div>
                 <div className={styles.right}>
                     <h1>ABOUT US</h1>
@@ -19,14 +19,14 @@ const about = () => {
                 <div className={styles.ourTeam}>
 
                     <div className={styles.card}>
-                        <img src="/images/shashank.jpg" alt="" />
+                        <Image width={100} height={100} src="/images/shashank.jpg" alt="" />
                         <div className={styles.info}>
                             <h3>Shashank Shekhar Pandey</h3>
                             <p>UI/UX,Frontend Developer</p>
                         </div>
                     </div>
                     <div className={styles.card}>
-                        <img src="/images/nitish.jpg" alt="" />
+                        <Image width={100} height={100} src="/images/nitish.jpg" alt="" />
                         <div className={styles.info}>
                             <h3>Nitish Singh</h3>
                             <p>Full Stack Developer</p>

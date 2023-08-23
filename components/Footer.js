@@ -6,7 +6,7 @@ import { Open_Sans } from 'next/font/google'
 import Link from 'next/link'
 const os = Open_Sans({ subsets: ['latin'] })
 import { usePathname } from 'next/navigation'
-
+import Image from 'next/image'
 
 const Footer = () => {
     let path = usePathname();
@@ -46,7 +46,7 @@ const Footer = () => {
                 </div>
                 <div className={styles.footerBottom}>
                     <div className={styles.logo}>
-                        <img src="/images/logo.png" alt="logo" />
+                        <Image width={100} height={100} src="/images/logo.png" alt="logo" />
                     </div>
                     <div className={styles.copyright}>
                         <p>All rights reserved © 2023 GLA-OLX </p>

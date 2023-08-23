@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from "@/styles/contact.module.css"
+import Image from 'next/image'
 
 const contact = () => {
     return (
@@ -11,11 +12,11 @@ const contact = () => {
                             <h2>Contact Info</h2>
 
                             <li>
-                                <span><img src="/images/location.png" alt="" /></span>
+                                <span><Image width={100} height={100}  src="/images/location.png" alt="" /></span>
                                 <span>GLA</span>
                             </li>
                             <li>
-                                <span><img src="/images/mail.png" alt="" /></span>
+                                <span><Image width={100} height={100}  src="/images/mail.png" alt="" /></span>
                                 <span>gla-olxsupport@gmail.com</span>
                             </li>
                             <li>
@@ -29,10 +30,10 @@ const contact = () => {
                         <div className={styles.socials}>
                             <h3>Socials:</h3>
                             <ul className={styles.socials}>
-                                <li><a href=""><img src="/images/1.png" alt="" /></a></li>
-                                <li><a href=""><img src="/images/5.png" alt="" /></a></li>
-                                <li><a href=""><img src="/images/3.png" alt="" /></a></li>
-                                <li><a href=""><img style={{ height: "28px" }} src="/images/whatsapp.png" alt="" /></a></li>
+                                <li><a href=""><Image width={100} height={100}  src="/images/1.png" alt="" /></a></li>
+                                <li><a href=""><Image width={100} height={100}  src="/images/5.png" alt="" /></a></li>
+                                <li><a href=""><Image width={100} height={100}  src="/images/3.png" alt="" /></a></li>
+                                <li><a href=""><Image width={100} height={100}  style={{ height: "28px" }} src="/images/whatsapp.png" alt="" /></a></li>
                             </ul>
                         </div>
                     </div>

@@ -42,7 +42,7 @@ const Home = () => {
     setShowSearchItem(false)
     setCategory(val)
     const ite = items.filter(item => {
-      if (item.category.includes(val)) {
+      if (item.category.includes(val) && item.seller !== currentUser) {
         return item
       }
     })

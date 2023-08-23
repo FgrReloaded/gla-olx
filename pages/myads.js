@@ -5,6 +5,7 @@ import { BsEyeFill } from "react-icons/bs"
 import glxContext from './context/glxContext'
 import Link from 'next/link'
 import NoItem from '@/components/NoItem'
+import Image from 'next/image'
 
 const myads = () => {
     const ref = useRef();
@@ -70,7 +71,7 @@ const myads = () => {
                                         <div className={styles.productData}>
                                             <div className={styles.details}>
                                                 <div>
-                                                    <img src={item.images[4]} alt="" />
+                                                    <Image width={100} height={100} src={item.images[4]} alt="" />
                                                     <h6>{item.title}</h6>
                                                 </div>
                                                 <span>₹ {item.price}</span>

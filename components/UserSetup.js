@@ -15,6 +15,7 @@ import { BiSolidCameraPlus } from "react-icons/bi"
 import { CldUploadWidget } from 'next-cloudinary';
 const jost = Jost({ subsets: ['latin'] })
 import glxContext from '@/pages/context/glxContext'
+import Image from 'next/image'
 
 
 
@@ -139,7 +140,7 @@ const UserSetup = () => {
                     <form className={styles.form} style={raleway.style}>
                         <h3 className={styles.h3}>Setting Up Your Account</h3>
                         <div className={`${styles.imageHolder} ${styles.formHolder}`}>
-                            <img src={userImg} />
+                            <Image width={100} height={100} src={userImg} />
                             <CldUploadWidget options={{ maxFiles: 1 }} onUpload={handleOnUpload} uploadPreset="j5di0uph">
                                 {({ open }) => {
                                     function handleOnClick(e) {

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { db } from "@/middleware/firebase"
 import { doc, updateDoc } from "firebase/firestore";
 import { CldUploadWidget } from 'next-cloudinary'
+import Image from 'next/image'
 
 const profile = () => {
   const ref = useRef();
@@ -148,10 +149,10 @@ const profile = () => {
             </div>
             <div className={styles.profilePicture}>
               <div className={styles.deletePic}>
-                <img onClick={deleteProfile} src="/images/delete.png" alt="delete" />
+                <Image width={100} height={100} onClick={deleteProfile} src="/images/delete.png" alt="delete" />
               </div>
               <div className={styles.profilePicHolder}>
-                <img src={profile} alt="delete" />
+                <Image width={100} height={100} src={profile} alt="delete" />
               </div>
               <div className={styles.picContent}>
                 <p>Clear photos are an important way for buyers and sellers to learn about each other. Be sure doesn’t include any personal or sensitive info you’d rather not have others see.</p>

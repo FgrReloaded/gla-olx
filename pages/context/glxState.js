@@ -141,7 +141,7 @@ const GlxState = ({ children }) => {
         }, 2500)
     }
     return (
-        <glxContext.Provider value={{ createItem, getItem, getItemBySearch, items, addUser, searchItem, setSearchItem, getChattingWith, getAllUsersData, users, show, message, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn, showAlert }}>
+        <glxContext.Provider value={{ createItem, getItem, getItemBySearch, items, addUser, searchItem, setSearchItem, getChattingWith, getAllUsersData, users, show, message, setMessage, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn, showAlert }}>
             {children}
         </glxContext.Provider>
     )

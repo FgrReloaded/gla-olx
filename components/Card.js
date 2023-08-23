@@ -6,14 +6,15 @@ const pop = Poppins({ subsets: ["latin"], weight: "700" })
 const mons = Montserrat({ subsets: ["latin"], weight: "400" })
 import { BsFillLightningChargeFill } from "react-icons/bs"
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Card = ({ item }) => {
     return (
         <>
-            <div className={styles.productBox}>
+            <Link href={`/product/${item.title}?seller=${item.seller}&tempToken=${item._id ? item._id : item.productId}`} className={styles.productBox}>
                 {/* <div className={styles.ribbon} ><BsFillLightningChargeFill /> Trending</div> */}
                 <div className={styles.productImg}>
-                    <img src={Array.isArray(item.images) ? item.images[4] : item.images} alt="img" />
+                    <Image src={Array.isArray(item.images) ? item.images[4] : item.images} alt="img" width={100} height={100} />
                 </div>
                 <div className={styles.productDetails}>
                     <div style={pop.style} className={styles.productPrice}>
@@ -34,7 +35,7 @@ const Card = ({ item }) => {
                         </p>
                     </div>
                 </div>
-            </div>
+            </Link>
 
         </>
     )

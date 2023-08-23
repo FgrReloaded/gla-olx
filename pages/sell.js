@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import Head from 'next/head'
 import { Roboto } from "next/font/google"
+import Image from 'next/image'
 const roboto = Roboto({ subsets: ["latin"], weight: "400" })
 
 const sell = () => {
@@ -135,7 +136,7 @@ const sell = () => {
               <div className={styles.add_image} style={{ cursor: "pointer" }} onClick={() => { ref.current.click() }}>
                 <span className={`hidden ${styles.removeImg}`} onClick={removeCover}>x</span>
                 <input type="file" onChange={handleCoverFile} accept='image/*' ref={ref} style={{ display: "none" }} />
-                <img src={coverSrc} width={80} style={{ height: height, width: width, cursor: "pointer" }} height={80} />
+                <Image src={coverSrc} width={80} style={{ height: height, width: width, cursor: "pointer" }} height={80} />
               </div>
             </div>
           </div>
@@ -148,7 +149,7 @@ const sell = () => {
                 files.length > 0 && (files.slice(0, 4).map((file, index) => {
                   return (
                     <div key={index} order={index}>
-                      <img src={URL.createObjectURL(file)} style={{ width: "100px", height: "95px", cursor: "default" }} />
+                      <Image width={100} height={95} src={URL.createObjectURL(file)} style={{ width: "100px", height: "95px", cursor: "default" }} />
                       <span className={styles.removeImg} onClick={removeImg}>x</span>
                     </div>
                   )
@@ -158,7 +159,7 @@ const sell = () => {
               {
                 files.length < 4 && (
                   <div>
-                    <img src="/images/addImage.png" className='smallImg' onClick={handleMiniImageUpload} width={30} height={30} />
+                    <Image src="/images/addImage.png" className='smallImg' onClick={handleMiniImageUpload} width={30} height={30} />
                   </div>
                 )
               }
@@ -207,7 +208,7 @@ const sell = () => {
             <div className={styles.down_sec}>
               <h2 className={styles.h2}>Review Your Details</h2>
               <div className={styles.review_details}>
-                <div className={styles.left}><img src={profilePic} alt="" />
+                <div className={styles.left}><Image width={100} height={100} src={profilePic} alt="profile" />
                 </div>
                 <div className={styles.reviewParent}>
                   <label htmlFor="">Name</label>

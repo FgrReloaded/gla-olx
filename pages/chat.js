@@ -20,6 +20,7 @@ import { auth, db } from "@/middleware/firebase"
 import { useRouter } from 'next/navigation';
 import glxContext from './context/glxContext';
 import LoadingChat from '@/components/LoadingChat'
+import Image from 'next/image'
 
 
 
@@ -202,7 +203,7 @@ const chat = () => {
                 users.toReversed().map((user, index) => {
                   return (
                     <li onClick={() => { handleReceiver(user.userId, user.itemName, user.itemPrice); showChat(); }} key={index}>
-                      <img src={user.profilePic} style={{ objectFit: "cover" }} />
+                      <Image width={100} height={100} src={user.profilePic} style={{ objectFit: "cover" }} />
                       <a>{user.fullname}</a>
                       <p>{user.itemName}</p>
                       <span onClick={showDeleteBtn} color='#728D90'>&#8942; <div onClick={deleteMsg} className='hidden'>Delete</div></span>
@@ -230,7 +231,7 @@ const chat = () => {
               <div className={styles.chatContent}>
                 <div className={styles.chatDetails}>
                   <div className={styles.chatUser}>
-                    <img src={receiverData && users.filter(user => user.userId === receiverData?.id)[0].profilePic} style={{ objectFit: "cover" }} />
+                    <Image width={100} height={100} src={receiverData && users.filter(user => user.userId === receiverData?.id)[0].profilePic} style={{ objectFit: "cover" }} />
                     <h3 style={noto.style}>{
                       receiverData && users.filter(user => user.userId === receiverData?.id)[0].fullname
                     }</h3>
