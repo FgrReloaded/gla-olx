@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import glxContext from "./glxContext";
 import { useRouter } from "next/navigation";
 import {
