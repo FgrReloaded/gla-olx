@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Jost } from 'next/font/google'
 import styles from '@/styles/signup.module.css'
 import { useEffect, useState, useContext, useRef } from 'react'
-import glxContext from './context/glxContext'
+import glxContext from '../context/glxContext'
 const jost = Jost({ subsets: ['latin'] })
 import { auth, db } from "@/middleware/firebase"
 import {

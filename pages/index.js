@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import styles from '@/styles/Home.module.css'
-import glxContext from './context/glxContext';
+import glxContext from '../context/glxContext';
 import Head from 'next/head';
 import { BiSearchAlt2 } from 'react-icons/bi'
 import { Poppins, Roboto } from "next/font/google"

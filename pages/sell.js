@@ -3,7 +3,7 @@ import styles from "@/styles/sell.module.css"
 import { BiImageAdd } from "react-icons/bi"
 import { AiOutlineCloseCircle, AiFillCloseCircle } from "react-icons/ai"
 import { IoIosArrowForward } from "react-icons/io"
-import glxContext from './context/glxContext'
+import glxContext from '../context/glxContext'
 import { CldUploadWidget } from 'next-cloudinary'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'

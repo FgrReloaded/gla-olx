@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState, useRef } from 'react'
 import styles from "@/styles/Myads.module.css"
 import { AiOutlineSearch, AiOutlineHeart } from "react-icons/ai"
 import { BsEyeFill } from "react-icons/bs"
-import glxContext from './context/glxContext'
+import glxContext from '../context/glxContext'
 import Link from 'next/link'
 import NoItem from '@/components/NoItem'
 import Image from 'next/image'

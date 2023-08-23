@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import glxContext from '@/pages/context/glxContext'
+import glxContext from '@/context/glxContext'
 
 const Alert = () => {
     let context = useContext(glxContext)

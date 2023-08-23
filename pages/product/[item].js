@@ -12,7 +12,7 @@ import Item from '@/models/Item'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ChatWithSeller from '@/components/ChatWithSeller'
-import glxContext from '../context/glxContext'
+import glxContext from '../../context/glxContext'
 import Image from 'next/image'
 
 const alice = Alice({ subsets: ['latin'], weight: "400" })

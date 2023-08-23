@@ -1,6 +1,6 @@
 import '@/styles/globals.css'
 // import '@/styles/signup.css'
-import GlxState from './context/glxState'
+import GlxState from '../context/glxState'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Alert from '@/components/Alert'
