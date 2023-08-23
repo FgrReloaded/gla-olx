@@ -1,5 +1,4 @@
 // Login router for user
-import User from "@/models/User";
 import connectDB from "@/middleware/connect";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
