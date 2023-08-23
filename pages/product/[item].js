@@ -19,7 +19,7 @@ const alice = Alice({ subsets: ['latin'], weight: "400" })
 const noto = Noto_Sans({ subsets: ['latin'], weight: "400" })
 const pop = Poppins({ subsets: ['latin'], weight: "500" })
 
-const Item = ({ item, similarItems }) => {
+const ProductItem = ({ item, similarItems }) => {
     const [currentUser, setCurrentUser] = useState(null)
     const router = useRouter()
     const [diff, setDiff] = useState("")
@@ -332,4 +332,4 @@ export async function getServerSideProps(context) {
     return { props: { item: JSON.parse(JSON.stringify(items)), similarItems: JSON.parse(JSON.stringify(similarProduct)), seller } }
 }
 
-export default Item
+export default ProductItem
