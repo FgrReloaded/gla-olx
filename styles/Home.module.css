@@ -228,15 +228,21 @@
         font-size: 0.8rem;
         padding-right: 7rem;
     }
+    .inputSearch::placeholder{
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
 
     .searchBtn {
         padding: 0.25rem 0.5rem;
         margin-top: 0.5rem;
         right: 2.5%;
     }
-    .searchBtn svg{
+
+    .searchBtn svg {
         width: 20;
     }
+
     .searchBtn span {
         color: #fff;
         font-size: 0.8rem;
@@ -266,7 +272,7 @@
     }
 
     .heroSec::after {
-        bottom: 30%;
+        bottom: 20%;
     }
 
     .dropDown {
@@ -293,8 +299,12 @@
     }
 
     .productList {
-        grid-template-columns: 0.9fr;
+        grid-template-columns: repeat(2, 1fr);
         justify-content: center;
+    }
+    .cardSec{
+        width: 100%;
+        padding: 0.5rem;
     }
 
 }

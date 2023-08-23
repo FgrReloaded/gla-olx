@@ -440,8 +440,11 @@
 }
 
 @media (max-width: 400px) {
+    .container{
+        padding: 0;
+    }
     .box {
-        width: 90%;
+        width: 100%;
         grid-template-columns: 1fr;
     }
 

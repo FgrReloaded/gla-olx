@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from "@/styles/card.module.css"
 import { Lato, Poppins, Montserrat } from "next/font/google"
-const lato = Lato({ subsets: ["latin"], weight: "700" })
+const lato = Lato({ subsets: ["latin"], weight: "400" })
 const pop = Poppins({ subsets: ["latin"], weight: "700" })
 const mons = Montserrat({ subsets: ["latin"], weight: "400" })
 import { BsFillLightningChargeFill } from "react-icons/bs"
@@ -17,7 +17,7 @@ const Card = ({ item }) => {
                     <Image src={Array.isArray(item.images) ? item.images[4] : item.images} alt="img" width={100} height={100} />
                 </div>
                 <div className={styles.productDetails}>
-                    <div style={pop.style} className={styles.productPrice}>
+                    <div className={styles.productPrice}>
                         <span>₹ {item.price}</span>
                     </div>
                     <div style={lato.style} className={styles.productTitle}>

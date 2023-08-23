@@ -4,7 +4,7 @@
     display: flex;
     justify-content: space-between;
     padding: 1rem;
-    background: #A5F3FC;
+    background: #f4f4f5;
     color: #64748B;
 }
 
@@ -34,6 +34,7 @@
 .icons {
     font-size: 2rem;
 }
+
 .logo img {
     position: absolute;
     left: 1%;
@@ -56,23 +57,33 @@
     .footerWrapper {
         padding: 0.5rem;
     }
+
     .title {
         font-size: 1rem;
     }
-    .list li{
+
+    .list li {
         font-size: 0.8rem;
     }
+
     .logo img {
-        width: 45px;
-        height: 30px;
+        width: 75px;
+        top: -5%;
     }
-    .iconList svg{
+
+    .iconList svg {
         font-size: 1.5rem;
     }
-    .copyright p{
+
+    .copyright p {
         font-size: 0.7rem;
         letter-spacing: 0.5px;
         font-weight: lighter;
     }
-    
+
+    .footerBottom {
+        margin-bottom: 5rem;
+
+    }
+
 }

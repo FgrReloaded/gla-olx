@@ -94,13 +94,13 @@ const Navbar = () => {
                                     <IoMdArrowDropdown onClick={() => { setShowDropdown(!showDropdown) }} id="dropdownDefaultButton" data-dropdown-toggle="dropdown" size={30} color='#fff' />
                                     {showDropdown &&
                                         <div className={styles.dropDown}>
-                                            <div className={styles.userData} style={jost.style}>
+                                            <div className={styles.userData}>
                                                 <div>
                                                     <Image width={100} height={100} loading='lazy' src={profilePic} alt="profile" />
                                                     <p>{displayName}</p>
                                                 </div>
                                                 <div>
-                                                    <Link href={"/editprofile   "}>View profile</Link>
+                                                    <Link href={"/editprofile"}>View profile</Link>
                                                 </div>
                                             </div>
                                             <hr />

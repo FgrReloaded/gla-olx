@@ -3,9 +3,10 @@ import styles from '@/styles/Home.module.css'
 import glxContext from '../context/glxContext';
 import Head from 'next/head';
 import { BiSearchAlt2 } from 'react-icons/bi'
-import { Poppins, Roboto } from "next/font/google"
+import { Poppins, Roboto, Alice } from "next/font/google"
 const pop = Poppins({ subsets: ["latin"], weight: "500" })
 const roboto = Roboto({ subsets: ["latin"], weight: "300" })
+const alice = Alice({ subsets: ["latin"], weight: "400" })
 import Card from '@/components/Card';
 import { AiFillPlusCircle } from 'react-icons/ai'
 import Category from '@/components/Category';
@@ -84,7 +85,7 @@ const Home = () => {
       <main>
         <div className={styles.heroSec} style={pop.style} >
           <div className={styles.searchBox}>
-            <input type="text" onChange={handleSearch} className={styles.inputSearch} placeholder="What are you looking for?..." />
+            <input style={alice.style} type="text" onChange={handleSearch} className={styles.inputSearch} placeholder="What are you looking for?..." />
             <div className={styles.searchBtn}>
               <span onClick={handleSearchItem}>Search</span> <BiSearchAlt2 color='#D9D9D9' size={25} />
             </div>

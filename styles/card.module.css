@@ -89,3 +89,17 @@
     line-height: 15px;
     margin-top: 0.4rem;
 }
+
+@media (max-width:400px) {
+    .productImg img {
+        height: 110px;
+    }
+
+    .productTitle {
+        font-size: 12px;
+    }
+    .productDesc{
+        display: none;
+    }
+
+}
