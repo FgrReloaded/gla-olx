@@ -17,7 +17,7 @@ const ChatWithSeller = ({ chatData }) => {
         </div>
         <div className={styles.content}>
           <span>Tips for Safe Chat</span>
-          <p>Don't share any personal information either to buyers or sellers</p>
+          <p>Don&apos;t share any personal information either to buyers or sellers</p>
           <hr/>
           <p>Never give any money in advance</p>
           <hr/>
