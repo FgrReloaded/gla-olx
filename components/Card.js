@@ -12,7 +12,7 @@ import Image from 'next/image'
 const Card = ({ item }) => {
     const [hide, setHide] = useState(true)
     const [currentWishlist, setCurrentWishlist] = useState("")
-    
+
     // const handleWishlist = async () => {
     //     let userId = localStorage.getItem("currentUserId")
     //     let product = {

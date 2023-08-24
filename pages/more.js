@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation'
 import Head from 'next/head'
 
 const More = () => {
-    const router = useRouter()
     const [currentUser, setCurrentUser] = useState("")
     useEffect(() => {
         let currentUserId = localStorage.getItem('currentUserId')
@@ -28,18 +27,18 @@ const More = () => {
             localStorage.removeItem("currentUserId")
             localStorage.removeItem("profilePic")
             setCurrentUser(null)
-            router.push("/")
+            window.location.href = "/"
         }).catch((error) => {
             console.log(error)
         });
     }
     return (
         <>
-        <Head>
-            <title>
-                More Menu
-            </title>
-        </Head>
+            <Head>
+                <title>
+                    More Menu
+                </title>
+            </Head>
             <div className={styles.container}>
                 <ul>
                     {
