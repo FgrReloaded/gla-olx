@@ -3,14 +3,14 @@ import ChattingWith from "@/models/ChattingWith";
 
 const handler = async (req, res) => {
     const { method } = req;
-    if (method === "POST") {    
+    if (method === "POST") {
         let { userToken, currentUser, itemName, itemPrice } = req.body;
         console.log(userToken, currentUser, itemName, itemPrice)
         if (!userToken || !currentUser || !itemName || !itemPrice) {
             res.status(400).json({ success: false, message: "Please provide all the fields" });
         }
         if (userToken === currentUser) {
-            res.status(400).json({ success: false, message: "You can't chat with yourself" });            
+            res.status(400).json({ success: false, message: "You can't chat with yourself" });
         }
         let findSender = await ChattingWith.findOne({ userId: currentUser });
         let findReceiver = await ChattingWith.findOne({ userId: userToken });

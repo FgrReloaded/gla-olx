@@ -11,6 +11,7 @@ export const config = {
 const handler = async (req, res) => {
 
     const { method } = req;
+    console.log(method)
     const limit = parseInt(req.query.limit);
     switch (method) {
         case "GET":
@@ -19,7 +20,7 @@ const handler = async (req, res) => {
                 const count = await Item.countDocuments();
                 if (limit >= count) {
                     res.status(200).json({ success: true, data: items, loadMore: false });
-                }else{
+                } else {
                     res.status(200).json({ success: true, data: items });
                 }
             } catch (error) {
@@ -55,6 +56,17 @@ const handler = async (req, res) => {
                 res.status(400).json({ success: false });
             }
             break;
+        case "DELETE":
+            try {
+                const { id } = req.query;
+                const deleteItem = await Item.findByIdAndDelete(id);
+                res.status(200).json({ success: true });
+
+            } catch (error) {
+                res.status(400).json({ success: false });
+            }
+            break;
+
         default:
             res.status(400).json({ success: false });
             break;

@@ -108,6 +108,24 @@ const GlxState = ({ children }) => {
         }
     }
 
+    // Function to delete Item
+    const deleteItem = async (id) => {
+        const res = await fetch(`/api/item?id=${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const { success } = await res.json()
+        if (success) {
+            setMessage("Ad Deleted Successfully")
+            showAlert()
+            setUserItems(items.filter((item) => item._id !== id))
+        }
+    }
+
+
+
     // Function to add user into chat list
     const getChattingWith = async () => {  // Working Fine
         setShowSkeleton(true);
@@ -135,6 +153,8 @@ const GlxState = ({ children }) => {
         setShowSkeleton(false);
     }
 
+
+
     // Function to show Alert Box
     const showAlert = () => {
         setShow("")
@@ -143,7 +163,7 @@ const GlxState = ({ children }) => {
         }, 2500)
     }
     return (
-        <glxContext.Provider value={{ createItem, getItem, getItemBySearch, items, addUser, searchItem, setSearchItem, getChattingWith, getAllUsersData, users, show, message, setMessage, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn, showAlert }}>
+        <glxContext.Provider value={{ createItem, getItem, deleteItem, getItemBySearch, items, addUser, searchItem, setSearchItem, getChattingWith, getAllUsersData, users, show, message, setMessage, setShow, getUserItem, userItems, showSkeleton, loadMoreBtn, showAlert }}>
             {children}
         </glxContext.Provider>
     )

@@ -6,10 +6,11 @@ import glxContext from '../context/glxContext'
 import Link from 'next/link'
 import NoItem from '@/components/NoItem'
 import Image from 'next/image'
+import Head from 'next/head'
 
 const MyAds = () => {
     const ref = useRef();
-    const { getUserItem, userItems } = useContext(glxContext)
+    const { getUserItem, userItems, deleteItem } = useContext(glxContext)
     const [handleFilter, setHandleFilter] = useState("")
     const [userId, setUserId] = useState("")
     useEffect(() => {
@@ -33,6 +34,9 @@ const MyAds = () => {
 
     return (
         <>
+        <Head>
+            <title>My Ads</title>
+        </Head>
             <div className={styles.section}>
                 <div className={styles.upperSection}>
                     <div className={styles.search}>
@@ -88,7 +92,7 @@ const MyAds = () => {
                                                     </span>
                                                     <span>Edit Ad</span>
                                                     <span>Mark as Sold</span>
-                                                    <span>Delete Ad</span>
+                                                    <span onClick={()=>{deleteItem(item._id)}}>Delete Ad</span>
                                                 </div>
                                             </div>
                                             <div className={styles.metaData}>
