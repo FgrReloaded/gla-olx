@@ -9,11 +9,11 @@ const handler = async (req, res) => {
             try {
                 let wishlist;
                 if (req.query.productId) {
-                    wishlist = await Wishlist.find({productId: req.query.productId });
-                }else if(req.query.userId && req.query.productId){
-                    wishlist = await Wishlist.find({userId: req.query.userId , productId: req.query.productId });
+                    wishlist = await Wishlist.find({ productId: req.query.productId });
+                } else if (req.query.userId && req.query.productId) {
+                    wishlist = await Wishlist.find({ userId: req.query.userId, productId: req.query.productId });
                 }
-                else{
+                else {
                     wishlist = await Wishlist.find({ userId: req.query.userId });
                 }
                 if (wishlist.length === 0) {

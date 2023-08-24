@@ -95,7 +95,7 @@ const Card = ({ item }) => {
                         </p>
                     </div>
                     <span className={styles.date}>
-                        {new Date(item.createdAt).toDateString().substring(3)}
+                        {item.createdAt && new Date(item.createdAt).toDateString().substring(3)}
                     </span>
                 </Link>
             </div>

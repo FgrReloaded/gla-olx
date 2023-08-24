@@ -17,7 +17,7 @@ const Wishlist = () => {
         let res = await fetch(`/api/wishlist?userId=${userId}`);
         let { data } = await res.json();
         if (data) {
-            setWishlist([data[0].product]);
+            setWishlist(data);
             setShowSkeleton(false)
         }
     }
@@ -35,7 +35,7 @@ const Wishlist = () => {
                         <div className={styles.productList}>
                             {
                                 wishlist.length > 0 && wishlist.map((item, index) => {
-                                    return <Card key={index} item={item} />
+                                    return <Card key={index} item={item.product} />
                                 })
                             }
                             {showSkeleton && <LoadingComponent />}
