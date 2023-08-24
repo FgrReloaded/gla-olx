@@ -1,10 +1,14 @@
 import React from 'react'
 import styles from "@/styles/contact.module.css"
 import Image from 'next/image'
+import Head from 'next/head'
 
 const contact = () => {
     return (
         <>
+         <Head>
+        <title>Contact Us</title>
+      </Head>
             <section className={styles.section}>
                 <div className={styles.container}>
                     <div className={styles.contactInfo}>

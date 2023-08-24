@@ -3,6 +3,7 @@ import styles from "@/styles/wishlist.module.css"
 import Card from '@/components/Card'
 import NoItem from '@/components/NoItem'
 import LoadingComponent from '@/components/LoadingComponent'
+import Head from 'next/head'
 
 const Wishlist = () => {
     const [wishlist, setWishlist] = useState([])
@@ -25,6 +26,11 @@ const Wishlist = () => {
 
     return (
         <>
+        <Head>
+            <title>
+                Wishlist
+            </title>
+        </Head>
             <div className={styles.section}>
                 <div>
                     <h4>My Wishlist</h4>

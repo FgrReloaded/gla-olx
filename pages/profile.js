@@ -9,7 +9,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '@/middleware/firebase'
 import Link from 'next/link'
 import Image from 'next/image'
-
+import Head from 'next/head'
 const MyProfile = ({ data }) => {
   const [user, setUser] = useState([])
   const [profilePic, setProfilePic] = useState("/images/user.png")
@@ -69,6 +69,11 @@ const MyProfile = ({ data }) => {
 
   return (
     <>
+    <Head>
+      <title>
+        Profile
+      </title>
+    </Head>
       <div className={styles.section}>
         <div className={styles.profileSection}>
           <div>

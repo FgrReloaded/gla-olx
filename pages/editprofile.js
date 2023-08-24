@@ -6,6 +6,7 @@ import { db } from "@/middleware/firebase"
 import { doc, updateDoc } from "firebase/firestore";
 import { CldUploadWidget } from 'next-cloudinary'
 import Image from 'next/image'
+import Head from 'next/head'
 
 const Profile = () => {
   const ref = useRef();
@@ -104,6 +105,12 @@ const Profile = () => {
 
   return (
     <>
+    <Head>
+      <title>
+
+      Edit Profile
+      </title>
+    </Head>
       <div className={styles.section}>
         <div className={styles.sideBar}>
           <div>

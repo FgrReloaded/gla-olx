@@ -10,6 +10,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/middleware/firebase"
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
+import Head from 'next/head'
 
 const More = () => {
     const router = useRouter()
@@ -34,6 +35,11 @@ const More = () => {
     }
     return (
         <>
+        <Head>
+            <title>
+                More Menu
+            </title>
+        </Head>
             <div className={styles.container}>
                 <ul>
                     {

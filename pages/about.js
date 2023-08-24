@@ -1,8 +1,14 @@
 import React from 'react'
 import styles from '@/styles/about.module.css'
+import Head from 'next/head'
 const about = () => {
     return (
         <>
+        <Head>
+            <title>
+                About Us
+            </title>
+        </Head>
             <div className={styles.aboutUs}>
                 <div className={styles.left}>
                     <img src="/images/newLogo.png" alt="" />

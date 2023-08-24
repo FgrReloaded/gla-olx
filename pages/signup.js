@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { doc, getDoc } from "firebase/firestore";
 import Cookies from 'js-cookie';
 import { BsArrowLeftShort } from 'react-icons/bs'
+import Head from 'next/head'
 
 
 export default function SignUp() {
@@ -166,6 +167,11 @@ export default function SignUp() {
 
   return (
     <>
+      <Head>
+        <title>
+          Sign Up
+        </title>
+      </Head>
       <ToastContainer
         position="bottom-right"
         autoClose={1500}

@@ -120,7 +120,7 @@ const Sell = () => {
   return (
     <>
       <Head>
-        <title>Sell - GLA-OLX.com</title>
+        <title>Sell</title>
       </Head>
       <header className={styles.header}>
         <h1>CREATE YOUR AD</h1>

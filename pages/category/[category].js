@@ -8,6 +8,7 @@ import Item from '@/models/Item'
 import Card from '@/components/Card'
 import NoItem from '@/components/NoItem'
 import { useRouter } from 'next/navigation'
+import Head from 'next/head'
 const MyCategory = ({ category, items }) => {
     const router = useRouter();
     const [subCat, setSubCat] = useState("")
@@ -45,6 +46,11 @@ const MyCategory = ({ category, items }) => {
 
     return (
         <>
+        <Head>
+            <title>
+                {category}
+            </title>
+        </Head>
             <Category handleCategory={handleCategory} />
             <section>
                 <div className={styles.heading}>
