@@ -6,17 +6,32 @@ import { IoIosArrowForward } from 'react-icons/io'
 import { BiHelpCircle } from 'react-icons/bi'
 import { BsPeople } from 'react-icons/bs'
 import { IoExitOutline } from 'react-icons/io5'
+import { signOut } from "firebase/auth";
+import { auth } from "@/middleware/firebase"
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 const More = () => {
+    const router = useRouter()
     const [currentUser, setCurrentUser] = useState("")
     useEffect(() => {
         let currentUserId = localStorage.getItem('currentUserId')
         if (currentUserId) {
             setCurrentUser(currentUserId)
         }
-
     }, [])
 
+    const handleLogout = () => {
+        signOut(auth).then(() => {
+            Cookies.remove(currentUser)
+            localStorage.removeItem("currentUserId")
+            localStorage.removeItem("profilePic")
+            setCurrentUser(null)
+            router.push("/")
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
     return (
         <>
             <div className={styles.container}>
@@ -41,7 +56,7 @@ const More = () => {
                     </li>
                     {
                         currentUser !== "" ?
-                            <li>
+                            <li onClick={handleLogout}>
                                 <button>Logout</button> <IoExitOutline size={30} color='var(--secondary)' />
                             </li> : ""
                     }

@@ -98,11 +98,12 @@ const UserSetup = () => {
         const { number, stdType, hostel, location, course, branch, year } = credentials;
         let currentUser = auth.currentUser;
         localStorage.setItem("currentUserId", currentUser.uid)
+        let profilePic = localStorage.getItem("profilePic")
         setDoc(doc(db, "users", currentUser.uid), {
             fullname: currentUser.displayName,
             email: currentUser.email,
             phone: number,
-            profilePic: localStorage.getItem("profilePic"),
+            profilePic: profilePic ? profilePic : "/images/user.png",
             stdType,
             hostel,
             location,
@@ -118,7 +119,7 @@ const UserSetup = () => {
                     fullname: currentUser.displayName,
                     email: currentUser.email,
                     phone: number,
-                    profilePic: localStorage.getItem("profilePic"),
+                    profilePic: profilePic ? profilePic : "/images/user.png",
                     stdType,
                     hostel,
                     location,

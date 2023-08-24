@@ -43,12 +43,14 @@
     margin-top: 2.5rem;
 }
 
-.active {
-    color: var(--secondary);
-}
+
 
 @media (max-width: 400px) {
     .mobileNav {
         display: block;
+    }
+
+    .active {
+        color: var(--secondary) !important;
     }
 }

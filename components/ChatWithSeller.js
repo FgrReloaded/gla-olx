@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 const ChatWithSeller = ({ chatData }) => {
   const router = useRouter()
   const startChat = () => {
-    const { currentUser, seller, item, itemPrice} = chatData
+    const { currentUser, seller, item, itemPrice } = chatData
     router.push(`/chat?currentUser=${currentUser}&userTempToken=${seller}&item=${item}&itemPrice=${itemPrice}`)
   }
   return (
@@ -18,9 +18,9 @@ const ChatWithSeller = ({ chatData }) => {
         <div className={styles.content}>
           <span>Tips for Safe Chat</span>
           <p>Don&apos;t share any personal information either to buyers or sellers</p>
-          <hr/>
+          <hr />
           <p>Never give any money in advance</p>
-          <hr/>
+          <hr />
           <p>Be kind to others, no abuse, chat gently</p>
         </div>
         <button onClick={startChat}>Chat With Seller</button>

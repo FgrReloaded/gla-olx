@@ -126,8 +126,8 @@ export default function SignUp() {
         // Signed in 
         const user = userCredential.user;
         localStorage.setItem("currentUserId", user.uid)
-        setShowLoader(false)
         getUserData(user.uid)
+        setShowLoader(false)
       })
       .catch((error) => {
         const errorCode = error.code;

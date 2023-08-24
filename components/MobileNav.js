@@ -3,7 +3,7 @@ import styles from "@/styles/mobileNav.module.css"
 import Link from 'next/link'
 import { BiHomeAlt2 } from 'react-icons/bi'
 import { BsChatLeftDots } from 'react-icons/bs'
-import { AiOutlinePlus ,AiOutlineUnorderedList} from 'react-icons/ai'
+import { AiOutlinePlus, AiOutlineUnorderedList } from 'react-icons/ai'
 import { CiViewList } from 'react-icons/ci'
 import { usePathname } from 'next/navigation'
 import { FiMoreHorizontal } from 'react-icons/fi'
@@ -43,7 +43,7 @@ const MobileNav = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href={"/more"} className={`${location === "/profile" ? styles.active : ""}`}>
+                        <Link href={"/more"} className={`${location === "/more" ? styles.active : ""}`}>
                             <FiMoreHorizontal size={28} />
                             More
                         </Link>
