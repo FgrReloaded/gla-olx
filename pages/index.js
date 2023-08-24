@@ -96,7 +96,7 @@ const Home = () => {
 
       <section className={styles.cardSec} id='cardSec'>
         <h3 className={styles.cardHead} style={roboto.style}>Fresh Recommendation:</h3>
-        {!noContent ?
+        {!noContent && items.length !== 0 ?
           <div className={styles.productList}>
             {
               items && !showSearchItem && items.map((item, i) => {
