@@ -29,7 +29,7 @@ const MyProfile = ({ data }) => {
     if (!userProfile) {
       let getId = localStorage.getItem('currentUserId')
       if (!getId) {
-        window.location.href = '/login'
+        window.location.href = '/signup'
       }
       let userData = JSON.parse(Cookies.get(getId));
       setUser(userData);

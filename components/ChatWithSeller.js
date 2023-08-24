@@ -16,9 +16,12 @@ const ChatWithSeller = ({ chatData }) => {
           <CiWarning size={50} />
         </div>
         <div className={styles.content}>
-          <p></p>
-          <p></p>
-          <p></p>
+          <span>Tips for Safe Chat</span>
+          <p>Don't share any personal information either to buyers or sellers</p>
+          <hr/>
+          <p>Never give any money in advance</p>
+          <hr/>
+          <p>Be kind to others, no abuse, chat gently</p>
         </div>
         <button onClick={startChat}>Chat With Seller</button>
       </div>

@@ -1,0 +1,47 @@
+/* Styling Below */
+
+.container{   
+    padding-inline: 1rem;
+    background: #fff;
+    padding-top: 2rem;
+    padding-bottom: 15rem;
+}
+.container ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.container ul li{
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+.container ul li::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: rgba(181, 181, 181, 0.449);
+}
+.container ul li a{
+    width: 100%;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #27272a;
+}
+
+.container ul li button{
+    font-size: 1.3rem;
+    font-family: monospace;
+    font-weight: 700;
+    color: var(--secondary);
+    padding: 1rem 0;
+}

@@ -133,8 +133,4 @@ const Home = () => {
   )
 }
 
-const newStyle = {
-  display: "grid",
-  gridTemplateColumns: "1fr",
-}
 export default Home

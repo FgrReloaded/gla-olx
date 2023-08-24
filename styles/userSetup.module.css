@@ -262,3 +262,15 @@
         box-shadow: -38px 0, -14px 0, 14px 0, 38px -12px;
     }
 }
+
+@media (max-width: 400px) {
+    .inner{
+        margin: 0;
+    }   
+    .wrapper{
+        align-items: baseline;
+    }
+    .form{
+        height: 92vh;
+    }
+}

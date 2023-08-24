@@ -55,7 +55,6 @@
 .productImg img {
     width: 100%;
     height: 150px;
-    cursor: pointer;
 }
 
 .productDetails {
@@ -78,7 +77,6 @@
     font-weight: bolder;
     cursor: pointer;
     text-transform: capitalize;
-    margin-bottom: -0.6rem !important;
 }
 
 
@@ -88,6 +86,7 @@
     color: #959C9E;
     line-height: 15px;
     margin-top: 0.4rem;
+    margin-bottom: 0.5rem;
 }
 
 @media (max-width:400px) {
@@ -102,4 +101,21 @@
         display: none;
     }
 
+}
+.date{
+    font-size: 0.5rem;
+    color: lightslategray;
+    text-align: right;
+    position: absolute;
+    right: 2%;
+    bottom: 1%;
+}
+.wishlistBox{
+    position: absolute;
+    top: 2.5%;
+    right: 2.5%;
+    border-radius: 50%;
+    padding: 5px;
+    background: lightblue;
+    cursor: pointer;
 }

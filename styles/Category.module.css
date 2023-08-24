@@ -72,8 +72,8 @@
         gap: 1rem;
     }
     .itemSection {
+        display: flex;
         justify-content: center;
-        grid-template-columns: 0.75fr;
         padding-left: 0;
     }
 }

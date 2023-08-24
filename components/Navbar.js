@@ -70,6 +70,9 @@ const Navbar = () => {
         }
         ref.current.style.left = "0%"
     }
+    const visitProfile = () => {
+        router.push("/profile")
+    }
 
     return (
         <>
@@ -81,6 +84,14 @@ const Navbar = () => {
                         </Link>
                     </div>
                     <div onClick={showNav} className={`${styles.toggle} ${nav ? styles.toggleActive : ""}`}></div>
+                    {
+                        currentUser ?
+                            <Image width={50} onClick={visitProfile} className={styles.mobileProfile} height={50} loading='lazy' src={profilePic} alt="profile" /> :
+                            <li className={`${styles.sellerBtn} ${styles.mobileSellerBtn}`}>
+                                <Link className={styles.loginLink} href={"/signup"}>Login</Link>
+                            </li>
+                    }
+
                     <ul ref={ref} style={pop.style}>
                         <li><Link className={`${path === "/" ? `${styles.active}` : ""} ${styles.navLinks}`} href={"/"}>Home</Link>
                         </li>

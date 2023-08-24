@@ -1,6 +1,6 @@
 import React, { useRef, useState, useContext } from 'react'
 import styles from "@/styles/userSetup.module.css"
-import { Raleway, Jost } from 'next/font/google'
+import { Raleway, Jost, Cookie } from 'next/font/google'
 const raleway = Raleway({ subsets: ['latin'], weight: "400" })
 import { BsTelephonePlus } from "react-icons/bs"
 import { PiStudent } from "react-icons/pi"
@@ -16,6 +16,7 @@ import { CldUploadWidget } from 'next-cloudinary';
 const jost = Jost({ subsets: ['latin'] })
 import glxContext from '@/context/glxContext'
 import Image from 'next/image'
+import Cookies from 'js-cookie'
 
 
 
@@ -113,6 +114,20 @@ const UserSetup = () => {
         })
             .then(() => {
                 setLoader(false)
+                Cookies.set(currentUser.uid, JSON.stringify([{
+                    fullname: currentUser.displayName,
+                    email: currentUser.email,
+                    phone: number,
+                    profilePic: localStorage.getItem("profilePic"),
+                    stdType,
+                    hostel,
+                    location,
+                    course,
+                    branch,
+                    year,
+                    userId: currentUser.uid,
+                    timestamp: new Date(),
+                }]), { expires: 5 })
                 showAlert("Account Created Successfully")
                 window.location.href = "/"
             })

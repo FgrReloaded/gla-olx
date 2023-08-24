@@ -232,6 +232,7 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     text-align: center;
+    white-space: nowrap;
 }
 
 .userData a {
@@ -256,6 +257,7 @@
     align-items: center;
     gap: 1rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    white-space: nowrap;
 }
 
 .otherDrops:last-child {
@@ -272,7 +274,30 @@
     display: none;
 }
 
+.mobileSellerBtn,
+.mobileProfile {
+    display: none;
+}
+
 @media (max-width: 400px) {
+
+    .mobileSellerBtn,
+    .mobileProfile {
+        display: block;
+    }
+
+    .logo a img {
+        width: 100px;
+    }
+    .mobileProfile{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+    .logo {
+        margin-left: 0;
+    }
+
     .navWrapper ul {
         z-index: 3;
         flex-direction: column;
@@ -337,6 +362,18 @@
 
     .toggleActive {
         right: 6%;
+    }
+
+    .sellerBtn {
+        margin-top: 1rem;
+        list-style: none;
+    }
+
+    .sellerBtn a {
+        padding: 0.5rem 1.5rem !important;
+        font-weight: bold;
+        font-size: 1.2rem;
+        letter-spacing: 0.5px;
     }
 
 }

@@ -116,6 +116,8 @@ const GlxState = ({ children }) => {
         let data = await res.json();
         if (data.success) {
             getAllUsersData(data.chattingWith.chattingWith)
+        } else {
+            setShowSkeleton(false);
         }
     }
 

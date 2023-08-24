@@ -2,11 +2,11 @@ import React from 'react'
 import styles from "@/styles/mobileNav.module.css"
 import Link from 'next/link'
 import { BiHomeAlt2 } from 'react-icons/bi'
-import { BsChat } from 'react-icons/bs'
-import { AiOutlinePlus } from 'react-icons/ai'
+import { BsChatLeftDots } from 'react-icons/bs'
+import { AiOutlinePlus ,AiOutlineUnorderedList} from 'react-icons/ai'
 import { CiViewList } from 'react-icons/ci'
 import { usePathname } from 'next/navigation'
-import {CgProfile} from 'react-icons/cg'
+import { FiMoreHorizontal } from 'react-icons/fi'
 
 
 
@@ -24,7 +24,7 @@ const MobileNav = () => {
                     </li>
                     <li>
                         <Link href={"/chat"} className={`${location === "/chat" ? styles.active : ""}`}>
-                            <BsChat size={28} />
+                            <BsChatLeftDots size={26} />
                             Chat
                         </Link>
                     </li>
@@ -38,14 +38,14 @@ const MobileNav = () => {
                     </li>
                     <li>
                         <Link href={"/myads"} className={`${location === "/myads" ? styles.active : ""}`}>
-                            <CiViewList size={28} />
+                            <AiOutlineUnorderedList size={28} />
                             My Ads
                         </Link>
                     </li>
                     <li>
-                        <Link href={"/profile"} className={`${location === "/profile" ? styles.active : ""}`}>
-                            <CgProfile size={28} />
-                            Profile
+                        <Link href={"/more"} className={`${location === "/profile" ? styles.active : ""}`}>
+                            <FiMoreHorizontal size={28} />
+                            More
                         </Link>
                     </li>
                 </ul>

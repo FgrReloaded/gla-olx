@@ -39,6 +39,10 @@ const Chat = () => {
   const { getChattingWith, users, getAllUsersData, addUser, showSkeleton } = context;
 
   useEffect(() => {
+    let currentUserId = localStorage.getItem("currentUserId")
+    if (!currentUserId) {
+      router.push("/signup")
+    }
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     let userToken = urlParams.get('userTempToken')

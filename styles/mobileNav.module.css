@@ -50,6 +50,5 @@
 @media (max-width: 400px) {
     .mobileNav {
         display: block;
-        grid-template-columns: repeat(4, 1fr);
     }
 }

@@ -180,7 +180,7 @@ export default function SignUp() {
       />
       <div className={styles.container} >
         {
-          !loader ?
+          !loader && !showSetup ?
             <div className={styles.main} style={jost.style}>
               <div className={styles.backBtn}>
                 <BsArrowLeftShort size={30} onClick={() => { router.push("/") }} />

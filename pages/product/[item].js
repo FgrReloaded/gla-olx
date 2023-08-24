@@ -210,22 +210,21 @@ const ProductItem = ({ item, similarItems }) => {
                 <div className={styles.innerBox}>
                     <div className={styles.sliderBox}>
                         <div className={styles.sliderElement}>
-                            <Image width={100} height={100}  src={mainSlider} alt="img" />
+                            <Image width={100} height={100} src={mainSlider} alt="img" />
                         </div>
-                        <Image alt='img' width={100} height={100}  src='/images/arr.png' className={styles.left} direct="left" onClick={handleSlider} />
-                        <Image alt='img' width={100} height={100}  src='/images/arr.png' className={styles.right} direct="right" onClick={handleSlider} />
+                        <Image alt='img' width={100} height={100} src='/images/arr.png' className={styles.left} direct="left" onClick={handleSlider} />
+                        <Image alt='img' width={100} height={100} src='/images/arr.png' className={styles.right} direct="right" onClick={handleSlider} />
                     </div>
                     <div className={styles.imgBox}>
-                        <Image width={100} height={100}  src={images[0]} alt={images[0]} onClick={(e) => { setMainSlider(e.target.alt) }} />
-                        <Image width={100} height={100}  src={images[1]} alt={images[1]} onClick={(e) => { setMainSlider(e.target.alt) }} />
-                        <Image width={100} height={100}  src={images[2]} alt={images[2]} onClick={(e) => { setMainSlider(e.target.alt) }} />
-                        <Image width={100} height={100}  src={images[3]} alt={images[3]} onClick={(e) => { setMainSlider(e.target.alt) }} />
+                        <Image width={100} height={100} src={images[0]} alt={images[0]} onClick={(e) => { setMainSlider(e.target.alt) }} />
+                        <Image width={100} height={100} src={images[1]} alt={images[1]} onClick={(e) => { setMainSlider(e.target.alt) }} />
+                        <Image width={100} height={100} src={images[2]} alt={images[2]} onClick={(e) => { setMainSlider(e.target.alt) }} />
+                        <Image width={100} height={100} src={images[3]} alt={images[3]} onClick={(e) => { setMainSlider(e.target.alt) }} />
                     </div>
                     <div className={styles.itemBox}>
                         <div className={styles.item1}>
                             <div className={styles.price}>
                                 <span style={noto.style}>₹{item.price}</span>
-
                                 <span> <AiOutlineShareAlt onClick={copyLink} size={30} />
                                     {
                                         currentUser === item.seller ? null : <>
@@ -244,7 +243,7 @@ const ProductItem = ({ item, similarItems }) => {
                         <div className={styles.item2}>
                             <div className={styles.profile}>
                                 <div>
-                                    <Image width={100} height={100}  src="/images/item1.jpg" alt="img" />
+                                    <Image width={100} height={100} src="/images/item1.jpg" alt="img" />
                                 </div>
                                 <div style={noto.style} onClick={handleUserProfile}>
                                     {item.sellerName} <IoIosArrowForward color='#BBBEBF' size={25} />
