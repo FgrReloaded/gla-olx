@@ -219,7 +219,7 @@
     padding: 5px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .searchBox {
         width: 100%;
     }
@@ -272,7 +272,7 @@
     }
 
     .heroSec::after {
-        bottom: 20%;
+        bottom: 15%;
     }
 
     .dropDown {
@@ -312,4 +312,10 @@
 .rotateArrow {
     transition: 0.3s ease-in-out;
     transform: rotate(90deg);
+}
+
+@media (min-width: 1300px){
+    .productList{
+        grid-template-columns: repeat(5, 1fr);
+    }
 }

@@ -53,7 +53,7 @@
     position: relative;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .footerWrapper {
         padding: 0.5rem;
     }

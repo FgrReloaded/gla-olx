@@ -65,7 +65,7 @@
     padding: 1rem;
 }
 
-@media (max-width: 400px){
+@media (max-width: 450px){
     .section{
         grid-template-columns: 1fr;
     }

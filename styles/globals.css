@@ -54,7 +54,7 @@ body {
     display: none !important;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     #__next {
         overflow-x: hidden;
     }

@@ -105,7 +105,7 @@
 }
 
 .sliderElement img {
-    width: 555px;
+    width: 100%;
     height: 415px;
 }
 
@@ -122,6 +122,7 @@
     border-radius: 50%;
     padding: 5px;
 }
+
 .left:hover,
 .right:hover {
     filter: invert(0.8);
@@ -143,12 +144,15 @@
     grid-template-rows: 0.5fr;
     user-select: none;
     gap: 1rem;
+    align-items: center;
+    justify-content: center;
     background: #fff;
     padding: 0.5rem;
 }
 
 .imgBox img {
-    width: 85px;
+    margin: auto;
+    width: 150px;
     height: 85px;
     transition: .5s ease-in-out;
 }
@@ -374,7 +378,7 @@
     padding: 1rem;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .container {
         min-width: 0%;
         padding: 5px 0;
@@ -427,6 +431,15 @@
 
     .detailsBox {
         grid-area: 4 / 1 / 5 / 2;
+    }
+
+    .similarItemsBox {
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    .products {
+        grid-template-columns: 1fr 1fr;
     }
 
 }

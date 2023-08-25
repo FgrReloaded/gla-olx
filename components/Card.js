@@ -74,7 +74,7 @@ const Card = ({ item }) => {
                 </span> */}
                 {/* <div className={styles.ribbon} ><BsFillLightningChargeFill /> Trending</div> */}
                 <div className={styles.productImg}>
-                    <Image src={Array.isArray(item.images) ? item.images[4] : item.images} alt="img" width={100} height={100} />
+                    <Image src={Array.isArray(item.images) ? item.images[4] : item.images} alt="img" width={500} height={100} />
                 </div>
                 <Link href={`/product/${item.title}?seller=${item.seller}&tempToken=${item._id ? item._id : item.productId}`} className={styles.productDetails}>
                     <div className={styles.productPrice}>

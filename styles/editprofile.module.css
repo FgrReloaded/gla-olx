@@ -194,7 +194,7 @@
     color: rgb(60, 60, 60);
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .section {
         flex-direction: column;
         width: 100%;

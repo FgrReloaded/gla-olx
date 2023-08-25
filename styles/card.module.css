@@ -55,6 +55,7 @@
 .productImg img {
     width: 100%;
     height: 150px;
+    object-fit: contain;
 }
 
 .productDetails {
@@ -89,7 +90,7 @@
     margin-bottom: 0.5rem;
 }
 
-@media (max-width:400px) {
+@media (max-width:450px) {
     .productImg img {
         height: 110px;
     }
