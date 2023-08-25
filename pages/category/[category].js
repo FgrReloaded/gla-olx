@@ -46,11 +46,11 @@ const MyCategory = ({ category, items }) => {
 
     return (
         <>
-        <Head>
-            <title>
-                {category}
-            </title>
-        </Head>
+            <Head>
+                <title>
+                    {category}
+                </title>
+            </Head>
             <Category handleCategory={handleCategory} />
             <section>
                 <div className={styles.heading}>
