@@ -319,3 +319,15 @@
         grid-template-columns: repeat(5, 1fr);
     }
 }
+
+.hideSearchResult{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+    background: #CFFAFE;
+    width: fit-content;
+    padding: 0 1rem;
+    font-weight: bolder;
+    cursor: pointer;
+}

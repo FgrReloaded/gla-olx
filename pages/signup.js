@@ -90,11 +90,13 @@ export default function SignUp() {
     const { fullname, email, password } = credentials;
     let check = inputVerification();
     if (!check) {
+      setShowLoader(false)
       return;
     }
     try {
       setLoader(true)
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(userCredential)
       const update = await updateProfile(auth.currentUser, {
         displayName: fullname,
       });
@@ -115,10 +117,12 @@ export default function SignUp() {
     setShowLoader(true)
     const { email, password } = credentials;
     if (email === "") {
+      setShowLoader(false)
       warnFunc("Email is Required");
       return;
     }
     if (password === "") {
+      setShowLoader(false)
       warnFunc("Password is Required");
       return;
     }
@@ -229,9 +233,9 @@ export default function SignUp() {
                     <FiLock className={`${styles.lock} ${showPass ? "hidden" : ""}`} onClick={() => { setShowPass(true) }} />
                     <FiUnlock className={`${showPass ? "" : "hidden"} ${styles.unlock}`} onClick={() => { setShowPass(false) }} />
                   </div>
-                  <button onClick={handleLogin} className={styles.button}>
+                  <button onClick={handleLogin} className={`${styles.button} ${styles.loginBtn}`}>
                     {
-                      showLoader ? <span className={styles.btnLoader}></span> :
+                      showLoader ? <span className={`${styles.btnLoader} ${styles.loginBtnLoader}`}></span> :
                         "Login"
                     }
                   </button>

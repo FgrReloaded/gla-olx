@@ -10,7 +10,9 @@ import Head from 'next/head'
 
 const MyAds = () => {
     const ref = useRef();
-    const { getUserItem, userItems, deleteItem } = useContext(glxContext)
+    const [currentItem, setCurrentItem] = useState([])
+    const [filterOpt, setFilterOpt] = useState("All")
+    const { getUserItem, userItems, deleteItem, setUserItems } = useContext(glxContext)
     const [handleFilter, setHandleFilter] = useState("")
     const [userId, setUserId] = useState("")
     useEffect(() => {
@@ -31,12 +33,35 @@ const MyAds = () => {
         e.target.nextSibling.classList.toggle(styles.show)
     }
 
+    const filterAds = (val) => {
+        let filteredItem;
+        if (currentItem.length === 0) {
+            setCurrentItem(userItems)
+        }
+        setFilterOpt(val);
+        if (val === "Active") {
+            filteredItem = userItems.filter(item => item.status === "Active")
+            if (filteredItem.length < 1) {
+                filteredItem = currentItem.filter(item => item.status === "Active")
+            }
+            setUserItems(filteredItem)
+        }
+        else if (val === "Completed") {
+            filteredItem = userItems.filter(item => item.status === "Completed")
+            if (filteredItem.length < 1) {
+                filteredItem = currentItem.filter(item => item.status === "Completed")
+            }
+            setUserItems(filteredItem)
+        } else {
+            setUserItems(currentItem)
+        }
+    }
 
     return (
         <>
-        <Head>
-            <title>My Ads</title>
-        </Head>
+            <Head>
+                <title>My Ads</title>
+            </Head>
             <div className={styles.section}>
                 <div className={styles.upperSection}>
                     <div className={styles.search}>
@@ -46,9 +71,9 @@ const MyAds = () => {
                     <div className={styles.filter}>
                         <p>Filter By: </p>
                         <div className={styles.filterOptions}>
-                            <span className={styles.active}>View all</span>
-                            <span>Active Ads</span>
-                            <span>Completed Ads</span>
+                            <span onClick={() => (filterAds("All"))} className={`${filterOpt === 'All' ? styles.active : ""}`}>View all</span>
+                            <span onClick={() => (filterAds("Active"))} className={`${filterOpt === 'Active' ? styles.active : ""}`}>Active Ads</span>
+                            <span onClick={() => (filterAds("Completed"))} className={`${filterOpt === 'Completed' ? styles.active : ""}`}>Completed Ads</span>
                         </div>
                     </div>
                 </div>
@@ -92,7 +117,7 @@ const MyAds = () => {
                                                     </span>
                                                     <span>Edit Ad</span>
                                                     <span>Mark as Sold</span>
-                                                    <span onClick={()=>{deleteItem(item._id)}}>Delete Ad</span>
+                                                    <span onClick={() => { deleteItem(item._id) }}>Delete Ad</span>
                                                 </div>
                                             </div>
                                             <div className={styles.metaData}>
@@ -107,7 +132,7 @@ const MyAds = () => {
                                     </div>
                                 )
                             }
-                        }) : <NoItem message={"No items listed for sell"} />}
+                        }) : <NoItem message={"No items sold yet"} />}
                 </div>
             </div>
         </>

@@ -16,11 +16,11 @@ import {
   query,
   deleteDoc,
 } from "firebase/firestore";
-import { auth, db } from "@/middleware/firebase"
+import { auth, db } from "@/middleware/firebase";
 import { useRouter } from 'next/navigation';
 import glxContext from '../context/glxContext';
-import LoadingChat from '@/components/LoadingChat'
-import Image from 'next/image'
+import LoadingChat from '@/components/LoadingChat';
+import Image from 'next/image';
 
 
 

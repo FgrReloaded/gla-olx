@@ -11,7 +11,6 @@ export const config = {
 const handler = async (req, res) => {
 
     const { method } = req;
-    console.log(method)
     const limit = parseInt(req.query.limit);
     switch (method) {
         case "GET":

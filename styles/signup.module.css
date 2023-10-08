@@ -254,13 +254,17 @@
   color: #fff;
 }
 
-.button:hover .btnLoader:nth-child(1) {
-  color: var(--secondary);
-}
-
 .btnLoader:nth-child(1) {
   color: #fff;
 }
+.button:hover .btnLoader:nth-child(1){
+  color: var(--secondary);
+}
+
+.loginBtn:hover .loginBtnLoader{
+  color: var(--secondary);
+}
+
 
 .btnLoader {
   width: 8px;

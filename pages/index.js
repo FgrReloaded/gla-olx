@@ -8,7 +8,7 @@ const pop = Poppins({ subsets: ["latin"], weight: "500" })
 const roboto = Roboto({ subsets: ["latin"], weight: "300" })
 const alice = Alice({ subsets: ["latin"], weight: "400" })
 import Card from '@/components/Card';
-import { AiFillPlusCircle } from 'react-icons/ai'
+import { AiFillPlusCircle, AiOutlineClose } from 'react-icons/ai'
 import Category from '@/components/Category';
 import NoItem from '@/components/NoItem';
 import LoadingComponent from '@/components/LoadingComponent';
@@ -25,6 +25,10 @@ const Home = () => {
 
   useEffect(() => {
     let currentUser = localStorage.getItem("currentUserId")
+    let profilePic = localStorage.getItem("profilePic")
+    if (!profilePic) {
+      localStorage.setItem("profilePic", "/images/user.png")
+    }
     if (currentUser) {
       setCurrentUser(currentUser)
     }
@@ -37,6 +41,11 @@ const Home = () => {
   }
   const handleSearch = (e) => {
     setSearch(e.target.value)
+    e.target.addEventListener("keyup", (e) => {
+      if (e.keyCode === 13) {
+        handleSearchItem()
+      }
+    })
   }
 
   const handleCategory = (val) => {
@@ -76,6 +85,11 @@ const Home = () => {
     }
   }
 
+  const handleCloseSearch = (e) => {
+    setShowSearchItem(false)
+    setSearch("")
+  }
+
   return (
     <>
       <Head>
@@ -85,7 +99,7 @@ const Home = () => {
       <main>
         <div className={styles.heroSec} style={pop.style} >
           <div className={styles.searchBox}>
-            <input style={alice.style} type="text" onChange={handleSearch} className={styles.inputSearch} placeholder="What are you looking for?..." />
+            <input style={alice.style} type="text" value={search} onChange={handleSearch} className={styles.inputSearch} placeholder="What are you looking for?..." />
             <div className={styles.searchBtn}>
               <span onClick={handleSearchItem}>Search</span> <BiSearchAlt2 color='#D9D9D9' size={25} />
             </div>
@@ -95,7 +109,9 @@ const Home = () => {
       <Category handleCategory={handleCategory} />
 
       <section className={styles.cardSec} id='cardSec'>
-        <h3 className={styles.cardHead} style={roboto.style}>Fresh Recommendation:</h3>
+        <h3 className={styles.cardHead} style={roboto.style}>Fresh Recommendation:
+          <span onClick={handleCloseSearch} className={`${styles.hideSearchResult} ${showSearchItem?"":"hidden"}`}>Search Result <AiOutlineClose /> </span>
+        </h3>
         {!noContent && items.length !== 0 ?
           <div className={styles.productList}>
             {

@@ -16,7 +16,7 @@ const Sell = () => {
   const [productData, setProductData] = useState({ title: "", desc: "", price: "", category: "", subCategory: "", sellerName: "" })
   const category = {
     "Lab Items": ["Lab-Coats", "ED-lab Stuff"],
-    "Room Items": ["Posters", "Lights", "General Room Stuff"],
+    "Room Items": ["Posters", "Lights", "General Room Stuff", "Electronics"],
     "Books": ["Course Books", "Novels", "Others"],
     "Sports Items": ["Cricket", "Badminton", "Volleyball", "Football", "Table Tennis", "Basketball"],
     "Gadgets": ["Mobiles", "Laptops", "Headphones", "Speakers", "Others"],
@@ -36,7 +36,14 @@ const Sell = () => {
   const ref = useRef(null);
   const ref1 = useRef(null);
   const context = useContext(glxContext);
-  const { createItem, showSkeleton } = context;
+  const { createItem, showSkeleton, setShowSkeleton, setMessage, setShow, showAlert } = context;
+
+  const warnUser = (msg) => {
+    setShowSkeleton(false);
+    showAlert(true);
+    setMessage(msg);
+    setShow(true);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -47,6 +54,14 @@ const Sell = () => {
     let coverImg = coverFile;
     let images = files.slice(0, 4);
     images.push(coverImg)
+    if(!coverImg){
+      warnUser("Please Upload a Cover Image")
+      return 
+    }
+    if(images.length < 4){
+      warnUser("Please Upload atleast 4 images")
+      return
+    }
     createItem({ title, desc, price, category, subCategory, seller, sellerName, images, sellerPic: profilePic })
   }
 

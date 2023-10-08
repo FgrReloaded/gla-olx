@@ -90,7 +90,7 @@ const Card = ({ item }) => {
                     <div style={mons.style} className={styles.productDesc}>
                         <p>
                             {
-                                item.desc && item.desc.length > 50 ? item.description.substring(0, 50) + "..." : item.desc
+                                item.desc && item.desc.length > 50 ? item?.desc.substring(0, 50) + "..." : item.desc
                             }
                         </p>
                     </div>

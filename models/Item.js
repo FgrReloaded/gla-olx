@@ -17,7 +17,10 @@ var ItemSchema = new Schema({
         type: Number,
         default: 0
     },
-    status: String,
+    status: {
+        type: String,
+        default: "Active"
+    },
 }, { timestamps: true });
 
 mongoose.models = {};

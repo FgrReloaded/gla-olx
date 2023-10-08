@@ -28,7 +28,7 @@ const UserSetup = () => {
     const [stdType, setStdType] = useState(null)
     const [credentials, setCredentials] = useState({ number: "", stdType: "", hostel: "", location: "", course: "", branch: "", year: "" })
     const context = useContext(glxContext);
-    const { showAlert } = context;
+    const { showAlert, setMessage, setShow } = context;
 
     const handleSetupChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -129,7 +129,10 @@ const UserSetup = () => {
                     userId: currentUser.uid,
                     timestamp: new Date(),
                 }]), { expires: 5 })
-                showAlert("Account Created Successfully")
+                setMessage("Account Created Successfully")
+                setShow(true)
+                showAlert();
+                
                 window.location.href = "/"
             })
             .catch((error) => {

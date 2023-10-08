@@ -245,7 +245,7 @@ const ProductItem = ({ item, similarItems }) => {
                                 <div>
                                     <Image width={100} height={100} src={item.sellerPic} alt="img" />
                                 </div>
-                                <div style={noto.style} onClick={handleUserProfile}>
+                                <div style={noto.style} className={`${item.sellerName.length>15?"shortName":""}`} onClick={handleUserProfile}>
                                     {item.sellerName} <IoIosArrowForward color='#BBBEBF' size={25} />
                                 </div>
                             </div>
