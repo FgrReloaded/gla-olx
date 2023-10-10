@@ -2,13 +2,14 @@ import React from 'react'
 import styles from "@/styles/contact.module.css"
 import Image from 'next/image'
 import Head from 'next/head'
+import { BsWhatsapp, BsInstagram, BsTwitter, BsFacebook } from "react-icons/bs"
 
 const contact = () => {
     return (
         <>
-         <Head>
-        <title>Contact Us</title>
-      </Head>
+            <Head>
+                <title>Contact Us</title>
+            </Head>
             <section className={styles.section}>
                 <div className={styles.container}>
                     <div className={styles.contactInfo}>
@@ -16,11 +17,11 @@ const contact = () => {
                             <h2>Contact Info</h2>
 
                             <li>
-                                <span><Image width={100} height={100}  src="/images/location.png" alt="" /></span>
+                                <span><Image width={100} height={100} src="/images/location.png" alt="" /></span>
                                 <span>GLA</span>
                             </li>
                             <li>
-                                <span><Image width={100} height={100}  src="/images/mail.png" alt="" /></span>
+                                <span><Image width={100} height={100} src="/images/mail.png" alt="" /></span>
                                 <span>gla-olxsupport@gmail.com</span>
                             </li>
                             <li>
@@ -34,10 +35,19 @@ const contact = () => {
                         <div className={styles.socials}>
                             <h3>Socials:</h3>
                             <ul className={styles.socials}>
-                                <li><a href=""><Image width={100} height={100}  src="/images/1.png" alt="" /></a></li>
-                                <li><a href=""><Image width={100} height={100}  src="/images/5.png" alt="" /></a></li>
-                                <li><a href=""><Image width={100} height={100}  src="/images/3.png" alt="" /></a></li>
-                                <li><a href=""><Image width={100} height={100}  style={{ height: "28px" }} src="/images/whatsapp.png" alt="" /></a></li>
+                                <li>
+                                    <BsFacebook size={40} color='#fff' />
+                                </li>
+                                <li>
+                                    <BsTwitter size={40} color='#fff' />
+
+                                </li>
+                                <li>
+                                    <BsInstagram size={40} color='#fff' />
+                                </li>
+                                <li>
+                                    <BsWhatsapp size={40} color='#fff' />
+                                </li>
                             </ul>
                         </div>
                     </div>

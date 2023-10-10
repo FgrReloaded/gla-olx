@@ -105,8 +105,10 @@
 }
 
 .sliderElement img {
+    object-fit: contain;
     width: 100%;
     height: 415px;
+    background: #cbd5e1;
 }
 
 .left,
@@ -155,6 +157,8 @@
     width: 150px;
     height: 85px;
     transition: .5s ease-in-out;
+    background: #cbd5e1;
+    object-fit: contain;
 }
 
 .imgBox img:hover {
@@ -163,10 +167,10 @@
 }
 
 .itemBox {
-    grid-area: 1 / 2 / 2 / 3;
+    grid-area: 1 / 2 / 3 / 3;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1.5fr 1fr;
+    grid-template-rows: 1fr 1.5fr 1fr 0.5fr;
     gap: 5px;
 }
 
@@ -181,7 +185,8 @@
 
 .item1,
 .item2,
-.item3 {
+.item3,
+.item4 {
     padding: 0rem 1rem;
     background: #fff;
     display: flex;
@@ -203,6 +208,21 @@
     grid-area: 3 / 1 / 4 / 2;
     flex-direction: row;
     gap: 15px;
+}
+.item4{
+    padding: 1rem;
+    justify-content: space-between;
+    gap: 15px;
+    flex-direction: row;
+    align-items: center;
+}
+.item4 button{
+    padding: 0.4rem 0.5rem;
+    background: #cbd5e1;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+
 }
 
 .price {

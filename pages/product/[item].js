@@ -27,7 +27,7 @@ const ProductItem = ({ item, similarItems }) => {
     const [showSafetyTips, setShowSafetyTips] = useState(false)
     const [chatData, setChatData] = useState({ currentUser: "", seller: "", item: "", itemPrice: "" })
     const context = useContext(glxContext)
-    const { showAlert, setMessage } = context
+    const { showAlert, setMessage, handleReport } = context
     useEffect(() => {
         checkWishlist();
         setCurrentUser(localStorage.getItem("currentUserId"));
@@ -270,6 +270,11 @@ const ProductItem = ({ item, similarItems }) => {
                                 <span>Negotiate with seller</span>
                             </div>
                         </div>
+                        <div className={styles.item4} style={noto.style}>
+                            <h4>Report This Ad: </h4> <button onClick={()=>{handleReport(item._id)}}>Report</button>
+                        </div>
+                            
+
                     </div>
 
                     <div className={styles.detailsBox} style={pop.style}>

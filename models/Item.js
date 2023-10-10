@@ -21,6 +21,10 @@ var ItemSchema = new Schema({
         type: String,
         default: "Active"
     },
+    reported: {
+        type: Number,
+        default: 0
+    },
 }, { timestamps: true });
 
 mongoose.models = {};
