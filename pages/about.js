@@ -18,7 +18,7 @@ const about = () => {
                     <p>
                         About GLA OLX
 
-                        Welcome to GLA OLX, your premier online marketplace tailored specifically for college students. At GLA OLX, we understand the unique needs and lifestyles of students, and we've created a platform that makes buying and selling items a breeze. <br />Our mission is to simplify the college experience by providing a convenient and safe platform for students to buy and sell items they need, whether it's textbooks, electronics, furniture, or even event tickets. We aim to foster a vibrant online community where students can connect, save money, and reduce their environmental footprint by reusing and recycling items.
+                        Welcome to GLA OLX, your premier online marketplace tailored specifically for college students. At GLA OLX, we understand the unique needs and lifestyles of students, and we&#39;ve created a platform that makes buying and selling items a breeze. <br />Our mission is to simplify the college experience by providing a convenient and safe platform for students to buy and sell items they need, whether it&#39;s textbooks, electronics, furniture, or even event tickets. We aim to foster a vibrant online community where students can connect, save money, and reduce their environmental footprint by reusing and recycling items.
                     </p>
                 </div>
             </div>
