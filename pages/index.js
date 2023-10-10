@@ -135,8 +135,14 @@ const Home = () => {
             })}
             {showSkeleton && <LoadingComponent />}
           </div>
-          : <NoItem />
+          : !showSkeleton && <NoItem />
         }
+        <div className={styles.productList}>
+
+        {
+          showSkeleton && <LoadingComponent />
+        }
+        </div>
         {
           !noContent && loadMoreBtn &&
           <button onClick={loadMore} className={styles.loadMore} style={pop.style}>
