@@ -80,7 +80,7 @@ const Navbar = () => {
                 <div className={styles.navWrapper}>
                     <div className={styles.logo}>
                         <Link href={"/"}>
-                            <Image width={100} height={100} src='/images/mainLogo.png' />
+                            <Image width={100} height={100} src='/images/currentLogo.png' />
                         </Link>
                     </div>
                     <div onClick={showNav} className={`${styles.toggle} ${nav ? styles.toggleActive : ""}`}></div>
